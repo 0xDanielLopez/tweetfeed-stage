@@ -1,0 +1,277 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* default style for large screens */
+#content,
+#contentMobile {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+/* style for small screens */
+@media (max-width: 992px) {
+
+    #content,
+    #contentMobile {
+        width: 98%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+}
+
+#presentation,
+#presentationMobile {
+    text-align: center;
+}
+
+.toph1 {
+    font-size: 60px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-family: 'Alegreya Sans SC', sans-serif;
+    /*font-weight: bold;*/
+    font-weight: 800;
+    color: #1DA1F2;
+}
+
+#presentation h2,
+#presentationMobile h2 {
+    font-size: 18px;
+}
+
+#presentationSecondary {
+    text-align: left;
+}
+
+#presentationSecondary h1 {
+    font-size: 42px;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    font-weight: 800;
+    color: #1DA1F2;
+}
+
+#presentationSecondary h2 {
+    font-size: 16px;
+
+}
+
+.cardTitle {
+    font-size: 36px;
+    text-align: center;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    font-weight: 600;
+    color: #1DA1F2;
+}
+
+.navbar-nav li a {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+}
+
+.active:not([role=tab]) {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    background: white;
+}
+
+.navbar-nav li a:hover:not(.active) {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    background: #8ec9ee;
+}
+
+/* Todos */
+.nav-pills li a {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    font-weight: 500;
+    background: #cad2e8;
+}
+
+/* Hover */
+.nav-pills li a:hover:not(.active) {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    background: #e1e6f2;
+}
+
+/* El activo */
+.nav-link.active:not([href$="html"]):not([href$="/"]):not(.border-bottom-0) {
+    color: white !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    background: #1DA1F2;
+}
+
+/* #004080 */
+/* background: #00b8ff !important; */
+
+.twitterLink:hover {
+    color: #005677 !important;
+}
+
+.valueLink:hover {
+    color: blue !important;
+}
+
+
+.buttonHover:hover {
+    background: #009ad6 !important;
+}
+
+.fa-copy:hover {
+    color: blue !important;
+}
+
+[href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide"]:hover {
+    background-color: #007fff !important;
+}
+
+.btn:hover {
+    background-image: linear-gradient(rgb(0 0 0/15%) 0 0);
+}
+
+/* =========== START Loader ======== */
+.ping {
+    --uib-size: 50px;
+    --uib-speed: 1s;
+    --uib-color: #3950cf;
+    position: relative;
+    height: var(--uib-size);
+    width: var(--uib-size);
+}
+
+.ping::before,
+.ping::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-color: var(--uib-color);
+    animation: pulse7132 var(--uib-speed) linear infinite;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.ping::after {
+    animation-delay: calc(var(--uib-speed) / -2);
+}
+
+@keyframes pulse7132 {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* =========== END Loader ======== */
+
+html,
+body {
+    height: 100%;
+}
+
+.info-span {
+    background-color: #7BC5F9;
+    /* Brighter shade of #29A6F3 */
+    color: black;
+    padding: 8px;
+    font-size: 0.7vw;
+    font-family: 'Rubik', sans-serif;
+}
+
+.info-link {
+    color: #483D8B;
+    transition: color 0.2s ease;
+    /* This will animate the color change over 0.5 seconds */
+}
+
+.info-link:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/* =========== TWEETS ======== */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.tweet-container {
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #15202B;
+    color: #fff;
+    display: block;
+    height: 220px; /* Fixed height */
+    overflow: auto; /* Handle overflow */
+}
+
+.tweet-container:hover {
+    background-color: #1A394B;
+    color: #fff;
+}
+
+.tweet-avatar img {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tweet-header {
+    text-align: center;
+}
+
+.tweet-author {
+    margin-top: 10px;
+}
+
+.tweet-body {
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.tweet-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    margin: 10px 0;
+}
+/* =========== END Tweets ======== */

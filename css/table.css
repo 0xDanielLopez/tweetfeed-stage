@@ -1,0 +1,170 @@
+table {
+  table-layout: fixed;
+}
+
+table th:nth-child(1) {
+  width: 14%;
+}
+
+table th:nth-child(2) {
+  width: 13%;
+}
+
+table th:nth-child(3) {
+  width: 8%;
+}
+
+table th:nth-child(4) {
+  width: 42%;
+}
+
+table th:nth-child(5) {
+  width: 10%;
+}
+
+table th:nth-child(6) {
+  width: 6%;
+}
+
+table th:nth-child(7) {
+  width: 7%;
+}
+
+.table tr,
+.table td {
+  text-align: center;
+  width: 10px;
+  vertical-align: middle;
+  font-size: 0.8vw;
+  font-family: 'Rubik', sans-serif;
+  color: #474747;
+}
+
+.twitterUser {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.65vw;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: #1DA1F2;
+  border: 2px solid black;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  max-width: 140px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.twitterUser:hover {
+  background-color: #0d8ecf;
+  border-color: #0d8ecf;
+}
+
+.twitterUser img {
+  border-radius: 50%;
+  border: 1px solid grey;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  width: 22px;
+  height: 22px;
+}
+
+.table td.tableTags {
+  font-size: 0.72vw;
+}
+
+/* Styles for screens that are 992px or smaller */
+@media (max-width: 992px) {
+
+  table {
+    table-layout: width:95%;
+  }
+
+  .table-borderless table th:nth-child(1),
+  .table-borderless table th:nth-child(3),
+  .table-borderless table th:nth-child(5),
+  .table-borderless table th:nth-child(7) {
+    width: 0%;
+    visibility: hidden;
+  }
+
+  .table-borderless table th:nth-child(2) {
+    width: 20%;
+  }
+
+  .table-borderless table th:nth-child(4) {
+    width: 70%;
+  }
+
+  .table-borderless table th:nth-child(6) {
+    width: 10%;
+  }
+
+  .tableResearchers table th:nth-child(1) {
+    width: 10%;
+  }
+
+  .tableResearchers table th:nth-child(2) {
+    width: 80%;
+  }
+
+  .tableResearchers table th:nth-child(3) {
+    width: 10%;
+  }
+
+
+  .table tr,
+  .table td {
+    text-align: center;
+    width: 10px;
+    vertical-align: middle;
+    font-size: 3vw;
+    font-family: 'Rubik', sans-serif;
+    color: #474747;
+  }
+
+  .twitterUser {
+    font-size: 2vw;
+  }
+
+  .tableTags {
+    font-size: 2vw;
+  }
+
+  .page-link {
+    font-size: 1.5vw;
+  }
+
+  .twitterUser img {
+    width: 10%;
+    height: auto;
+  }
+
+}
+
+input {
+  text-align: center;
+  vertical-align: middle;
+  width: 105%;
+}
+
+.green {
+  background: green;
+}
+
+.red {
+  background: red;
+}
+
+.virustotal {
+  width: 16px;
+  height: auto;
+}
+
+#abuse_ch {
+  width: 16px;
+  height: auto;
+}
