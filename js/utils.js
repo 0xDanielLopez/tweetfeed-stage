@@ -237,6 +237,23 @@
     window.addEventListener('pagehide', clearTrackedIntervals);
   }
 
+  // ─── Global AJAX error handler ─────────────────────────────────────────────
+  // Logs all failed AJAX requests (previously silent, leaving spinners spinning).
+  // Individual pages can still add .fail() for page-specific UX.
+  function initAjaxErrorHandler() {
+    if (typeof $ === 'undefined') return;
+    $(document).ajaxError(function(event, xhr, settings, error) {
+      console.error('[TweetFeed] AJAX failed:', settings.url, xhr.status, error || xhr.statusText);
+    });
+  }
+  if (typeof $ !== 'undefined') {
+    $(initAjaxErrorHandler);
+  } else {
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof $ !== 'undefined') initAjaxErrorHandler();
+    });
+  }
+
   // ─── Event delegation for copy buttons ─────────────────────────────────────
   // Attach once per page load. Reads value from data-copy attribute.
   function initCopyDelegation() {
