@@ -496,7 +496,7 @@
 			$.ajax({
 				type: 'GET',
 				context: document.body,
-				url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv',
+				url: 'https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/week.csv',
 				success: function(response) {
 					var data = csvJSON(response);
 					var last_date = data.at(-1)[0];

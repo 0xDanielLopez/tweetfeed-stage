@@ -414,7 +414,7 @@
 	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 	Chart.defaults.global.defaultFontColor = '#858796';
 	$(function() {
-		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
+		$.get('https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/today.csv', function(response) {
 			let data = csvJSON(response);
 			var last_date = data.at(-1)[0];
 			var first_date = data.at(1)[0];
@@ -435,7 +435,7 @@
 
 			countUsers(tableUsersToday, data);
 		})
-		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv', function(response) {
+		$.get('https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/week.csv', function(response) {
 			let data = csvJSON(response);
 			var last_date = data.at(-1)[0];
 			var first_date = data.at(1)[0];
@@ -457,7 +457,7 @@
 			countUsers(tableUsersWeek, data);
 
 		})
-		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv', function(response) {
+		$.get('https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/month.csv', function(response) {
 			let data = csvJSON(response);
 			var last_date = data.at(-1)[0];
 			var first_date = data.at(1)[0];
@@ -480,7 +480,7 @@
 
 		})
 		/*
-		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv', function(response) {
+		$.get('https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/year.csv', function(response) {
 			let data = csvJSON(response);
 			var last_date = data.at(-1)[0];
 			var first_date = data.at(1)[0];

@@ -269,7 +269,7 @@
                 $.ajax({
                     type: 'GET',
                     context: document.body,
-                    url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv',
+                    url: 'https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/today.csv',
                     success: function(response) {
                         var data = csvJSON(response);
                         var last_date = data.at(-1)[0];
@@ -363,7 +363,7 @@
                     },
                     cache: false
                 });
-                //                                                        $.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function (response) {
+                //                                                        $.get('https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/today.csv', function (response) {
                 //                                                        })
                 init = 0;
                 loaddatacall++;
