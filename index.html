@@ -508,6 +508,9 @@
 	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- Export -->
 	<script src="js/demo/datatables-demo.js"></script>
+	<!-- TweetFeed shared utilities -->
+	<script src="js/config.js"></script>
+	<script src="js/utils.js"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	$(function() {
@@ -633,12 +636,13 @@
 								var pic = new Image();
 								pic.src = 'pics/' + user + '.png';
 
-								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + pic.src + '" alt="Profile pic of ' + user + '">&nbsp;' + user + '</a>';
+								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + escapeHtml(pic.src) + '" alt="Profile pic of ' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
 
 								// Add external link in URLs (v3: no direct access)
-								data[i][3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>';
+								// XSS-safe: escape value in both attribute (data-copy) and text (HTML)
+								data[i][3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" title="Copy"></i> ' + escapeHtml(value) + '</span>';
 
-								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
+								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
 
 								if (type == "url") {
 									value = encodeURIComponent(value);
@@ -714,16 +718,16 @@
 							var pic = new Image();
 							pic.src = 'pics/' + user + '.png';
 
-							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + pic.src + '" alt="Profile pic of ' + user + '">&nbsp;' + user + '</a>');
+							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + escapeHtml(pic.src) + '" alt="Profile pic of ' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
 
 							var type = $(this.node()).find('td').eq(2).text().trim();
 							var value = $(this.node()).find('td').eq(3).text().trim();
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 
 							// Add external link in URLs (v3: no direct access)
-							$(this.node()).find('td').eq(3).html('<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>');
+							$(this.node()).find('td').eq(3).html('<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" title="Copy"></i> ' + escapeHtml(value) + '</span>');
 
-							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
+							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
 
 							// For Mobile
 							// Only show: User (1), Value (3) and Twitter (5)
@@ -741,6 +745,10 @@
 					olddate = data[data.length - 1][0];
 					countTypes('.today', data);
 					loaddatacall++;
+				},
+				error: function(xhr, status, err) {
+					console.error('[TweetFeed] loadData failed:', status, err);
+					$("#loadingToday").html('<p class="text-danger" style="padding:1em;">⚠️ Could not load data from GitHub. Retrying next cycle...</p>');
 				},
 				cache: false
 			});
@@ -902,25 +910,7 @@
 		$('[data-toggle="tooltip"]').tooltip()
 	})
 	</script>
-	<script>
-	function copyClipboard(value) {
-		/* Get the text field */
-		navigator.clipboard.writeText(value);
-
-		//onclick="copyClipboard(\'' + value + '\')"
-		var aux = 'i[onclick="copyClipboard(\'' + value + '\')"]';
-
-		$(aux).removeClass("far fa-copy");
-		$(aux).addClass("fas fa-check");
-		$(aux).css("color", "green");
-		setTimeout(
-			function() {
-				$(aux).removeClass("fas fa-check");
-				$(aux).addClass("far fa-copy");
-				$(aux).css("color", "");
-			}, 1000);
-	}
-	</script>
+	<!-- copyClipboard now provided by js/utils.js (event delegation on .tf-copy) -->
 </body>
 
 </html>

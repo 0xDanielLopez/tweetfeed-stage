@@ -101,9 +101,18 @@
   function copyToClipboard(text, $trigger) {
     var done = function(success) {
       if ($trigger && $trigger.length && success) {
-        var $feedback = $('<span class="tf-copy-feedback" style="color:green;font-weight:bold;margin-left:4px;"> ✓</span>');
-        $trigger.after($feedback);
-        setTimeout(function() { $feedback.fadeOut(600, function() { $feedback.remove(); }); }, 800);
+        // If the trigger is a FontAwesome copy icon, swap to a green checkmark briefly
+        if ($trigger.hasClass('fa-copy') || $trigger.hasClass('far') || $trigger.hasClass('fas')) {
+          var origColor = $trigger.css('color');
+          $trigger.removeClass('far fa-copy').addClass('fas fa-check').css('color', 'green');
+          setTimeout(function() {
+            $trigger.removeClass('fas fa-check').addClass('far fa-copy').css('color', origColor || '');
+          }, 1000);
+        } else {
+          var $feedback = $('<span class="tf-copy-feedback" style="color:green;font-weight:bold;margin-left:4px;"> ✓</span>');
+          $trigger.after($feedback);
+          setTimeout(function() { $feedback.fadeOut(600, function() { $feedback.remove(); }); }, 800);
+        }
       }
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
