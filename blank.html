@@ -103,10 +103,10 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
-                            <a class="nav-link" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
+                            <a class="nav-link" href="https://twitter.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+                            <a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="about.html"><i class="fas fa-question-circle"></i> About</a>
@@ -129,7 +129,7 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="background-color: #343A40;">
                                 <a class="dropdown-item" href="/statistics/"><i class="fas fa-chart-area"></i> Statistics</a>
                                 <a class="dropdown-item" href="/protect/"><i class="fas fa-shield-alt"></i> Protect</a>
-                                <a class="dropdown-item" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a class="dropdown-item" href="https://twitter.com/0xDanielLopez" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> Twitter</a>
                                 <a class="dropdown-item" href="/contact/"><i class="fas fa-envelope"></i> Contact</a>
                                 <a class="dropdown-item" href="/about/"><i class="fas fa-question-circle"></i> About</a>
                             </div>
@@ -156,12 +156,12 @@
                         <div class="col-md-4 text-right">20211011</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 text-left"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i>&nbspTwitter</a></div>
+                        <div class="col-md-4 text-left"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i>&nbspTwitter</a></div>
                         <div class="col-md-4 text-center"></div>
                         <div class="col-md-4 text-right">TweetFeed</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 text-left"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbspLinkedIn</a></span></div>
+                        <div class="col-md-4 text-left"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i>&nbspLinkedIn</a></span></div>
                         <div class="col-md-4 text-center">All credits to the infosec Community that share knowledge at Twitter</div>
                         <div class="col-md-4 text-right">Made with <span>❤</span> in Andalucía, Spain</div>
                     </div>
@@ -285,13 +285,13 @@
                                     var type = data[i][2];
 
                                     var user = data[i][1];
-                                    data[i][1] = '<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>'
+                                    data[i][1] = '<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '" rel="noopener noreferrer">' + user + '</a>'
 
                                     var value = data[i][3];
-                                    // data[i][3] = '<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>'
+                                    // data[i][3] = '<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer">' + value + '</a>'
 
                                     var tweet_url = data[i][5];
-                                    data[i][5] = '<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
+                                    data[i][5] = '<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
 
                                     // Add VT
 
@@ -300,7 +300,7 @@
                                     } else if (value.startsWith("https://")) {
                                         value = value.replace("https://", "");
                                     }
-                                    data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
+                                    data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
 
                                     var node = table.row.add(data[i]).draw().node();
                                     $(node).addClass('highlight');
@@ -334,7 +334,7 @@
                                     value = value.replace("https://", "");
                                 }
 
-                                data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
+                                data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
                             }
 
                             table.rows.add(data).order([0, 'desc']).draw();
@@ -346,13 +346,13 @@
                                 $(this.node()).toggleClass(col);
 
                                 var user = $(this.node()).find('td').eq(1).text().trim();
-                                $(this.node()).find('td').eq(1).html('<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>');
+                                $(this.node()).find('td').eq(1).html('<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '" rel="noopener noreferrer">' + user + '</a>');
 
                                 var value = $(this.node()).find('td').eq(3).text().trim();
-                                // $(this.node()).find('td').eq(3).html('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>');
+                                // $(this.node()).find('td').eq(3).html('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer">' + value + '</a>');
 
                                 var tweet_url = $(this.node()).find('td').eq(5).text().trim();
-                                $(this.node()).find('td').eq(5).html('<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
+                                $(this.node()).find('td').eq(5).html('<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"></a>');
 
                             })
                             animationNew();
