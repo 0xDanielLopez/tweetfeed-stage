@@ -275,3 +275,8 @@ body {
     margin: 10px 0;
 }
 /* =========== END Tweets ======== */
+
+/* phishunt.io cross-link accent (mirrors phishunt's TweetFeed accent) */
+#phishunt-link .nav-link { color: #60a5fa !important; }
+#phishunt-link .nav-link:hover { color: #93bbfd !important; }
+
