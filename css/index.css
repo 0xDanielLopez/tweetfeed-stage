@@ -3,11 +3,6 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 
 /* default style for large screens */
@@ -193,11 +188,6 @@ body {
 }
 
 /* =========== END Loader ======== */
-
-html,
-body {
-    height: 100%;
-}
 
 .info-span {
     background-color: #7BC5F9;

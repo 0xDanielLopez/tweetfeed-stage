@@ -263,6 +263,12 @@
       e.stopPropagation();
       var text = $(this).attr('data-copy') || '';
       if (!text) return;
+      // Selector support: if data-copy starts with "#", copy the text
+      // content of the referenced element (used on hunt.html command blocks).
+      if (text.charAt(0) === '#') {
+        var $target = $(text);
+        if ($target.length) text = $target.text();
+      }
       copyToClipboard(text, $(this));
     });
   }
