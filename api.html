@@ -8,17 +8,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="API endpoint to download IOCs shared at Twitter">
+	<meta name="description" content="Public API for TweetFeed IOC feeds. Query indicators of compromise (URLs, domains, IPs, hashes) from the infosec community on Twitter/X in JSON or CSV.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="api,free,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious">
 	<link rel="canonical" href="https://tweetfeed.live/api.html">
 	<title>API to download Indicators of Compromise (IOCs) - TweetFeed</title>
 	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="TweetFeed REST API for IOCs">
 	<meta name="twitter:description" content="Free REST API to access IOC feeds programmatically: today/week/month/year by type/tag.">
 	<meta name="twitter:url" content="https://tweetfeed.live/api.html">
-	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card.png">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
 	<!-- Facebook -->
 	<meta property="og:url" content="https://tweetfeed.live/api.html">
@@ -27,6 +27,10 @@
 	<meta property="og:description" content="Free REST API to access IOC feeds programmatically: today/week/month/year by type/tag.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
 	<!-- Custom fonts for this template -->
@@ -125,6 +129,33 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
 	<script>
 	hljs.highlightAll();
+	</script>
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"sameAs": [
+			"https://twitter.com/0xDanielLopez",
+			"https://github.com/0xDanielLopez/TweetFeed"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
+	}
 	</script>
 </head>
 

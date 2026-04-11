@@ -8,7 +8,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Information about the project TweetFeed ">
+	<meta name="description" content="Learn about TweetFeed, a community project that aggregates indicators of compromise shared publicly by security researchers on Twitter/X.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="about,tweetfeed">
 	<link rel="canonical" href="https://tweetfeed.live/base.html">
@@ -107,6 +107,33 @@
 		/* IE 10+ */
 	}
 	</style>
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"sameAs": [
+			"https://twitter.com/0xDanielLopez",
+			"https://github.com/0xDanielLopez/TweetFeed"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
+	}
+	</script>
 </head>
 
 <body id="page-top">

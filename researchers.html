@@ -8,17 +8,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Researchers from infosec community sharing IOCs at Twitter">
+	<meta name="description" content="Infosec researchers from the Twitter/X community whose shared indicators of compromise power the TweetFeed IOC feeds. Credit and links to profiles.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="researchers,community,twitter,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious">
 	<link rel="canonical" href="https://tweetfeed.live/researchers.html">
 	<title>Researchers sharing IOCs at Twitter - TweetFeed</title>
 	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Top infosec researchers sharing IOCs - TweetFeed">
 	<meta name="twitter:description" content="Ranking of top researchers and threat intel accounts contributing IOCs to TweetFeed.">
 	<meta name="twitter:url" content="https://tweetfeed.live/researchers.html">
-	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card.png">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
 	<!-- Facebook -->
 	<meta property="og:url" content="https://tweetfeed.live/researchers.html">
@@ -27,6 +27,10 @@
 	<meta property="og:description" content="Ranking of top researchers and threat intel accounts contributing IOCs to TweetFeed.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
 	<!-- Custom fonts for this template -->
@@ -121,6 +125,33 @@
 		/* IE 10+ */
 	}
 	</style>
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"sameAs": [
+			"https://twitter.com/0xDanielLopez",
+			"https://github.com/0xDanielLopez/TweetFeed"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
+	}
+	</script>
 </head>
 
 <body id="page-top">

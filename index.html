@@ -14,11 +14,11 @@
 	<link rel="canonical" href="https://tweetfeed.live">
 	<title>Indicators Of Compromise (IOCs) shared by infosec community - TweetFeed</title>
 	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Indicators Of Compromise (IOCs) shared by infosec community - TweetFeed">
 	<meta name="twitter:description" content="Live feeds of IOCs (URLs, domains, IPs, hashes) shared by the infosec community on Twitter/X.">
 	<meta name="twitter:url" content="https://tweetfeed.live">
-	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card.png">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
 	<!-- Facebook -->
 	<meta property="og:url" content="https://tweetfeed.live">
@@ -27,6 +27,10 @@
 	<meta property="og:description" content="Live feeds of IOCs (URLs, domains, IPs, hashes) shared by the infosec community on Twitter/X.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- URL canonica -->
 	
 	<!-- Preconnect -->
@@ -96,6 +100,33 @@
 		"logo": "https://tweetfeed.live/img/TweetFeed_card.png",
 		"keywords": "feed,phishing,scam,malware,twitter,osint,ioc,threat",
 		"slogan": "Feeds of Indicators Of Compromise shared at Twitter"
+	}
+	</script>
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"sameAs": [
+			"https://twitter.com/0xDanielLopez",
+			"https://github.com/0xDanielLopez/TweetFeed"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
 	}
 	</script>
 </head>
