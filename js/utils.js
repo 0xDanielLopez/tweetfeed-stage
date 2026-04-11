@@ -308,4 +308,37 @@
   window.copyClipboard = function(text) { copyToClipboard(text, null); };
   window.addZero = addZero;
   window.number_format = numberFormat;
+
+  // Legacy downloadCSV(csvString, filename) — matches the inline signature
+  // used by 9 pages before dedupe. Writes a pre-joined CSV string as a Blob.
+  window.downloadCSV = function(csv, filename) {
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  // Legacy exportTableToCSV(filename) — scrapes the first <table> on the
+  // page starting at row index 2 (skipping header + DataTables filter row)
+  // and downloads it. Used by 9 generic pages; index.html keeps its own
+  // custom variant that does column skipping + URL extraction.
+  if (!window.exportTableToCSV) {
+    window.exportTableToCSV = function(filename) {
+      var csv = [];
+      var rows = document.querySelectorAll('table tr');
+      for (var i = 2; i < rows.length; i++) {
+        var row = [];
+        var cols = rows[i].querySelectorAll('td, th');
+        for (var j = 0; j < cols.length; j++) row.push(cols[j].innerText);
+        csv.push(row.join(','));
+      }
+      window.downloadCSV(csv.join('\n'), filename);
+    };
+  }
 })(window);
