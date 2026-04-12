@@ -266,9 +266,9 @@ body {
 }
 /* =========== END Tweets ======== */
 
-/* phishunt.io cross-link — branded pill using phishunt's dark navy */
-#phishunt-link .nav-link { color: #cbd5e1 !important; background: #0f172a; border-radius: 6px; padding: 4px 12px !important; }
-#phishunt-link .nav-link:hover { color: #fff !important; background: #1e293b; }
+/* phishunt.io cross-link — same style as other nav links */
+#phishunt-link .nav-link { color: rgba(255,255,255,.75) !important; }
+#phishunt-link .nav-link:hover { color: #fff !important; }
 
 /* Copy-to-clipboard icons — prevent blue flash on click */
 .tf-copy { cursor: pointer; color: inherit; }
