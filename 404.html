@@ -162,7 +162,6 @@
                     autorefresh = 1;
                     $(this).text('Disable Auto Refresh');
                     init = 1;
-                    progressBar();
                     loadData();
 
                     table.rows().every(function() {
@@ -176,13 +175,11 @@
 
             let table = $('#dataTable').DataTable();
             loadData();
-            progressBar();
             var timerAux = setInterval(timerCycle, 6000);
 
             function timerCycle() {
                 if (autorefresh) {
                     loadData();
-                    progressBar();
                 }
             }
 
@@ -203,22 +200,6 @@
                 $('.newRow').fadeIn(1000, "linear");
             }
 
-            function progressBar() {
-                var timeleft = 5;
-                var downloadTimer = setInterval(function() {
-                    if (timeleft <= 0) {
-                        clearInterval(downloadTimer);
-                    }
-                    if (autorefresh == 0) {
-                        timeleft = 5;
-                        clearInterval(downloadTimer);
-                        document.getElementById("progressBar").value = 0;
-                    } else {
-                        document.getElementById("progressBar").value = 5 - timeleft;
-                    }
-                    timeleft -= 1;
-                }, 1000);
-            }
             var loaddatacall = 0;
             var olddate = '';
 
