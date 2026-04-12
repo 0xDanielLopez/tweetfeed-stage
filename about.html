@@ -155,6 +155,33 @@
 			</nav>
 			<!-- Top bar end -->
 			<div id="content">
+				<style>
+				.about-section { color: #555; font-size: 15px; font-family: 'Rubik', sans-serif; }
+				.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+				@media(max-width:768px) { .faq-grid { grid-template-columns: 1fr; } }
+				.faq-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.2rem 1.4rem; box-shadow: 0 2px 6px rgba(0,0,0,.04); }
+				.faq-card h4 { font-size: 1rem; font-weight: 700; margin: 0 0 0.6rem; color: #333; }
+				.faq-card h4 i { color: #1DA1F2; margin-right: 6px; font-size: 0.85rem; }
+				.faq-card p { margin: 0 0 0.5rem; line-height: 1.6; }
+				.faq-card p:last-child { margin-bottom: 0; }
+				.faq-card.wide { grid-column: 1 / -1; }
+				.section-heading { font-size: 1.3rem; font-weight: 700; color: #444; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px; }
+				.section-heading i { color: #1DA1F2; font-size: 1rem; }
+				.similar-list { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+				.similar-list li { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+				.similar-list li:last-child { border-bottom: none; }
+				.similar-list li a { font-weight: 600; color: #1DA1F2; text-decoration: none; }
+				.similar-list li a:hover { text-decoration: underline; }
+				.similar-list li span { color: #777; font-size: 0.9rem; }
+				.about-cta { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; }
+				.about-cta h3 { font-size: 1.4rem; font-weight: 700; margin: 0 0 0.5rem; }
+				.about-cta p { color: #94a3b8; margin: 0 0 1.2rem; }
+				.about-cta .cta-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; margin: 0 6px; transition: transform .15s; }
+				.about-cta .cta-btn.primary { background: #1DA1F2; color: #fff; }
+				.about-cta .cta-btn.primary:hover { background: #0d8bd9; transform: translateY(-2px); color: #fff; text-decoration: none; }
+				.about-cta .cta-btn.ghost { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.15); }
+				.about-cta .cta-btn.ghost:hover { background: rgba(255,255,255,.15); transform: translateY(-2px); color: #fff; text-decoration: none; }
+				</style>
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-question-circle" style="font-size: 36px;"></i> About</h1>
@@ -165,111 +192,113 @@
 					<p class="toph1"><i class="fas fa-question-circle" style="font-size: 36px;"></i> About</p>
 					<p style="font-size: 14px;"><em>TweetFeed</em></p>
 				</div>
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-				<p style="color: #737373; font-size: 16px; font-family: 'Rubik', sans-serif;">
-					Twitter / 𝕏 is a place where many <b>infosec researchers share Indicators of Compromise (IOCs)</b>, detections tips and other useful cybersec info.
-					<br>
-					<span style="display: block; margin-top: 15px;">With this idea in mind I created this website to <b>make more accessible</b> the data being shared.</span>
+				<hr style="border: 1px solid black;">
+				<p class="about-section">
+					A free, community-driven project that collects <b>Indicators of Compromise (IOCs)</b> shared by security researchers on Twitter/X and makes them accessible via feeds, API and search.
 				</p>
-				<br>
-				<h2 style="color: #737373;font-weight: 550;">FAQ</h2>
-				<ul style="color: #737373; font-size: 16px; font-family: 'Rubik', sans-serif;">
-					<li style="margin-bottom: 20px;"><b>How does TweetFeed work?</b>
-						<ul class="fa-ul">
-							<li><i class="fa-li fa fa-check"></i>TweetFeed searches Indicators of Compromise in tweets that contain <b>specific tags</b> or that are <b>posted by some infosec folks.</b></li>
-						</ul>
-					</li>
-					<li style="margin-bottom: 20px;"><b>Who is behind TweetFeed?</b>
-						<ul class="fa-ul">
-							<li><i class="fa-li fa fa-check"></i>I'm <a style="text-decoration:none;color:blue;" href="https://0xdaniellopez.github.io/CV/" target="_blank" rel="noopener noreferrer">Daniel López</a>. A <b>Security Engineer</b> with over 6 years of experience working in Security Operations Centers (SOC).</li>
-							<li><i class="fa-li fa fa-check"></i>Also -in my spare time- I enjoy coding, building projects and researching threats; and that's why I created TweetFeed.</li>
-							<li><i class="fa-li fa fa-check"></i>BUT, I only created this website. The valuable data (i.e. IOCs) is shared by <b>the whole infosec community.</b></li>
-						</ul>
-					</li>
-				</ul>
+				<!-- FAQ -->
+				<div class="faq-grid about-section">
+					<div class="faq-card">
+						<h4><i class="fas fa-chevron-right"></i> What are IOCs?</h4>
+						<p>Indicators of Compromise are artifacts (URLs, domains, IPs, file hashes) observed in connection with malicious activity. They help defenders detect and respond to threats.</p>
+					</div>
+					<div class="faq-card">
+						<h4><i class="fas fa-chevron-right"></i> How does TweetFeed work?</h4>
+						<p>TweetFeed monitors tweets containing specific tags or posted by known infosec researchers, extracts IOCs, and aggregates them into feeds updated every 15 minutes.</p>
+					</div>
+					<div class="faq-card wide">
+						<h4><i class="fas fa-chevron-right"></i> Who is behind TweetFeed?</h4>
+						<p>I'm <a href="https://0xdaniellopez.github.io/CV/" target="_blank" rel="noopener noreferrer" style="color:#1DA1F2;text-decoration:none;">Daniel López</a>, a Cyber Threat Researcher with over 10 years of experience in the cybersecurity field. I like researching and building projects, and that's why I created TweetFeed.</p>
+						<p>I only created this website. The valuable data is shared by <b>the whole infosec community</b>.</p>
+					</div>
+				</div>
+				<!-- Testimonials -->
+				<h2 class="section-heading"><i class="fab fa-twitter"></i> What people say</h2>
 				<div class="container" style="font-family: 'Rubik', sans-serif;">
 					<div class="grid-container">
-						<!-- Tweet 1 -->
 						<a href="https://twitter.com/fr0gger_/status/1747771695803621852" target="_blank" style="text-decoration: none; color: inherit;" rel="noopener noreferrer">
 							<div class="tweet-container text-center">
 								<div class="tweet-header">
 									<div class="tweet-avatar">
-										<img loading="lazy" src="https://pbs.twimg.com/profile_images/1508937439804796929/nG0gj8d8_400x400.jpg" alt="Avatar">
+										<img loading="lazy" src="pics/fr0gger_.png" alt="fr0gger_ avatar">
 									</div>
 									<div class="tweet-author">@fr0gger_</div>
 								</div>
 								<hr class="tweet-divider">
 								<div class="tweet-body">
-									Pretty cool TweetFeed is back and you can also use it with #OpenCTI 🤩
+									Pretty cool TweetFeed is back and you can also use it with #OpenCTI
 									<br><br>
-									Amazing work by @0xDanielLopez 🔥
+									Amazing work by @0xDanielLopez
 								</div>
 							</div>
 						</a>
-						<!-- Tweet 2 -->
 						<a href="https://x.com/1ZRR4H/status/1435222202861903872" target="_blank" style="text-decoration: none; color: inherit;" rel="noopener noreferrer">
 							<div class="tweet-container text-center">
 								<div class="tweet-header">
 									<div class="tweet-avatar">
-										<img loading="lazy" src="https://pbs.twimg.com/profile_images/1142488768517156864/Ab9ueob-_400x400.png" alt="Avatar">
+										<img loading="lazy" src="pics/1ZRR4H.png" alt="1ZRR4H avatar">
 									</div>
 									<div class="tweet-author">@1ZRR4H</div>
 								</div>
 								<hr class="tweet-divider">
 								<div class="tweet-body">
-									Muy bueno Daniel 🔥🔥
+									Muy bueno Daniel
 									<br><br>
 									Se valora mucho tu trabajo!!
 								</div>
 							</div>
 						</a>
-						<!-- Tweet 3 -->
 						<a href="https://twitter.com/BushidoToken/status/1435219362487603204" target="_blank" style="text-decoration: none; color: inherit;" rel="noopener noreferrer">
 							<div class="tweet-container text-center">
 								<div class="tweet-header">
 									<div class="tweet-avatar">
-										<img loading="lazy" src="https://pbs.twimg.com/profile_images/1492641334112497665/lFZL9kyQ_400x400.jpg" alt="Avatar">
+										<img loading="lazy" src="pics/BushidoToken.png" alt="BushidoToken avatar">
 									</div>
 									<div class="tweet-author">@BushidoToken</div>
 								</div>
 								<hr class="tweet-divider">
 								<div class="tweet-body">
-									Nice one 👏
+									Nice one
 								</div>
 							</div>
 						</a>
-						<!-- Tweet 4 -->
 						<a href="https://twitter.com/Lucifer_UD/status/1655743447645708289" target="_blank" style="text-decoration: none; color: inherit;" rel="noopener noreferrer">
 							<div class="tweet-container text-center">
 								<div class="tweet-header">
 									<div class="tweet-avatar">
-										<img loading="lazy" src="https://pbs.twimg.com/profile_images/1475373953308717059/glzA4WzV_400x400.jpg" alt="Avatar">
+										<img loading="lazy" src="pics/Lucifer_UD.png" alt="Lucifer_UD avatar">
 									</div>
 									<div class="tweet-author">@Lucifer_UD</div>
 								</div>
 								<hr class="tweet-divider">
 								<div class="tweet-body">
-									very amazing tools！just the nice function that I want
+									very amazing tools! just the nice function that I want
 								</div>
 							</div>
 						</a>
 					</div>
 				</div>
-				<br>
+				<!-- Similar services -->
+				<h2 class="section-heading"><i class="fas fa-star"></i> Similar services</h2>
+				<ul class="similar-list about-section">
+					<li><a href="https://threatfox.abuse.ch/" target="_blank" rel="noopener noreferrer">ThreatFox</a> - <span>IOC sharing platform from abuse.ch</span></li>
+					<li><a href="https://urlhaus.abuse.ch/" target="_blank" rel="noopener noreferrer">URLhaus</a> - <span>Malicious URL sharing from abuse.ch</span></li>
+					<li><a href="https://urlscan.io/" target="_blank" rel="noopener noreferrer">urlscan.io</a> - <span>Website scanner and sandbox</span></li>
+					<li><a href="https://phishunt.io/" target="_blank" rel="noopener noreferrer">phishunt.io</a> - <span>Real-time phishing detection</span></li>
+				</ul>
+				<!-- CTA -->
+				<div class="about-cta">
+					<h3>Get the data</h3>
+					<p>All IOC data is free and open. Use it in your threat hunting, blocklists, or SIEM.</p>
+					<a href="api.html" class="cta-btn primary"><i class="fas fa-code"></i> API Docs</a>
+					<a href="feeds.html" class="cta-btn ghost"><i class="fas fa-download"></i> Download Feeds</a>
+				</div>
+				<!-- Disclaimer -->
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 13px;font-family: 'Rubik', sans-serif;">
 					<p>Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.</p>
 					<p>Also please note that all the data is collected from Twitter and sorted/served here as it is on best effort.</p>
-					<p>Anyway feel free to <a target="_blank" href="https://x.com/0xDanielLopez" style="color: #0000EE;" rel="noopener noreferrer">reach me out</a> regarding any False Positive or to provide any kind of comment. Feedback is always highly appreciated.</p>
+					<p>Feel free to <a target="_blank" href="https://x.com/0xDanielLopez" style="color: #555;" rel="noopener noreferrer">reach out</a> regarding any False Positive or to provide feedback.</p>
 				</div>
-				<!-- Happy to see you here, drafts testing what fits better
-				<hr style="border: 1px solid black;" id="similarSites">
-				<h2 style="color: #737373;font-weight: 550;">Similar sites</h2>
-				<ul style="font-size: 16px;">
-					<li><a target="_blank" href="https://threatfox.abuse.ch/" style="color: #0000EE;" rel="noopener noreferrer">ThreatFox</a> - from abuse.ch</li>
-					<li><a target="_blank" href="https://urlscan.io/products/phishingfeed/" style="color: #0000EE;" rel="noopener noreferrer">Phishing URL Feed</a> - from urlscan.io</li>
-					<li><a target="_blank" href="https://phishunt.io/feed.txt" style="color: #0000EE;" rel="noopener noreferrer">Phishing feed</a> - from phishunt.io</li>
-				</ul>
-				-->
 			</div>
 			<!-- End of Main Content -->
 			<!-- Footer -->

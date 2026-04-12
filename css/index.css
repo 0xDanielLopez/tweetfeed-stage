@@ -266,7 +266,11 @@ body {
 }
 /* =========== END Tweets ======== */
 
-/* phishunt.io cross-link accent — teal, distinct from TweetFeed's Twitter blue */
-#phishunt-link .nav-link { color: #0e7490 !important; font-weight: 600; }
-#phishunt-link .nav-link:hover { color: #155e75 !important; }
+/* phishunt.io cross-link — white like other nav links, subtle emphasis */
+#phishunt-link .nav-link { color: rgba(255,255,255,.85) !important; }
+#phishunt-link .nav-link:hover { color: #fff !important; }
+
+/* Footer link colors — muted, not distracting */
+footer a.text-decoration-none { color: #555 !important; }
+footer a.text-decoration-none:hover { color: #1DA1F2 !important; text-decoration: underline !important; }
 
