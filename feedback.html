@@ -8,11 +8,11 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Provide feedback about TweetFeed">
+	<meta name="description" content="Share feedback, report bugs, and suggest features for TweetFeed IOC feeds.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="feedback,tweetfeed">
 	<link rel="canonical" href="https://tweetfeed.live/feedback.html">
-	<title>Feedback - TweetFeed</title>
+	<title>Feedback and Feature Requests - TweetFeed</title>
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:title" content="Feeds with IOCs shared by infosec community - TweetFeed.live">
@@ -253,6 +253,8 @@
 	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- Export -->
 	<script src="js/demo/datatables-demo.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/utils.js"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	$(function() {
@@ -270,7 +272,6 @@
 				autorefresh = 1;
 				$(this).text('Disable Auto Refresh');
 				init = 1;
-				progressBar();
 				loadData();
 
 				table.rows().every(function() {
@@ -284,13 +285,11 @@
 
 		let table = $('#dataTable').DataTable();
 		loadData();
-		progressBar();
 		var timerAux = setInterval(timerCycle, 6000);
 
 		function timerCycle() {
 			if (autorefresh) {
 				loadData();
-				progressBar();
 			}
 		}
 
@@ -311,22 +310,6 @@
 			$('.newRow').fadeIn(1000, "linear");
 		}
 
-		function progressBar() {
-			var timeleft = 5;
-			var downloadTimer = setInterval(function() {
-				if (timeleft <= 0) {
-					clearInterval(downloadTimer);
-				}
-				if (autorefresh == 0) {
-					timeleft = 5;
-					clearInterval(downloadTimer);
-					document.getElementById("progressBar").value = 0;
-				} else {
-					document.getElementById("progressBar").value = 5 - timeleft;
-				}
-				timeleft -= 1;
-			}, 1000);
-		}
 		var loaddatacall = 0;
 		var olddate = '';
 
@@ -337,17 +320,18 @@
 			$.ajax({
 				type: 'GET',
 				context: document.body,
-				url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv',
+				url: TweetFeed.dataUrl('today.csv'),
 				success: function(response) {
 					var data = csvJSON(response);
-					var last_date = data.at(-1)[0];
-					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy (HH:mm:ss) UTC");
+					if (!data || data.length === 0) return;
+					var last_date = data[data.length - 1][0];
+					var date1 = formatDateLong(last_date);
 
 					$("#lastDate").text("Last update: " + date1);
 
 					if (loaddatacall > 0) {
 
-						for (var i = data.length - 20; i < data.length; i++) {
+						for (var i = Math.max(0, data.length - 20); i < data.length; i++) {
 							if (olddate < data[i][0]) {
 								console.log('old:' + olddate + '------- New:' + data[i][0]);
 								var type = data[i][2];
@@ -488,62 +472,8 @@
 			let p_md5 = type['md5'];
 		}
 
-		function csvJSON(csv) {
-
-			var lines = csv.split("\n");
-			var result = [];
-			//for (var i = lines.length - 1; i >= 0; i--) {
-			for (var i = 0; i < lines.length; i++) {
-				var obj = [];
-				var currentline = lines[i].split(",");
-				if (currentline.length > 1) {
-					for (var j = 0; j < currentline.length; j++) {
-						obj.push(currentline[j]);
-					}
-					result.push(obj);
-				}
-
-			}
-			return result;
-		}
 	})
 	</script>
-	<script>
-	function downloadCSV(csv, filename) {
-		var csvFile;
-		var downloadLink;
-		// CSV file
-		csvFile = new Blob([csv], { type: "text/csv" });
-		// Download link
-		downloadLink = document.createElement("a");
-		// File name
-		downloadLink.download = filename;
-		// Create a link to the file
-		downloadLink.href = window.URL.createObjectURL(csvFile);
-		// Hide download link
-		downloadLink.style.display = "none";
-		// Add the link to DOM
-		document.body.appendChild(downloadLink);
-		// Click download link
-		downloadLink.click();
-	}
-
-	function exportTableToCSV(filename) {
-		var csv = [];
-		var rows = document.querySelectorAll("table tr");
-		for (var i = 2; i < rows.length; i++) {
-			var row = [],
-				cols = rows[i].querySelectorAll("td, th");
-			for (var j = 0; j < cols.length; j++)
-				row.push(cols[j].innerText);
-			csv.push(row.join(","));
-		}
-
-		// Download CSV file
-		downloadCSV(csv.join("\n"), filename);
-	}
-	</script>
-	<script src="js/date.js"></script>
 	<script>
 	$(".nav a").on("click", function() {
 		$(".nav").find(".active").removeClass("active");
