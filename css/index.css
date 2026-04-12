@@ -266,9 +266,9 @@ body {
 }
 /* =========== END Tweets ======== */
 
-/* phishunt.io cross-link — pill badge to stand out as external project */
-#phishunt-link .nav-link { color: #fff !important; background: rgba(0,0,0,.15); border-radius: 6px; padding: 4px 12px !important; }
-#phishunt-link .nav-link:hover { background: rgba(0,0,0,.25); }
+/* phishunt.io cross-link — branded pill using phishunt's dark navy */
+#phishunt-link .nav-link { color: #cbd5e1 !important; background: #0f172a; border-radius: 6px; padding: 4px 12px !important; }
+#phishunt-link .nav-link:hover { color: #fff !important; background: #1e293b; }
 
 /* Footer link colors — muted, not distracting */
 footer a.text-decoration-none { color: #555 !important; }
