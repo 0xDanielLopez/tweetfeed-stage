@@ -1,3 +1,2 @@
 User-agent: *
-
-Sitemap: https://tweetfeed.live/sitemap.xml
+Disallow: /
