@@ -14,7 +14,7 @@
     <link rel="canonical" href="https://tweetfeed.live/404.html">
     <title>Error 404 - TweetFeed</title>
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <!-- Custom styles for this page -->
@@ -23,47 +23,9 @@
     <link href="css/table.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/tooltip.css" rel="stylesheet">
+	<link href="css/tweetfeed.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <style>
-        .url{
-                background-color: #c8f6fd; 
-            }
-            .domain{
-                background-color: #a0dde6;  /* #34e3a4 */
-            }
-            .ip{
-                background-color: #34e3a4; 
-            }            
-            .sha256{
-                background-color: #EAC56E; 
-            }
-            .md5{
-                background-color: #ead18f; /* #ead18f */
-            }
-            @-webkit-keyframes highlight {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            @-moz-keyframes highlight {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            @-o-keyframes highlight {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            @keyframes highlight {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            .highlight td{
-                -webkit-animation: fadein 2s; /* Safari 4+ */
-                -moz-animation:    fadein 2s; /* Fx 5+ */
-                -o-animation:      fadein 2s; /* Opera 12+ */
-                animation:         fadein 2s; /* IE 10+ */
-            }
-        </style>
 </head>
 
 <body id="page-top">
@@ -171,6 +133,7 @@
         <!-- Logout Modal-->
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="js/config.js"></script>
   <script src="js/utils.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Core plugin JavaScript-->
@@ -266,11 +229,11 @@
                 $.ajax({
                     type: 'GET',
                     context: document.body,
-                    url: 'https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/today.csv',
+                    url: TweetFeed.dataUrl('today.csv'),
                     success: function(response) {
                         var data = csvJSON(response);
-                        var last_date = data.at(-1)[0];
-                        var date1 = Date.parse(last_date).toString("MMMM dS, yyyy (HH:mm:ss) UTC");
+                        var last_date = data[data.length - 1][0];
+                        var date1 = formatDateLong(last_date, true);
 
                         $("#lastDate").text("Last update: " + date1);
 
@@ -282,13 +245,13 @@
                                     var type = data[i][2];
 
                                     var user = data[i][1];
-                                    data[i][1] = '<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '" rel="noopener noreferrer">' + user + '</a>'
+                                    data[i][1] = '<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + escapeHtml(user) + '" rel="noopener noreferrer">' + escapeHtml(user) + '</a>'
 
                                     var value = data[i][3];
                                     // data[i][3] = '<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer">' + value + '</a>'
 
                                     var tweet_url = data[i][5];
-                                    data[i][5] = '<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
+                                    data[i][5] = '<a style="text-decoration: none;" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
 
                                     // Add VT
 
@@ -343,13 +306,13 @@
                                 $(this.node()).toggleClass(col);
 
                                 var user = $(this.node()).find('td').eq(1).text().trim();
-                                $(this.node()).find('td').eq(1).html('<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '" rel="noopener noreferrer">' + user + '</a>');
+                                $(this.node()).find('td').eq(1).html('<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + escapeHtml(user) + '" rel="noopener noreferrer">' + escapeHtml(user) + '</a>');
 
                                 var value = $(this.node()).find('td').eq(3).text().trim();
                                 // $(this.node()).find('td').eq(3).html('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer">' + value + '</a>');
 
                                 var tweet_url = $(this.node()).find('td').eq(5).text().trim();
-                                $(this.node()).find('td').eq(5).html('<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"></a>');
+                                $(this.node()).find('td').eq(5).html('<a style="text-decoration: none;" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"></a>');
 
                             })
                             animationNew();
@@ -360,8 +323,6 @@
                     },
                     cache: false
                 });
-                //                                                        $.get('https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/today.csv', function (response) {
-                //                                                        })
                 init = 0;
                 loaddatacall++;
             }
@@ -410,36 +371,9 @@
                     '</div>'
                 $(className).html(myvar);
 
-                let p_url = type['url'];
-                let p_domain = type['domain'];
-                let p_ip = type['ip'];
-                let p_sha256 = type['sha256'];
-                let p_md5 = type['md5'];
-            }
-
-            function csvJSON(csv) {
-
-                var lines = csv.split("\n");
-                var result = [];
-                //for (var i = lines.length - 1; i >= 0; i--) {
-                for (var i = 0; i < lines.length; i++) {
-                    var obj = [];
-                    var currentline = lines[i].split(",");
-                    if (currentline.length > 1) {
-                        for (var j = 0; j < currentline.length; j++) {
-                            obj.push(currentline[j]);
-                        }
-                        result.push(obj);
-                    }
-
-                }
-                return result;
             }
         })
         </script>
-        <script>
-        </script>
-        <script type="text/javascript" src="js/date.js"></script>
         <script>
         $(".nav a").on("click", function() {
             $(".nav").find(".active").removeClass("active");

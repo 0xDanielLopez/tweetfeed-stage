@@ -188,6 +188,26 @@
     return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
+  // Replaces date.js Date.parse().toString("MMMM dS, yyyy HH:mm:ss UTC")
+  var _months = ['January','February','March','April','May','June',
+                 'July','August','September','October','November','December'];
+  function _ordinal(d) {
+    if (d === 1 || d === 21 || d === 31) return 'st';
+    if (d === 2 || d === 22) return 'nd';
+    if (d === 3 || d === 23) return 'rd';
+    return 'th';
+  }
+  function formatDateLong(dateStr, parenTime) {
+    var d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    var day = d.getUTCDate();
+    var time = addZero(d.getUTCHours()) + ':' + addZero(d.getUTCMinutes()) + ':' + addZero(d.getUTCSeconds());
+    if (parenTime) {
+      return _months[d.getUTCMonth()] + ' ' + day + _ordinal(day) + ', ' + d.getUTCFullYear() + ' (' + time + ') UTC';
+    }
+    return _months[d.getUTCMonth()] + ' ' + day + _ordinal(day) + ', ' + d.getUTCFullYear() + ' ' + time + ' UTC';
+  }
+
   // ─── AJAX wrapper with error handling ──────────────────────────────────────
   // Shows user-friendly error in the provided element on failure.
   function safeGet(url, options) {
@@ -293,6 +313,7 @@
     addZero: addZero,
     numberFormat: numberFormat,
     number_format: numberFormat,  // legacy alias (snake_case)
+    formatDateLong: formatDateLong,
     safeGet: safeGet,
     destroyDataTableIfExists: destroyDataTableIfExists,
     trackInterval: trackInterval,
@@ -308,6 +329,7 @@
   window.copyClipboard = function(text) { copyToClipboard(text, null); };
   window.addZero = addZero;
   window.number_format = numberFormat;
+  window.formatDateLong = formatDateLong;
 
   // Legacy downloadCSV(csvString, filename) — matches the inline signature
   // used by 9 pages before dedupe. Writes a pre-joined CSV string as a Blob.

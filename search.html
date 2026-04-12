@@ -35,7 +35,7 @@
 	<link rel="preconnect" href="//fonts.googleapis.com">
 	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<!-- Custom styles for this template -->
 	<link href="css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom styles for this page -->
@@ -44,47 +44,9 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
+	<link href="css/tweetfeed.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-	<style>
-		.url{
-            background-color: #c8f6fd; 
-        }
-        .domain{
-            background-color: #a0dde6;  /* #34e3a4 */
-        }
-        .ip{
-            background-color: #34e3a4; 
-        }            
-        .sha256{
-            background-color: #ffc591; /*Red:  #EAC56E*/
-        }
-        .md5{
-            background-color: #FFCC99; /* #ead18f */
-        }
-        @-webkit-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @-moz-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @-o-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .highlight td{
-            -webkit-animation: fadein 2s; /* Safari 4+ */
-            -moz-animation:    fadein 2s; /* Fx 5+ */
-            -o-animation:      fadein 2s; /* Opera 12+ */
-            animation:         fadein 2s; /* IE 10+ */
-        }
-    </style>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -148,7 +110,7 @@
 							<a class="nav-link" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search</a>
+							<a class="nav-link active" href="search.html"><i class="fas fa-search"></i> Search</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -448,7 +410,6 @@
 				autorefresh = 1;
 				$(this).text('Disable Auto Refresh');
 				init = 1;
-				progressBar();
 				loadData();
 
 				table.rows().every(function() {
@@ -462,49 +423,24 @@
 
 		let table = $('#dataTableFull').DataTable();
 		loadData();
-		progressBar();
 		var timerAux = setInterval(timerCycle, 6000);
 
 		function timerCycle() {
 			if (autorefresh) {
 				loadData();
-				progressBar();
 			}
 		}
 
 		function animation() {
-			//$('.today', '.col').animate({
-			//    opacity: 'toggle'
-			//});
-
 			$('.today', '.col').hide();
 			$('.today', '.col').fadeIn(1000, "linear");
 		}
 
 		function animationNew() {
-			//$('.newRow').animate({
-			//    opacity: 'toggle'
-			//}, "linear");
 			$('.newRow').hide();
 			$('.newRow').fadeIn(1000, "linear");
 		}
 
-		function progressBar() {
-			var timeleft = 5;
-			var downloadTimer = setInterval(function() {
-				if (timeleft <= 0) {
-					clearInterval(downloadTimer);
-				}
-				if (autorefresh == 0) {
-					timeleft = 5;
-					clearInterval(downloadTimer);
-					document.getElementById("progressBar").value = 0;
-				} else {
-					document.getElementById("progressBar").value = 5 - timeleft;
-				}
-				timeleft -= 1;
-			}, 1000);
-		}
 		var loaddatacall = 0;
 		var olddate = '';
 
@@ -515,13 +451,14 @@
 			$.ajax({
 				type: 'GET',
 				context: document.body,
-				url: 'https://raw.githubusercontent.com/0xDanielLopez/tweetfeed-data-stage/master/week.csv',
+				url: TweetFeed.dataUrl('week.csv'),
 				success: function(response) {
 					var data = csvJSON(response);
-					var last_date = data.at(-1)[0];
-					var first_date = data.at(1)[0];
-					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+					if (data.length < 2) return;
+					var last_date = data[data.length - 1][0];
+					var first_date = data[1][0];
+					var date1 = formatDateLong(last_date);
+					var date2 = formatDateLong(first_date);
 					$(".lastDateWeekFrom").fadeOut(function() {
 						$(this).text("From: " + date2).fadeIn(2000);
 					});
@@ -534,16 +471,14 @@
 
 					if (loaddatacall > 0) {
 
-						for (var i = data.length - 20; i < data.length; i++) {
+						for (var i = Math.max(0, data.length - 20); i < data.length; i++) {
 							if (olddate < data[i][0]) {
-								//console.log('old:' + olddate + '------- New:' + data[i][0]);
 								var type = data[i][2];
 
 								var user = data[i][1];
-								var pic = new Image();
-								pic.src = 'pics/' + user + '.png';
+								var picSrc = 'pics/' + user + '.png';
 
-								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + pic.src + '" alt="">&nbsp;' + user + '</a>';
+								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
 
 								var value = data[i][3];
 
@@ -551,18 +486,9 @@
 								data[i][3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" title="Copy"></i> ' + escapeHtml(value) + '</span>';
 
 								var tweet_url = data[i][5];
-								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
-
-								// Add VT
-								//if (value.startsWith("http://")) {
-								//	value = value.replace("http://", "");
-								//} else if (value.startsWith("https://")) {
-								//	value = value.replace("https://", "");
-								//}
-								//value = value.split("/")[0]
+								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
 
 								if (type == "url") {
-									value = encodeURIComponent(value);
 									value = encodeURIComponent(value);
 								}
 
@@ -608,7 +534,6 @@
 
 							if (type == "url") {
 								value = encodeURIComponent(value);
-								value = encodeURIComponent(value);
 							}
 
 							data[i].push('<a class="twitterLink" style="text-decoration: none;color:#394eff;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal"></img> <i class="fas fa-external-link-alt"></i></a>');
@@ -624,10 +549,9 @@
 
 							var user = $(this.node()).find('td').eq(1).text().trim();
 
-							var pic = new Image();
-							pic.src = 'pics/' + user + '.png';
+							var picSrc = 'pics/' + user + '.png';
 
-							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + pic.src + '" alt="">&nbsp;' + user + '</a>');
+							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
 
 							var value = $(this.node()).find('td').eq(3).text().trim();
 							var type = $(this.node()).find('td').eq(2).text().trim();
@@ -636,7 +560,7 @@
 							$(this.node()).find('td').eq(3).html('<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" title="Copy"></i> ' + escapeHtml(value) + '</span>')
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
-							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
+							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
 
 							// For Mobile
 							// Only show: User (1), Value (3) and Twitter (5)
@@ -654,10 +578,13 @@
 					countTypes('.today', data);
 					loaddatacall++;
 				},
+				error: function(xhr, status, err) {
+					console.error('[TweetFeed] loadData failed:', status, err);
+					$("#loadingWeek").html('<p class="text-danger" style="padding:1em;">Could not load data from GitHub. Retrying next cycle...</p>');
+				},
 				cache: false
 			});
 			init = 0;
-			loaddatacall++;
 		}
 
 		function countTypes(className, jsonArr) {
@@ -685,53 +612,10 @@
 
 			$("#loadingWeek").hide();
 
-			let p_url = type['url'];
-			let p_domain = type['domain'];
-			let p_ip = type['ip'];
-			let p_sha256 = type['sha256'];
-			let p_md5 = type['md5'];
-		}
-
-		function csvJSON(csv) {
-
-			var lines = csv.split("\n");
-			var result = [];
-			//for (var i = lines.length - 1; i >= 0; i--) {
-			for (var i = 0; i < lines.length; i++) {
-				var obj = [];
-				var currentline = lines[i].split(",");
-				if (currentline.length > 1) {
-					for (var j = 0; j < currentline.length; j++) {
-						obj.push(currentline[j]);
-					}
-					result.push(obj);
-				}
-
-			}
-			return result;
 		}
 	})
 	</script>
 	<script>
-	function downloadCSV(csv, filename) {
-		var csvFile;
-		var downloadLink;
-		// CSV file
-		csvFile = new Blob([csv], { type: "text/csv" });
-		// Download link
-		downloadLink = document.createElement("a");
-		// File name
-		downloadLink.download = filename;
-		// Create a link to the file
-		downloadLink.href = window.URL.createObjectURL(csvFile);
-		// Hide download link
-		downloadLink.style.display = "none";
-		// Add the link to DOM
-		document.body.appendChild(downloadLink);
-		// Click download link
-		downloadLink.click();
-	}
-
 	function exportTableToCSV(filename) {
 		var csv = [];
 		var rows = document.querySelectorAll("table tr");
@@ -749,7 +633,6 @@
 
 		// Download CSV file
 		var dateNowUTC = new Date(Date.now());
-		//dateNowUTC = dateNowUTC.toString("YYYYMMDD_HH:mm:ss");
 		let d = new Date(Date.now());
 		let day = d.getDate();
 		let month = (d.getMonth() + 1);
@@ -780,7 +663,6 @@
 
 		// Download CSV file
 		var dateNowUTC = new Date(Date.now());
-		//dateNowUTC = dateNowUTC.toString("YYYYMMDD_HH:mm:ss");
 		let d = new Date(Date.now());
 		let day = d.getDate();
 		let month = (d.getMonth() + 1);
@@ -798,12 +680,7 @@
 		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
 	}
 
-	function addZero(i) {
-		if (i < 10) { i = "0" + i }
-		return i;
-	}
 	</script>
-	<script src="js/date.js"></script>
 	<script>
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
