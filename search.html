@@ -431,8 +431,6 @@
 		let autorefresh = 0;
 		let init = 1;
 		let flag_new = 0;
-		let table;
-		var timerAux;
 		$('#customSwitch1').click(function() {
 			if (autorefresh) {
 				// Disabled
@@ -444,7 +442,6 @@
 				autorefresh = 1;
 				$(this).text('Disable Auto Refresh');
 				init = 1;
-				if (!table) return;       // table still lazy-pending; ignore until ready
 				loadData();
 
 				table.rows().every(function() {
@@ -457,11 +454,15 @@
 			}
 		})
 
-		// Defer the expensive DataTable() init + first CSV fetch until the
-		// table nears the viewport. Baseline PSI mobile TBT was 5.1s with
-		// the synchronous init blocking the main thread.
-		TweetFeed.lazyInViewport('dataTableFull', function() {
-			table = $('#dataTableFull').DataTable();
+		let table = $('#dataTableFull').DataTable();
+		var timerAux;
+		// Defer initial CSV fetch to window.load so the DataTable skeleton
+		// paints before the week.csv fetch+parse. PSI mobile baseline
+		// LCP 4.2s, TBT 1920ms.
+		// NOTE: do NOT lazy-init the DataTable() itself — verified 2026-04-26
+		// that lazy-on-viewport regresses CLS to 0.533 (DataTables wrapper
+		// injection shifts layout post-paint), net perf -0.18.
+		$(window).on('load', function() {
 			loadData();
 			timerAux = setInterval(timerCycle, 6000);
 			TweetFeed.trackInterval(timerAux);

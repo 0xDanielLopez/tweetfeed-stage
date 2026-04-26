@@ -391,36 +391,37 @@
 	<!-- Page level custom scripts -->
 	<script src="vendor/chart.js/Chart.min.js"></script>
 	<script>
-	// DataTables init + CSV fetch deferred via TweetFeed.lazyInViewport so each
-	// of the 3 pane tables (today/week/month) only loads when the user reaches
-	// or activates its tab. Baseline PSI mobile LCP was 6.7s with all 3 inits
-	// running synchronously at script-load time.
-	let tableUsersToday, tableUsersWeek, tableUsersMonth;
+	// 'today' table inits synchronously (default-active tab, in initial
+	// viewport) — lazy-init here regressed CLS to 0.317 because the
+	// DataTables wrapper injects after paint and shifts layout.
+	// 'week' and 'month' live on inactive Bootstrap pills (display:none
+	// at load), so IntersectionObserver never fires until the user
+	// clicks the tab, deferring 2 CSV fetches + 2 DataTable inits without
+	// any CLS impact on the initial paint.
+	let tableUsersToday = $('#dataTableUsersToday').DataTable();
+	let tableUsersWeek, tableUsersMonth;
 
 	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 	Chart.defaults.global.defaultFontColor = '#858796';
 	$(function() {
-		TweetFeed.lazyInViewport('dataTableUsersToday', function() {
-			tableUsersToday = $('#dataTableUsersToday').DataTable();
-			$.get(TweetFeed.dataUrl('today.csv'), function(response) {
-				let data = csvJSON(response);
-				var last_date = data[data.length - 1][0];
-				var first_date = data[1][0];
-				var date1 = formatDateLong(last_date);
-				var date2 = formatDateLong(first_date);
-				$(".lastDateTodayFrom").fadeOut(function() {
-					$(this).text("From: " + date2).fadeIn(2000);
-				});
-				$(".lastDateTodayTo").fadeOut(function() {
-					$(this).text("To: " + date1).fadeIn(2000);
-				});
+		$.get(TweetFeed.dataUrl('today.csv'), function(response) {
+			let data = csvJSON(response);
+			var last_date = data[data.length - 1][0];
+			var first_date = data[1][0];
+			var date1 = formatDateLong(last_date);
+			var date2 = formatDateLong(first_date);
+			$(".lastDateTodayFrom").fadeOut(function() {
+				$(this).text("From: " + date2).fadeIn(2000);
+			});
+			$(".lastDateTodayTo").fadeOut(function() {
+				$(this).text("To: " + date1).fadeIn(2000);
+			});
 
-				$("#lastDateToday").show();
-				$("#loadingToday").hide();
+			$("#lastDateToday").show();
+			$("#loadingToday").hide();
 
-				countUsers(tableUsersToday, data);
-			})
-		});
+			countUsers(tableUsersToday, data);
+		})
 
 		TweetFeed.lazyInViewport('dataTableUsersWeek', function() {
 			tableUsersWeek = $('#dataTableUsersWeek').DataTable();
