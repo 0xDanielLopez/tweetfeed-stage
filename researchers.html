@@ -391,79 +391,80 @@
 	<!-- Page level custom scripts -->
 	<script src="vendor/chart.js/Chart.min.js"></script>
 	<script>
-	let tableUsersToday = $('#dataTableUsersToday').DataTable();
-	let tableUsersWeek = $('#dataTableUsersWeek').DataTable();
-	let tableUsersMonth = $('#dataTableUsersMonth').DataTable();
-	//let tableUsersYear = $('#dataTableUsersYear').DataTable();
+	// DataTables init + CSV fetch deferred via TweetFeed.lazyInViewport so each
+	// of the 3 pane tables (today/week/month) only loads when the user reaches
+	// or activates its tab. Baseline PSI mobile LCP was 6.7s with all 3 inits
+	// running synchronously at script-load time.
+	let tableUsersToday, tableUsersWeek, tableUsersMonth;
 
 	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 	Chart.defaults.global.defaultFontColor = '#858796';
 	$(function() {
-		$.get(TweetFeed.dataUrl('today.csv'), function(response) {
-			let data = csvJSON(response);
-			var last_date = data[data.length - 1][0];
-			var first_date = data[1][0];
-			var date1 = formatDateLong(last_date);
-			var date2 = formatDateLong(first_date);
-			$(".lastDateTodayFrom").fadeOut(function() {
-				$(this).text("From: " + date2).fadeIn(2000);
-			});
-			$(".lastDateTodayTo").fadeOut(function() {
-				$(this).text("To: " + date1).fadeIn(2000);
-			});
+		TweetFeed.lazyInViewport('dataTableUsersToday', function() {
+			tableUsersToday = $('#dataTableUsersToday').DataTable();
+			$.get(TweetFeed.dataUrl('today.csv'), function(response) {
+				let data = csvJSON(response);
+				var last_date = data[data.length - 1][0];
+				var first_date = data[1][0];
+				var date1 = formatDateLong(last_date);
+				var date2 = formatDateLong(first_date);
+				$(".lastDateTodayFrom").fadeOut(function() {
+					$(this).text("From: " + date2).fadeIn(2000);
+				});
+				$(".lastDateTodayTo").fadeOut(function() {
+					$(this).text("To: " + date1).fadeIn(2000);
+				});
 
-			$("#lastDateToday").show();
-			$("#loadingToday").hide();
+				$("#lastDateToday").show();
+				$("#loadingToday").hide();
 
-			//$(".lastDateTodayFrom").text("From: " + date2);
-			//$(".lastDateTodayTo").text("To: " + date1);
+				countUsers(tableUsersToday, data);
+			})
+		});
 
-			countUsers(tableUsersToday, data);
-		})
-		$.get(TweetFeed.dataUrl('week.csv'), function(response) {
-			let data = csvJSON(response);
-			var last_date = data[data.length - 1][0];
-			var first_date = data[1][0];
-			var date1 = formatDateLong(last_date);
-			var date2 = formatDateLong(first_date);
-			$(".lastDateWeekFrom").fadeOut(function() {
-				$(this).text("From: " + date2).fadeIn(2000);
-			});
-			$(".lastDateWeekTo").fadeOut(function() {
-				$(this).text("To: " + date1).fadeIn(2000);
-			});
+		TweetFeed.lazyInViewport('dataTableUsersWeek', function() {
+			tableUsersWeek = $('#dataTableUsersWeek').DataTable();
+			$.get(TweetFeed.dataUrl('week.csv'), function(response) {
+				let data = csvJSON(response);
+				var last_date = data[data.length - 1][0];
+				var first_date = data[1][0];
+				var date1 = formatDateLong(last_date);
+				var date2 = formatDateLong(first_date);
+				$(".lastDateWeekFrom").fadeOut(function() {
+					$(this).text("From: " + date2).fadeIn(2000);
+				});
+				$(".lastDateWeekTo").fadeOut(function() {
+					$(this).text("To: " + date1).fadeIn(2000);
+				});
 
-			$("#lastDateWeek").show();
-			$("#loadingWeek").hide();
+				$("#lastDateWeek").show();
+				$("#loadingWeek").hide();
 
-			//$(".lastDateWeekFrom").text("From: " + date2);
-			//$(".lastDateWeekTo").text("To: " + date1);
+				countUsers(tableUsersWeek, data);
+			})
+		});
 
-			countUsers(tableUsersWeek, data);
+		TweetFeed.lazyInViewport('dataTableUsersMonth', function() {
+			tableUsersMonth = $('#dataTableUsersMonth').DataTable();
+			$.get(TweetFeed.dataUrl('month.csv'), function(response) {
+				let data = csvJSON(response);
+				var last_date = data[data.length - 1][0];
+				var first_date = data[1][0];
+				var date1 = formatDateLong(last_date);
+				var date2 = formatDateLong(first_date);
+				$(".lastDateMonthFrom").fadeOut(function() {
+					$(this).text("From: " + date2).fadeIn(2000);
+				});
+				$(".lastDateMonthTo").fadeOut(function() {
+					$(this).text("To: " + date1).fadeIn(2000);
+				});
 
-		})
-		$.get(TweetFeed.dataUrl('month.csv'), function(response) {
-			let data = csvJSON(response);
-			var last_date = data[data.length - 1][0];
-			var first_date = data[1][0];
-			var date1 = formatDateLong(last_date);
-			var date2 = formatDateLong(first_date);
-			$(".lastDateMonthFrom").fadeOut(function() {
-				$(this).text("From: " + date2).fadeIn(2000);
-			});
-			$(".lastDateMonthTo").fadeOut(function() {
-				$(this).text("To: " + date1).fadeIn(2000);
-			});
+				$("#lastDateMonth").show();
+				$("#loadingMonth").hide();
 
-			$("#lastDateMonth").show();
-			$("#loadingMonth").hide();
-
-			//$(".lastDateMonthFrom").text("From: " + date2);
-			//$(".lastDateMonthTo").text("To: " + date1);
-
-			countUsers(tableUsersMonth, data);
-
-		})
+				countUsers(tableUsersMonth, data);
+			})
+		});
 		/*
 		$.get(TweetFeed.dataUrl('year.csv'), function(response) {
 			let data = csvJSON(response);
