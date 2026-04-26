@@ -453,25 +453,12 @@
 			}
 		})
 
-		// Custom empty-state messaging for both pre-load (emptyTable) and
-		// post-search-no-match (zeroRecords). Mirrors the dashboard's
-		// #emptyState pattern: open-folder icon + brief message + hint.
-		var __emptyTableHTML = '<div class="empty-state">' +
-			'<div class="empty-icon"><i class="far fa-folder-open"></i></div>' +
-			'<div class="empty-message">Loading IOCs…</div>' +
-			'<div class="empty-hint">Fetching the last week of indicators.</div>' +
-			'</div>';
-		var __zeroRecordsHTML = '<div class="empty-state">' +
-			'<div class="empty-icon"><i class="fas fa-search"></i></div>' +
-			'<div class="empty-message">No IOCs match your search</div>' +
-			'<div class="empty-hint">Try a broader query or remove a filter.</div>' +
-			'</div>';
-		let table = $('#dataTableFull').DataTable({
-			language: {
-				emptyTable: __emptyTableHTML,
-				zeroRecords: __zeroRecordsHTML,
-			},
-		});
+		// DataTable instance is already created by js/demo/datatables-full.js
+		// (which runs at $(document).ready time, before this $(function(){...})
+		// block). The language.emptyTable / language.zeroRecords config
+		// also lives there so DataTables picks it up at the only init call.
+		// Calling DataTable() again here just returns the cached instance.
+		let table = $('#dataTableFull').DataTable();
 		var timerAux;
 		// Defer initial CSV fetch to window.load so the DataTable skeleton
 		// paints before the week.csv fetch+parse. PSI mobile baseline
