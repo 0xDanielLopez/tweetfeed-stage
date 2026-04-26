@@ -453,7 +453,25 @@
 			}
 		})
 
-		let table = $('#dataTableFull').DataTable();
+		// Custom empty-state messaging for both pre-load (emptyTable) and
+		// post-search-no-match (zeroRecords). Mirrors the dashboard's
+		// #emptyState pattern: open-folder icon + brief message + hint.
+		var __emptyTableHTML = '<div class="empty-state">' +
+			'<div class="empty-icon"><i class="far fa-folder-open"></i></div>' +
+			'<div class="empty-message">Loading IOCs…</div>' +
+			'<div class="empty-hint">Fetching the last week of indicators.</div>' +
+			'</div>';
+		var __zeroRecordsHTML = '<div class="empty-state">' +
+			'<div class="empty-icon"><i class="fas fa-search"></i></div>' +
+			'<div class="empty-message">No IOCs match your search</div>' +
+			'<div class="empty-hint">Try a broader query or remove a filter.</div>' +
+			'</div>';
+		let table = $('#dataTableFull').DataTable({
+			language: {
+				emptyTable: __emptyTableHTML,
+				zeroRecords: __zeroRecordsHTML,
+			},
+		});
 		var timerAux;
 		// Defer initial CSV fetch to window.load so the DataTable skeleton
 		// paints before the week.csv fetch+parse. PSI mobile baseline
