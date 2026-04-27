@@ -1,3 +1,6 @@
 User-agent: *
-Content-Signal: ai-train=no, search=no, ai-input=no
 Disallow: /
+
+# AI preferences (informative, draft-romm-aipref-contentsignals):
+#   ai-train=no, search=no, ai-input=no
+# Stage host — not indexable, not for AI consumption.
