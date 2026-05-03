@@ -10,15 +10,15 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Search and hunt for indicators of compromise from Twitter/X. Find malicious URLs, domains, IPs and hashes. Free Threat Intelligence hunting dashboard.">
+	<meta name="description" content="Copy-paste hunting recipes for TweetFeed IOCs: bash + jq, Splunk SPL, Microsoft Sentinel KQL, CrowdStrike Falcon, MISP, Suricata, Sigma templates.">
 	<meta name="author" content="tweetfeed.live">
-	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious">
+	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,crowdstrike,sigma,suricata,misp,opencti,sentinel,wazuh,falcon,sentinelone,thehive,yara,stix">
 	<link rel="canonical" href="https://tweetfeed.live/hunt.html">
 	<title>Free IOC Threat Hunting Dashboard - Search Malware, Phishing, URLs</title>
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Threat hunting queries for IOC feeds - TweetFeed">
-	<meta name="twitter:description" content="Ready-to-use threat hunting queries (curl, Sentinel KQL, Splunk) against the TweetFeed API.">
+	<meta name="twitter:description" content="Ready-to-use threat hunting recipes against the TweetFeed API: terminal, Splunk, Sentinel KQL, Defender, CrowdStrike, MISP, Suricata, Sigma.">
 	<meta name="twitter:url" content="https://tweetfeed.live/hunt.html">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
@@ -26,7 +26,7 @@
 	<meta property="og:url" content="https://tweetfeed.live/hunt.html">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Threat hunting queries for IOC feeds - TweetFeed">
-	<meta property="og:description" content="Ready-to-use threat hunting queries (curl, Sentinel KQL, Splunk) against the TweetFeed API.">
+	<meta property="og:description" content="Ready-to-use threat hunting recipes against the TweetFeed API: terminal, Splunk, Sentinel KQL, Defender, CrowdStrike, MISP, Suricata, Sigma.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -46,7 +46,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=19" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=20" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
@@ -60,21 +60,31 @@
 		"@context": "https://schema.org",
 		"@type": "HowTo",
 		"name": "Hunt for IOCs from Twitter/X using TweetFeed",
-		"description": "Step-by-step queries for MISP, OpenCTI, Splunk SPL, Microsoft Defender (KQL) and QRadar AQL to ingest the TweetFeed IOC stream into your SIEM or Threat Intelligence platform.",
+		"description": "Copy-paste recipes for terminal (bash + jq), Splunk SPL, Microsoft Sentinel KQL, Microsoft Defender for Endpoint, CrowdStrike Falcon, SentinelOne, Wazuh, MISP feed install, Suricata rules, Pi-hole, TheHive, OpenCTI, Sigma rule templates, YARA generation and STIX 2.1 export.",
 		"author": {"@id": "https://tweetfeed.live/#founder"},
 		"about": {"@id": "https://tweetfeed.live/#organization"},
 		"tool": [
+			{"@type": "HowToTool", "name": "Terminal (bash + jq)"},
+			{"@type": "HowToTool", "name": "Splunk"},
+			{"@type": "HowToTool", "name": "Microsoft Sentinel"},
+			{"@type": "HowToTool", "name": "Microsoft Defender for Endpoint"},
+			{"@type": "HowToTool", "name": "CrowdStrike Falcon"},
+			{"@type": "HowToTool", "name": "SentinelOne"},
+			{"@type": "HowToTool", "name": "Wazuh"},
 			{"@type": "HowToTool", "name": "MISP"},
 			{"@type": "HowToTool", "name": "OpenCTI"},
-			{"@type": "HowToTool", "name": "Splunk"},
-			{"@type": "HowToTool", "name": "Microsoft Defender (KQL)"},
-			{"@type": "HowToTool", "name": "IBM QRadar"}
+			{"@type": "HowToTool", "name": "TheHive"},
+			{"@type": "HowToTool", "name": "Suricata"},
+			{"@type": "HowToTool", "name": "Pi-hole"},
+			{"@type": "HowToTool", "name": "Sigma"},
+			{"@type": "HowToTool", "name": "YARA"}
 		],
 		"step": [
-			{"@type": "HowToStep", "name": "Pick the time window", "text": "Choose today, week, month or year depending on the staleness tolerance of your detection rules."},
-			{"@type": "HowToStep", "name": "Pick the IOC type", "text": "Filter by url, domain, ip, sha256 or md5 to match the column type expected by your SIEM."},
-			{"@type": "HowToStep", "name": "Configure the platform-specific connector", "text": "Use the ready-made MISP feed URL, OpenCTI connector config, Splunk Stream input, KQL externaldata() block, or QRadar Reference Set REST integration shown on the page."},
-			{"@type": "HowToStep", "name": "Schedule a refresh", "text": "Pull every 15 to 60 minutes (the underlying CSVs are updated every 15 min)."}
+			{"@type": "HowToStep", "name": "Pick a recipe by your tool", "text": "Jump to the section that matches your stack: terminal, SIEM, EDR/XDR, network and firewall, TIP and SOAR, or detection content."},
+			{"@type": "HowToStep", "name": "Configure the connector or lookup", "text": "Each recipe includes the exact ingest pattern: REST API calls, CSV download, RSS feed, MISP feed URL, KQL externaldata() block or Splunk inputlookup."},
+			{"@type": "HowToStep", "name": "Schedule the refresh", "text": "TweetFeed CSVs and the API refresh every 15 minutes. Match your pull cadence to your detection latency tolerance."},
+			{"@type": "HowToStep", "name": "Tune the allowlist for false positives", "text": "Every join recipe shows where to add an allowlist (KQL pack_array, SPL where clause, Wazuh CDB list) so trusted assets stop firing alerts."},
+			{"@type": "HowToStep", "name": "Pivot back to provenance", "text": "Every IOC carries the original tweet URL and researcher handle. Use the pivot recipes to verify before acting on any indicator."}
 		]
 	}
 	</script>
@@ -144,27 +154,53 @@
 		"mainEntity": [
 			{
 				"@type": "Question",
-				"name": "How do I import TweetFeed IOCs into MISP?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Add the TweetFeed CSV feed URL (for example https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv) as a new Feed in MISP and enable auto-refresh. Exact feed configuration is shown on this page."
-				}
+				"name": "How fresh are the IOCs?",
+				"acceptedAnswer": {"@type": "Answer", "text": "TweetFeed scrapes the source feeds every 15 minutes via cron. The end-to-end pipeline (scrape, dedupe, classify, aggregate, push) takes roughly 17 to 25 seconds, so an IOC tweeted right now lands in today.csv and the API within one cron tick."}
 			},
 			{
 				"@type": "Question",
-				"name": "Can I query TweetFeed from Splunk?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Yes. Use curl or Splunk's HTTP Event Collector to pull the TweetFeed API on a schedule, then match IOCs against your index data. Copy-paste query examples for Splunk SPL, Microsoft Sentinel KQL and QRadar AQL are provided on this page."
-				}
+				"name": "Is there a rate limit on the API?",
+				"acceptedAnswer": {"@type": "Answer", "text": "api.tweetfeed.live runs as a Cloudflare Worker on the Free plan (100,000 requests per day). Real traffic sits around 7 to 8K per day, leaving roughly 300x headroom. There is no authentication or per-key throttling."}
 			},
 			{
 				"@type": "Question",
-				"name": "Does TweetFeed integrate with OpenCTI and IntelOwl?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Yes. OpenCTI can ingest the CSV feeds via a Connector source. IntelOwl can query the REST API per analyzer run. Both configurations are documented with working examples on this page."
-				}
+				"name": "Can I use TweetFeed data commercially?",
+				"acceptedAnswer": {"@type": "Answer", "text": "Yes. The IOC data is published under CC0 1.0 (no rights reserved). Attribution is appreciated but not required. The website code, branding and logos are not included in CC0."}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I credit the original researcher?",
+				"acceptedAnswer": {"@type": "Answer", "text": "Every IOC carries a user field (Twitter/X handle) and a tweet field (full URL to the source post). Link back to the tweet whenever you republish or alert on an IOC."}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I handle false positives?",
+				"acceptedAnswer": {"@type": "Answer", "text": "TweetFeed publishes everything reasonably tagged and does not suppress noise. Use a client-side allowlist (the KQL and SPL recipes show the pattern) and report false positives via the public Featurebase board."}
+			},
+			{
+				"@type": "Question",
+				"name": "Why is there no authentication?",
+				"acceptedAnswer": {"@type": "Answer", "text": "TweetFeed is open data, side-project scope, CC0-licensed. Adding auth would gate adoption without solving any real abuse. The Cloudflare Worker absorbs spike traffic; if you need a private mirror just clone the GitHub repo."}
+			},
+			{
+				"@type": "Question",
+				"name": "Is there an MCP server for AI agents?",
+				"acceptedAnswer": {"@type": "Answer", "text": "Yes. mcp.tweetfeed.live exposes 5 tools: query_iocs, check_url, check_ip, check_hash and list_recent_iocs. See the Agents page for the config snippet."}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I contribute new IOCs?",
+				"acceptedAnswer": {"@type": "Answer", "text": "Post the IOC on Twitter/X with one of the tracked hashtags (full list on the Feeds page) or get added to the curated TweetFeedList. The next cron tick picks it up automatically."}
+			},
+			{
+				"@type": "Question",
+				"name": "Is there a self-hosted or enterprise version?",
+				"acceptedAnswer": {"@type": "Answer", "text": "No SLA, no enterprise tier - this is a single-maintainer side project. Use TweetFeed as one source of many in your Threat Intelligence pipeline, never as the only source."}
+			},
+			{
+				"@type": "Question",
+				"name": "Does TweetFeed work in air-gapped environments?",
+				"acceptedAnswer": {"@type": "Answer", "text": "Yes. Clone the data repo (github.com/0xDanielLopez/TweetFeed) inside your perimeter and refresh on whatever cadence your egress policy allows. The CSV layout is documented and stable."}
 			}
 		]
 	}
@@ -239,7 +275,7 @@
 							<a class="nav-link" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="threat-intelligence-guide.html"><i class="fas fa-book"></i> Guide</a>
+							<a class="nav-link" href="docs/"><i class="fas fa-book"></i> Docs</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="about.html"><i class="fas fa-question-circle"></i> About</a>
@@ -266,7 +302,7 @@
 								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
 								<a class="dropdown-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <i class="fas fa-external-link-alt"></i></a>
 								<a class="dropdown-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <i class="fas fa-external-link-alt"></i></a>
-								<a class="dropdown-item" href="threat-intelligence-guide.html"><i class="fas fa-book"></i> Guide</a>
+								<a class="dropdown-item" href="docs/"><i class="fas fa-book"></i> Docs</a>
 								<a class="dropdown-item" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 							</div>
 						</li>
@@ -277,11 +313,13 @@
 			<div id="content">
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
+					<p style="margin:0 0 0.5rem 0; font-family:'Rubik',sans-serif;"><a href="docs/" class="text-decoration-none" style="color:#737373; font-size:13px;">&larr; Docs</a></p>
 					<h1 class="toph1"><i class="fas fa-bullseye" style="font-size: 36px;"></i> Threat Hunting</h1>
 					<h2><em>Ready-to-use threat hunting queries for MISP, OpenCTI, Splunk and QRadar</em></h2>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
+					<p style="margin:0 0 0.5rem 0; font-family:'Rubik',sans-serif;"><a href="docs/" class="text-decoration-none" style="color:#737373; font-size:13px;">&larr; Docs</a></p>
 					<p class="toph1"><i class="fas fa-bullseye" style="font-size: 36px;"></i> Threat Hunting</p>
 					<p style="font-size: 14px;"><em>Hunt IOCs in different environments</em></p>
 				</div>
