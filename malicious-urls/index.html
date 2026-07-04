@@ -581,7 +581,7 @@
 			if (top.length === 0) { $('#samplesError').show(); $('#samplesLoading').hide(); return; }
 			for (const r of top) {
 				const valSafe = escapeHtml(r.value || '');
-				const tags = (r.tags || []).map(t => '<span style="color:#1DA1F2;">'+escapeHtml(t)+'</span>').join(' ');
+				const tags = (r.tags || []).map(t => '<span style="color:#1178b3;">'+escapeHtml(t)+'</span>').join(' ');
 				const userSafe = escapeHtml(r.user || '');
 				const tweetSafe = escapeHtml(r.tweet || '');
 				const $tr = $('<tr>')
