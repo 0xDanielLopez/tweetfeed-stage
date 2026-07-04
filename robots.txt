@@ -1,6 +1,8 @@
 User-agent: *
-Disallow: /
+Allow: /
 
+# Stage host - kept out of search via per-page noindex meta. Crawling must
+# stay allowed or Google never sees the noindex (pages would linger as
+# 'indexed, though blocked by robots.txt').
 # AI preferences (informative, draft-romm-aipref-contentsignals):
 #   ai-train=no, search=no, ai-input=no
-# Stage host — not indexable, not for AI consumption.
