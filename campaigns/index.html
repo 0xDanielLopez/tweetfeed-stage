@@ -428,8 +428,12 @@
 			var bg = IOC_TYPE_COLORS[type] || '#737373';
 			var color = IOC_TYPE_DARK_TEXT[type] ? '#1c1c1c' : '#fff';
 			var value = ioc.value || '';
-			var tweetLink = ioc.tweet
-				? '<a class="tfc-ioc-link" href="' + esc(ioc.tweet) + '" target="_blank" rel="noopener noreferrer" title="Source tweet" aria-label="Open source tweet"><i class="fas fa-external-link-alt"></i></a>'
+			// Scheme guard: tweet URLs come from feed data; only http(s) may
+			// land in an href (escapeHtml alone would still let javascript:
+			// URLs through as valid link targets).
+			var tweetUrl = (typeof ioc.tweet === 'string' && /^https?:\/\//i.test(ioc.tweet)) ? ioc.tweet : '';
+			var tweetLink = tweetUrl
+				? '<a class="tfc-ioc-link" href="' + esc(tweetUrl) + '" target="_blank" rel="noopener noreferrer" title="Source tweet" aria-label="Open source tweet"><i class="fas fa-external-link-alt"></i></a>'
 				: '';
 			return (
 				'<div class="tfc-ioc-row">' +
