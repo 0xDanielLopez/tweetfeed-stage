@@ -522,7 +522,8 @@
 			// render in that delivered order.
 			var html = campaigns.map(renderCampaignCard).join('');
 			$('#campaignsList').html(html).show();
-			TweetFeed.initCopyDelegation();
+			// Copy buttons need no re-init: utils.js attaches document-level
+			// .tf-copy delegation once at page load.
 		}
 
 		function showError(msg) {
