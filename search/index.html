@@ -304,6 +304,18 @@
 			background: #fff;
 			color: #1c1c1c;
 		}
+		.tfl-corro-chip {
+			display: inline-block;
+			padding: 2px 9px;
+			border: 1px solid #b3b3b3;
+			border-radius: 12px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			background: #f5f5f5;
+			color: #595959;
+			cursor: help;
+			white-space: nowrap;
+		}
 		.tfl-ai {
 			background: #f8f9fa;
 			border: 1px solid #1c1c1c;
@@ -334,6 +346,20 @@
 			line-height: 1.6;
 			margin: 0 0 0.6rem 0;
 		}
+		.tfl-fp-row {
+			margin-top: 0.6rem;
+			padding-top: 0.5rem;
+			border-top: 1px solid #e0e0e0;
+			color: #8a8a8a;
+			font-size: 12px;
+			font-family: 'Rubik', sans-serif;
+		}
+		.tfl-fp-row a { color: #1178b3; }
+		.tfl-fp-row .tf-copy {
+			cursor: pointer;
+			color: #8a8a8a;
+		}
+		.tfl-fp-row .tf-copy:hover { color: #000; text-decoration: underline; }
 	</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -1058,6 +1084,74 @@
 			return KNOWN_TYPES.indexOf(type) !== -1 ? 'tfl-type-' + type : 'tfl-type-other';
 		}
 
+		function parseUtcTimestamp(s) {
+			// Defensive parse of the API's "YYYY-MM-DD HH:MM:SS" (space or
+			// T-separated) timestamp strings. Returns NaN - never throws - on
+			// anything else so a malformed/missing value just skips the span.
+			if (typeof s !== 'string') return NaN;
+			var m = s.match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);
+			if (!m) return NaN;
+			return Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+		}
+
+		// Coverage signal only - describes how many accounts/posts reported the
+		// IOC, never a maliciousness verdict. Kept monochrome on purpose (no
+		// green/red) so it can't be mistaken for a confidence/verdict badge.
+		function corroborationChip(rec) {
+			var users = (rec && Array.isArray(rec.users)) ? rec.users : [];
+			var U = users.length;
+			var C = Number(rec && rec.count) || 0;
+			var label;
+
+			if (U >= 10) {
+				label = 'Reported by 10+ accounts';
+			} else if (U >= 2) {
+				label = 'Reported by ' + U + ' accounts';
+			} else if (U === 1 && C > 1) {
+				label = C + ' posts · same account';
+			} else {
+				label = 'Single report';
+			}
+
+			var firstTs = parseUtcTimestamp(rec && rec.first_seen);
+			var lastTs = parseUtcTimestamp(rec && rec.last_seen);
+			if (!isNaN(firstTs) && !isNaN(lastTs)) {
+				var spanDays = (lastTs - firstTs) / 86400000;
+				if (spanDays >= 90) {
+					label += ' · recurring over ' + Math.floor(spanDays / 30) + ' months';
+				}
+			}
+
+			var tip = 'Coverage signal only: how many accounts posted this IOC. ' +
+				'More reports do not confirm maliciousness - verify independently.';
+			return '<span class="tfl-corro-chip" data-toggle="tooltip" data-placement="top" title="' + esc(tip) + '">' + esc(label) + '</span>';
+		}
+
+		// Plain-text template for a false-positive report, copied to the
+		// clipboard via the existing .tf-copy delegation (js/utils.js). Never
+		// wired with onclick - data-copy + delegated listener only.
+		function buildFpReportText(rec) {
+			var value = (rec && rec.value) || '';
+			var type = (rec && rec.type) || '';
+			var firstSeen = (rec && rec.first_seen) || '?';
+			var lastSeen = (rec && rec.last_seen) || '?';
+			var count = Number(rec && rec.count) || 0;
+			var users = (rec && Array.isArray(rec.users)) ? rec.users : [];
+			var tweets = (rec && Array.isArray(rec.tweets)) ? rec.tweets : [];
+			var reportedBy = users.map(function(u) { return '@' + u; }).join(' ');
+			var tweetList = tweets.filter(function(u) { return typeof u === 'string'; }).join(' ');
+
+			return 'False positive report\n' +
+				'IOC: ' + value + '\n' +
+				'Type: ' + type + '\n' +
+				'First seen: ' + firstSeen + ' UTC\n' +
+				'Last seen: ' + lastSeen + ' UTC\n' +
+				'Seen: ' + count + ' times\n' +
+				'Reported by: ' + reportedBy + '\n' +
+				'Tweets: ' + tweetList + '\n' +
+				'Reason: ';
+		}
+
 		function renderRecord(r) {
 			var type = r && r.type || '';
 			var value = r && r.value || '';
@@ -1087,6 +1181,7 @@
 				'<div class="tfl-record">' +
 					'<div class="tfl-record-header">' +
 						'<span class="tfl-type-badge ' + typeClass(type) + '">' + esc(type || 'unknown') + '</span>' +
+						corroborationChip(r) +
 						'<code class="tfl-value">' + esc(value) + '</code>' +
 						'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>' +
 						'<a class="tf-action tf-action-vt" href="https://www.virustotal.com/gui/search/' + esc(encodeURIComponent(value)) + '" target="_blank" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>' +
@@ -1095,6 +1190,11 @@
 					(tagsHtml ? '<div class="tfl-tags">' + tagsHtml + '</div>' : '') +
 					(usersHtml ? '<div class="tfl-meta">Reported by: ' + usersHtml + '</div>' : '') +
 					(tweetsHtml ? '<div class="tfl-meta tfl-tweets">Source tweets: ' + tweetsHtml + '</div>' : '') +
+					'<div class="tfl-fp-row">' +
+						'<a href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Report a false positive</a>' +
+						' &middot; ' +
+						'<span class="tf-copy" data-copy="' + esc(buildFpReportText(r)) + '" role="button" tabindex="0" aria-label="Copy false positive report details" title="Copy report details">Copy report details</span>' +
+					'</div>' +
 				'</div>'
 			);
 		}
@@ -1159,6 +1259,11 @@
 			html += renderAI(data && data.ai);
 
 			$results.html(html);
+			// Bootstrap tooltips are only auto-initialized once, at document
+			// ready ($('[data-toggle="tooltip"]').tooltip() below), for the
+			// static markup present at load - re-init here for the
+			// .tfl-corro-chip tooltips just inserted dynamically.
+			$results.find('[data-toggle="tooltip"]').tooltip();
 		}
 
 		function renderError(query) {
