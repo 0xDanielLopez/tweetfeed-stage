@@ -29,6 +29,7 @@ API_URL = "https://api.tweetfeed.live/v1/campaigns"
 HTTP_TIMEOUT = 30
 TOP_N = 10
 MAX_TITLE_DOMAINS = 3
+MAX_TITLE_CONTEXT_CHARS = 60
 MAX_CONTEXT_CHARS = 600
 MAX_META_DESC_CHARS = 155
 
@@ -65,8 +66,13 @@ def build_title(campaign):
     else:
         # No domain anchors (tag- or path-pattern-clustered campaign) - fall
         # back to a short context excerpt so the title is never empty.
+        # Truncate on a word boundary (like build_meta_description) so the
+        # H1/<title> never ends mid-word.
         context = campaign.get("context", "").strip()
-        title = context[:80] + ("..." if len(context) > 80 else "")
+        if len(context) <= MAX_TITLE_CONTEXT_CHARS:
+            title = context
+        else:
+            title = context[:MAX_TITLE_CONTEXT_CHARS].rsplit(" ", 1)[0] + "..."
         if not title:
             title = campaign["id"]
     return f"{title} — Campaign tracked by TweetFeed ({campaign.get('ioc_count', 0)} IOCs)"
