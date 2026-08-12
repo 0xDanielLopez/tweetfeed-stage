@@ -15,6 +15,7 @@ import datetime
 import html
 import json
 import sys
+from collections import Counter, defaultdict
 from pathlib import Path
 from urllib.parse import quote
 
@@ -26,6 +27,10 @@ REPO_ROOT = SCRIPT_DIR.parent
 CAMPAIGNS_DIR = REPO_ROOT / "campaigns"
 IS_STAGE = not (REPO_ROOT / "CNAME").is_file()
 API_URL = "https://api.tweetfeed.live/v1/campaigns"
+# Same TweetFeed data repo the rest of the site pulls raw snapshot files from
+# (e.g. today.csv) - a plain build-time GET, not the live api.tweetfeed.live
+# path that has to worry about Fastly cache pinning.
+IPMETA_URL = "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/ipmeta.json"
 HTTP_TIMEOUT = 30
 TOP_N = 10
 MAX_TITLE_DOMAINS = 3
@@ -47,6 +52,15 @@ def fetch_campaigns():
     resp.raise_for_status()
     data = resp.json()
     return data.get("campaigns", [])
+
+
+def fetch_ipmeta():
+    """~10k-entry {ip: {org, country, city, fetched_at}} snapshot, refreshed
+    4x/day upstream. Fetched once per generator run, same as fetch_campaigns()."""
+    resp = requests.get(IPMETA_URL, timeout=HTTP_TIMEOUT)
+    resp.raise_for_status()
+    data = resp.json()
+    return data.get("entries", {})
 
 
 def js_encode_uri_component(s):
@@ -115,6 +129,39 @@ def format_ioc(row):
     }
 
 
+def build_infra(campaign, ipmeta_entries):
+    """Group this campaign's ip-type IOCs (from its already-fetched, capped-
+    at-25 iocs list) by ipmeta org, for the "Infrastructure footprint" card.
+    IPs with no exact-match ipmeta entry are silently excluded - not all IPs
+    are in the ~10k-entry snapshot, and that's expected, not an error.
+    Returns (infra, total_ip_count) where infra is a list of pre-escaped
+    {org, ip_count, country} dicts sorted by ip_count desc, ready for direct
+    template iteration (same shape convention as format_domain/format_ioc)."""
+    org_ips = defaultdict(dict)  # org -> {ip: country}
+    for row in campaign.get("iocs", []):
+        if row.get("type") != "ip":
+            continue
+        ip = row.get("value", "")
+        meta = ipmeta_entries.get(ip)
+        if not meta or not meta.get("org"):
+            continue
+        org_ips[meta["org"]][ip] = meta.get("country", "")
+
+    infra = []
+    total_ips = set()
+    for org, ip_countries in org_ips.items():
+        total_ips.update(ip_countries)
+        country_counts = Counter(c for c in ip_countries.values() if c)
+        country = country_counts.most_common(1)[0][0] if country_counts else ""
+        infra.append({
+            "org": html.escape(org, quote=True),
+            "ip_count": len(ip_countries),
+            "country": html.escape(country, quote=True),
+        })
+    infra.sort(key=lambda i: (-i["ip_count"], i["org"]))
+    return infra, len(total_ips)
+
+
 def build_webpage_jsonld(campaign, title, meta_description):
     payload = {
         "@context": "https://schema.org",
@@ -130,13 +177,14 @@ def build_webpage_jsonld(campaign, title, meta_description):
     return "\n".join([lines[0]] + ["\t" + line for line in lines[1:]])
 
 
-def render_campaign(campaign, env, generated_at_str):
+def render_campaign(campaign, env, generated_at_str, ipmeta_entries):
     title = build_title(campaign)
     meta_description = build_meta_description(campaign)
     context_raw = campaign.get("context", "").strip()
     context_html = html.escape(context_raw, quote=True)
 
     domains = [format_domain(d) for d in campaign.get("anchors", {}).get("registered_domains", [])]
+    infra, infra_ip_count = build_infra(campaign, ipmeta_entries)
     iocs = [format_ioc(r) for r in campaign.get("iocs", [])]
 
     c = {
@@ -148,6 +196,9 @@ def render_campaign(campaign, env, generated_at_str):
         "first_seen": html.escape(campaign.get("first_seen", ""), quote=True),
         "ioc_count": campaign.get("ioc_count", 0),
         "domains": domains,
+        "infra": infra,
+        "infra_ip_count": infra_ip_count,
+        "infra_org_count": len(infra),
         "generated_at_str": generated_at_str,
     }
 
@@ -164,6 +215,7 @@ def main():
     campaigns = fetch_campaigns()
     campaigns.sort(key=lambda c: c.get("ioc_count", 0), reverse=True)
     top = campaigns[:TOP_N]
+    ipmeta_entries = fetch_ipmeta()
 
     generated_at_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
@@ -179,7 +231,7 @@ def main():
     for campaign in top:
         cid = campaign.get("id", "<missing-id>")
         try:
-            page_html = render_campaign(campaign, env, generated_at_str)
+            page_html = render_campaign(campaign, env, generated_at_str, ipmeta_entries)
             out_dir = CAMPAIGNS_DIR / cid
             out_dir.mkdir(parents=True, exist_ok=True)
             (out_dir / "index.html").write_text(page_html, encoding="utf-8")

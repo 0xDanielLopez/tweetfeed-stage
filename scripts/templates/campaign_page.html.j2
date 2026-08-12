@@ -282,6 +282,43 @@
 				</div>
 
 				<!-- ============================================================ -->
+				<!-- INFRASTRUCTURE FOOTPRINT (IP-TYPE IOCS, IPMETA.JSON LOOKUP)   -->
+				<!-- Omitted entirely when the campaign has no matched IP infra   -->
+				<!-- (majority case - most campaigns are domain/URL-heavy).       -->
+				<!-- ============================================================ -->
+				{% if c.infra %}
+				<h3 class="section-heading">Infrastructure footprint</h3>
+				<div class="card mb-4">
+					<div class="card-body">
+						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">{{ c.infra_ip_count }} IP{{ 's' if c.infra_ip_count != 1 }} across {{ c.infra_org_count }} network{{ 's' if c.infra_org_count != 1 }} in this campaign:</p>
+						<div class="table-responsive">
+							<table class="table table-sm" style="table-layout:fixed; width:100%; min-width:420px; margin-bottom:0;">
+								<colgroup>
+									<col style="width:100%;">
+									<col style="width:70px;">
+									<col style="width:90px;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>Network</th>
+										<th>IPs</th>
+										<th>Country</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for i in c.infra %}<tr>
+										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ i.org }}">{{ i.org }}</td>
+										<td style="font-size:13px; vertical-align:middle;">{{ i.ip_count }}</td>
+										<td style="font-size:13px; vertical-align:middle;">{{ i.country }}</td>
+									</tr>
+									{% endfor %}</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+
+				<!-- ============================================================ -->
 				<!-- IOCS IN THIS CAMPAIGN (BAKED FROM API AT BUILD TIME)          -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading">IOCs in this campaign</h3>
