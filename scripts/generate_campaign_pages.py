@@ -213,7 +213,8 @@ def render_campaign(campaign, env, generated_at_str, ipmeta_entries):
         # Campaign permalinks live at /campaigns/tfc-<id>/ (depth 2) and light
         # up Campaigns in the primary nav. Shell markup comes from the shared
         # partials; see scripts/site_ia.py.
-        **shell_context(depth=2, active_key="campaigns/", indent="\t\t\t"),
+        **shell_context(depth=2, active_key="campaigns/", indent="\t\t\t",
+                        docs_active="campaigns/"),
     )
 
 
