@@ -208,7 +208,7 @@
 								<thead><tr><th>Domain</th></tr></thead>
 								<tbody>
 									{% for d in c.domains %}<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="{{ d.value_full }}"><i class="tf-copy far fa-copy" data-copy="{{ d.value_full }}" style="margin-right:0.4rem;"></i>{{ d.value_display }}</td>
+										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="{{ d.value_full }}"><i class="tf-copy far fa-copy" data-copy="{{ d.value_full }}" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>{{ d.value_display }}</td>
 									</tr>
 									{% endfor %}</tbody>
 							</table>
@@ -284,7 +284,7 @@
 									{% for s in iocs %}<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ s.date_short }}</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:{{ s.type_color }}; color:{{ s.type_text_color }}; border-radius:3px;">{{ s.type }}</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ s.value_full }}"><i class="tf-copy far fa-copy" data-copy="{{ s.value_full }}" style="margin-right:0.4rem;"></i>{{ s.value_display }}</td>
+										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ s.value_full }}"><i class="tf-copy far fa-copy" data-copy="{{ s.value_full }}" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>{{ s.value_display }}</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/{{ s.user }}" target="_blank" rel="noopener noreferrer">@{{ s.user }}</a></td>
 									</tr>
 									{% endfor %}</tbody>
