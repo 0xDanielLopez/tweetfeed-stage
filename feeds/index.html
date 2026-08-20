@@ -394,11 +394,21 @@
 		   dates land on, so the row does not resize when counts.json arrives. */
 		p.fds-card-range {
 			margin: 0;
-			min-height: 2.8em;
+			min-height: 1.4em;
 			font-size: 12px;
 			line-height: 1.4;
 			color: #737373;
 			font-family: 'Rubik', sans-serif;
+		}
+		/* At 360px each card is 157px wide and Bootstrap's card-header eats
+		   40px of that in padding, which left "SHA-256  4,957" wrapping onto
+		   two lines. Every card on this page is a download card, so trimming
+		   the gutter here costs nothing and buys back 24px of measure. */
+		@media (max-width: 575.98px) {
+			.card-header { padding-left: 0.6rem; padding-right: 0.6rem; }
+			ul.fds-typelist { font-size: 13px; }
+			.fds-typelist i { margin-right: 4px; }
+			p.fds-card-range { font-size: 11px; }
 		}
 
 		/* ── IOC-type cross-links ─────────────────────────────────────────
@@ -615,7 +625,7 @@
 						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Today</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Since 00:00 UTC today"></i>
-								<p class="fds-card-range"><em class="lastDateTodayFrom"></em><br><em class="lastDateTodayTo"></em></p>
+								<p class="fds-card-range"><em class="fds-range-today"></em></p>
 								<hr>
 								<ul class="fds-typelist">
 									<li><span><i class="fas fa-link fds-ic-url" aria-hidden="true"></i>URLs</span><span class="fds-type-n today-url">-</span></li>
@@ -633,7 +643,7 @@
 						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 7 days"></i>
-								<p class="fds-card-range"><em class="lastDateWeekFrom"></em><br><em class="lastDateWeekTo"></em></p>
+								<p class="fds-card-range"><em class="fds-range-week"></em></p>
 								<hr>
 								<ul class="fds-typelist">
 									<li><span><i class="fas fa-link fds-ic-url" aria-hidden="true"></i>URLs</span><span class="fds-type-n week-url">-</span></li>
@@ -651,7 +661,7 @@
 						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 30 days"></i>
-								<p class="fds-card-range"><em class="lastDateMonthFrom"></em><br><em class="lastDateMonthTo"></em></p>
+								<p class="fds-card-range"><em class="fds-range-month"></em></p>
 								<hr>
 								<ul class="fds-typelist">
 									<li><span><i class="fas fa-link fds-ic-url" aria-hidden="true"></i>URLs</span><span class="fds-type-n month-url">-</span></li>
@@ -669,7 +679,7 @@
 						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Year</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 365 days"></i>
-								<p class="fds-card-range"><em class="lastDateYearFrom"></em><br><em class="lastDateYearTo"></em></p>
+								<p class="fds-card-range"><em class="fds-range-year"></em></p>
 								<hr>
 								<ul class="fds-typelist">
 									<li><span><i class="fas fa-link fds-ic-url" aria-hidden="true"></i>URLs</span><span class="fds-type-n year-url">-</span></li>
@@ -1045,10 +1055,11 @@
 			if (typeof counts === 'string') counts = JSON.parse(counts);
 			const windows = (counts && counts.windows) || {};
 			const TYPES = ['url', 'domain', 'ip', 'sha256', 'md5'];
-			// "YYYY-MM-DD HH:MM:SS" -> "YYYY-MM-DD HH:MM UTC". formatDateLong's
-			// "August 19th, 2026 00:52:38 UTC" is 36 characters, which wraps to
-			// four lines inside a quarter-width card at 360px.
-			const stamp = function(s) { return s ? String(s).slice(0, 16) + ' UTC' : ''; };
+			// Date only. formatDateLong's "August 19th, 2026 00:52:38 UTC" is 36
+			// characters and a "YYYY-MM-DD HH:MM UTC" stamp is 20; both wrap
+			// inside a card that is 157px wide at 360px. The window a file
+			// covers is a date range, and the exact timestamps are in the file.
+			const stamp = function(s) { return s ? String(s).slice(0, 10) : ''; };
 
 			const HEADLINE = { today: '#feedsHlToday', month: '#feedsHlMonth', year: '#feedsHlYear' };
 			for (const key of Object.keys(HEADLINE)) {
@@ -1063,8 +1074,8 @@
 				const w = windows[key];
 				if (!w) continue;
 				if (w.first_date) {
-					$('.lastDate' + period + 'From').text('From: ' + stamp(w.first_date));
-					$('.lastDate' + period + 'To').text('To: ' + stamp(w.last_date));
+					const from = stamp(w.first_date), to = stamp(w.last_date);
+					$('.fds-range-' + key).text(from === to ? from : from + ' to ' + to);
 				}
 				for (const t of TYPES) {
 					$('.' + key + '-' + t).text(TweetFeed.numberFormat((w.types && w.types[t]) || 0));
