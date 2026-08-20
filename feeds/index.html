@@ -353,6 +353,9 @@
 		}
 		/* Colour, size and family come from .tf-prose ul; only rhythm here. */
 		ul.fds-facts { margin: 0 0 1rem; padding-left: 1.25rem; line-height: 1.6; }
+		/* A second eyebrow following a card row sat flush against the cards'
+		   bottom border, reading as a caption for the row above it. */
+		.row + p.fds-grid-label { margin-top: 0.75rem; }
 
 		/* ── Window card internals ────────────────────────────────────────
 		   The five per-type counts were five bare coloured icons in a nested
@@ -635,7 +638,7 @@
 									<li><span><i class="fas fa-file-alt fds-ic-md5" aria-hidden="true"></i>MD5</span><span class="fds-type-n today-md5">-</span></li>
 								</ul>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/today.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Today (.csv)</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/today.csv" data-umami-event="download-csv-today" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Today (.csv)</a>
 							</div>
 						</div>
 					</div>
@@ -653,7 +656,7 @@
 									<li><span><i class="fas fa-file-alt fds-ic-md5" aria-hidden="true"></i>MD5</span><span class="fds-type-n week-md5">-</span></li>
 								</ul>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/week.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Week (.csv)</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/week.csv" data-umami-event="download-csv-week" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Week (.csv)</a>
 							</div>
 						</div>
 					</div>
@@ -671,7 +674,7 @@
 									<li><span><i class="fas fa-file-alt fds-ic-md5" aria-hidden="true"></i>MD5</span><span class="fds-type-n month-md5">-</span></li>
 								</ul>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/month.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Month (.csv)</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/month.csv" data-umami-event="download-csv-month" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Month (.csv)</a>
 							</div>
 						</div>
 					</div>
@@ -689,7 +692,7 @@
 									<li><span><i class="fas fa-file-alt fds-ic-md5" aria-hidden="true"></i>MD5</span><span class="fds-type-n year-md5">-</span></li>
 								</ul>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/year.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Year (.csv)</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/year.csv" data-umami-event="download-csv-year" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Year (.csv)</a>
 							</div>
 						</div>
 					</div>
@@ -711,7 +714,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Domains</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One domain per line, Pi-hole/dnsmasq style"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/domains.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> domains.txt</a>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/domains.txt" data-umami-event="download-blocklist-domains" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> domains.txt</a>
 							</div>
 						</div>
 					</div>
@@ -720,7 +723,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Hosts</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="0.0.0.0 hosts-file format"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/hosts.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> hosts.txt</a>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/hosts.txt" data-umami-event="download-blocklist-hosts" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> hosts.txt</a>
 							</div>
 						</div>
 					</div>
@@ -729,7 +732,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">AdGuard</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="AdGuard Home ||domain^ syntax"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/adguard.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> adguard.txt</a>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/adguard.txt" data-umami-event="download-blocklist-adguard" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> adguard.txt</a>
 							</div>
 						</div>
 					</div>
@@ -738,7 +741,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">dnsmasq</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="dnsmasq address=/domain/0.0.0.0 format"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> dnsmasq.txt</a>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt" data-umami-event="download-blocklist-dnsmasq" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> dnsmasq.txt</a>
 							</div>
 						</div>
 					</div>
@@ -750,7 +753,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">RPZ</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="DNS Response Policy Zone for BIND, Unbound and PowerDNS Recursor"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/rpz.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> rpz.txt</a>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/rpz.txt" data-umami-event="download-blocklist-rpz" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> rpz.txt</a>
 							</div>
 						</div>
 					</div>
@@ -759,7 +762,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">IPs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One IP per line, for firewalls"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/ips.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> ips.txt</a>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/ips.txt" data-umami-event="download-blocklist-ips" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> ips.txt</a>
 							</div>
 						</div>
 					</div>
@@ -768,7 +771,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">URLs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Full URL per line, for proxies, IDS and enrichment"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/urls.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> urls.txt</a>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/urls.txt" data-umami-event="download-blocklist-urls" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> urls.txt</a>
 							</div>
 						</div>
 					</div>
@@ -816,7 +819,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Manifest</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of every daily Event - the file MISP fetches first"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/misp/manifest.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> manifest.json</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/misp/manifest.json" data-umami-event="download-misp-manifest" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> manifest.json</a>
 							</div>
 						</div>
 					</div>
@@ -825,7 +828,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Feed cache</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="md5(value),event-uuid per attribute - what MISP's Cache feed correlates against (last 31 days)"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/misp/hashes.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> hashes.csv</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/misp/hashes.csv" data-umami-event="download-misp-hashes" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> hashes.csv</a>
 							</div>
 						</div>
 					</div>
@@ -838,7 +841,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Manifest</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of all bundles plus indicator counts"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/manifest.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> manifest.json</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/manifest.json" data-umami-event="download-stix-manifest" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> manifest.json</a>
 							</div>
 						</div>
 					</div>
@@ -847,7 +850,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Today</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with the last 24h of IOCs"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/today.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> today.json</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/today.json" data-umami-event="download-stix-today" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> today.json</a>
 							</div>
 						</div>
 					</div>
@@ -856,7 +859,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with the last 7 days of IOCs"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/week.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> week.json</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/week.json" data-umami-event="download-stix-week" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> week.json</a>
 							</div>
 						</div>
 					</div>
@@ -865,7 +868,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with the last 31 days of IOCs"></i>
 								<hr>
-								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/month.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> month.json</a>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/month.json" data-umami-event="download-stix-month" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> month.json</a>
 							</div>
 						</div>
 					</div>
@@ -1037,7 +1040,7 @@
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=3"></script>
+	<script src="../js/utils.js?v=4"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	// One counts.json fetch feeds both the headline figures and the four
