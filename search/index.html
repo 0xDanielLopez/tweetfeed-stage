@@ -51,10 +51,10 @@
 	<link href="../css/index.css?v=47" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=47" rel="stylesheet">
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -209,7 +209,7 @@
 		}
 		.skip-link:focus {
 			top: 0;
-			outline: 2px solid #4682B4;
+			outline: 2px solid #3a6f96;
 			outline-offset: -2px;
 		}
 	</style>
@@ -1298,19 +1298,19 @@
 			}
 
 			var myvar = '<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['url'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['url'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['domain'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['domain'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['ip'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['ip'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['sha256'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['sha256'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['md5'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['md5'], 2) + '</span>' +
 				'</div>'
 			$(className).html(myvar);
 
@@ -1662,8 +1662,8 @@
 			);
 		}
 
-		// Cross-feed corroboration from public abuse.ch feeds (optional API
-		// field, max 3 entries). Sibling pattern to renderAI() below - own
+		// Cross-feed corroboration from public threat feeds (optional API
+		// field, max 5 entries). Sibling pattern to renderAI() below - own
 		// tfl-ext- namespace, no verdict colors. Every field is esc()'d in
 		// text/attribute/href position; `link` only renders as an href when
 		// it passes a strict allowlist (must start with the urlhaus.abuse.ch,
@@ -1671,8 +1671,11 @@
 		// renders without a link rather than trusting an arbitrary URL from
 		// the API. bazaar.abuse.ch is safe to allow the same way: the backend
 		// builds that URL itself from a regex-validated 64-hex sha256, it
-		// never copies a URL out of the feed.
-		var EXT_SRC_LABELS = { urlhaus: 'URLhaus', threatfox: 'ThreatFox', malwarebazaar: 'MalwareBazaar' };
+		// never copies a URL out of the feed. usom/ipsum entries never carry
+		// a link at all (see tweetfeed/external.py's module docstring), so
+		// they're not in EXT_LINK_ALLOW - isAllowedExtLink already returns
+		// false for a missing/non-string link, same as any other unmatched src.
+		var EXT_SRC_LABELS = { urlhaus: 'URLhaus', threatfox: 'ThreatFox', malwarebazaar: 'MalwareBazaar', usom: 'USOM', ipsum: 'IPsum' };
 		var EXT_LINK_ALLOW = ['https://urlhaus.abuse.ch/', 'https://threatfox.abuse.ch/', 'https://bazaar.abuse.ch/'];
 
 		function isAllowedExtLink(link) {
@@ -1681,9 +1684,13 @@
 		}
 
 		function renderExternal(external) {
+			// Cap matches openapi.yaml's `external.maxItems` (5) - keep both
+			// in lockstep, same reasoning as tweetfeed/external.py's
+			// combine_matches docstring on why a stale local cap silently
+			// truncates a legitimately-corroborated IOC.
 			var entries = (Array.isArray(external) ? external : []).filter(function(e) {
 				return e && typeof e.src === 'string' && typeof e.threat === 'string';
-			}).slice(0, 3);
+			}).slice(0, 5);
 			if (!entries.length) return '';
 
 			var rows = entries.map(function(e) {
@@ -1708,7 +1715,7 @@
 				'<div class="tfl-ext" role="note" aria-label="External feed corroboration">' +
 					'<div class="tfl-ext-header"><i class="fas fa-globe"></i> External feeds</div>' +
 					rows +
-					'<div class="tfl-ext-foot">Third-party open feeds (abuse.ch) - shown for corroboration, not part of the canonical feed data.</div>' +
+					'<div class="tfl-ext-foot">Third-party open feeds (abuse.ch, USOM via elliotwutingfeng/USOM-Blocklists, IPsum by @stamparm) - shown for corroboration, not part of the canonical feed data.</div>' +
 				'</div>'
 			);
 		}
