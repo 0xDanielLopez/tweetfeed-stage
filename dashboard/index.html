@@ -1342,8 +1342,13 @@
 		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
 	}
 
-	// Delegated - the repo forbids inline click handlers.
-	$(document).on('click', '[data-export="values"]', function() {
+	// Delegated - the repo forbids inline click handlers. Deliberately plain
+	// DOM, not jQuery: this block is an inline <script>, so it runs during
+	// parsing, while vendor/jquery is loaded with `defer` and does not execute
+	// until parsing finishes. Binding with $ here threw "$ is not defined" and
+	// left the export button dead (2026-08-22).
+	document.addEventListener('click', function (e) {
+		if (!e.target.closest('[data-export="values"]')) return;
 		exportValuesToCSV('TweetFeed.csv');
 	});
 	</script>
