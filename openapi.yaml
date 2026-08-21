@@ -993,6 +993,43 @@ components:
               description: |
                 `true` when the looked-up value is a bogon/reserved-range
                 address. Other fields are absent in that case.
+            drop:
+              type: object
+              description: |
+                Optional. Present only when this IP's network has a hit in
+                The Spamhaus Project's DROP/ASN-DROP netblock lists (a
+                droplet-side sidecar refresh, independent of ipinfo.io
+                above); absent means no hit was found, never "verified
+                clean". `cidr` and `asn` are two independent checks - either,
+                both, or neither may be present. A hit flags the NETWORK
+                hosting this IP, not the IOC value itself.
+              properties:
+                cidr:
+                  type: object
+                  description: |
+                    Present when the IP falls inside a netblock listed on
+                    Spamhaus's DROP (Don't Route Or Peer) list.
+                  properties:
+                    sblid:
+                      type: string
+                      description: |
+                        Spamhaus SBL reference id for the listed netblock,
+                        e.g. "SBL627127".
+                asn:
+                  type: object
+                  description: |
+                    Present when this IP's ASN is listed on Spamhaus's
+                    ASN-DROP list. Carries no sblid - ASN-DROP entries are
+                    referenced by ASN, not by SBL id.
+                  properties:
+                    asn:
+                      type: integer
+                      description: The flagged ASN number.
+                    asname:
+                      type: string
+                      description: |
+                        AS name as published by Spamhaus. May be absent even
+                        when the asn block itself is present.
         reg:
           type: object
           description: |
