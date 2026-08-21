@@ -42,10 +42,10 @@
 	<link href="../css/index.css?v=47" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=47" rel="stylesheet">
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
@@ -132,7 +132,7 @@
 		}
 		.skip-link:focus {
 			top: 0;
-			outline: 2px solid #4682B4;
+			outline: 2px solid #3a6f96;
 			outline-offset: -2px;
 		}
 	</style>
@@ -261,9 +261,10 @@
 					</ul>
 				</details>
 				<script>
-					/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js is
-					   referenced WITHOUT a ?v= on 54 of 56 pages, so anything added there would
-					   never reach a warm cache. Inline also means no FOUC.
+					/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=4
+					   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
+					   56th) does not load it at all, so anything added there would never reach
+					   that page. Inline also means no FOUC.
 					   The markup ships `open`, so desktop and any JS-disabled browser get the
 					   full list with no CSS trickery. CSS cannot close it: a closed <details>
 					   is hidden by the UA through its slot, and an author-level display:block
@@ -466,7 +467,7 @@
 								<a href="../tag/phishing/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#phishing</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">40,809 hits last year &middot; 7,722 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">40,832 hits last year &middot; 7,750 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Phishing infrastructure observed by public Twitter/X researchers</div>
 								</a>
@@ -476,7 +477,7 @@
 								<a href="../tag/c2/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#C2</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">9,529 hits last year &middot; 164 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">9,532 hits last year &middot; 167 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Command and Control servers (URLs, IPs, domains)</div>
 								</a>
@@ -486,7 +487,7 @@
 								<a href="../tag/scam/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#scam</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">5,575 hits last year &middot; 53 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">5,574 hits last year &middot; 55 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Fraud and scam infrastructure (fake stores, crypto, romance, giveaways)</div>
 								</a>
@@ -496,7 +497,7 @@
 								<a href="../tag/malware/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#malware</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">2,809 hits last year &middot; 545 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">2,824 hits last year &middot; 560 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Malware-hosting URLs, domains and IPs</div>
 								</a>
@@ -506,7 +507,7 @@
 								<a href="../tag/apt/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#APT</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">1,687 hits last year &middot; 145 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">1,685 hits last year &middot; 145 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">APT infrastructure (URLs, domains, IPs, hashes)</div>
 								</a>
@@ -526,7 +527,7 @@
 								<a href="../tag/stealer/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#stealer</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">733 hits last year &middot; 45 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">734 hits last year &middot; 46 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Infostealer infrastructure (URLs, domains, IPs, hashes)</div>
 								</a>

@@ -49,10 +49,10 @@
 	<link href="../../css/index.css?v=47" rel="stylesheet">
 	<link href="../../css/tooltip.css" rel="stylesheet">
 	<link href="../../css/tweetfeed.css?v=47" rel="stylesheet">
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -124,8 +124,15 @@
 		}
 		.skip-link:focus {
 			top: 0;
-			outline: 2px solid #4682B4;
+			outline: 2px solid #3a6f96;
 			outline-offset: -2px;
+		}
+		/* The desktop navbar is fixed-top at 56px and nothing compensates for
+		   it, so every anchor on this campaign_page.html.j2 page used to land
+		   underneath it. Same fix as feeds/index.html. */
+		@media (min-width: 992px) {
+			#content [id]:target,
+			#content h2[id], #content h3[id], #content section[id] { scroll-margin-top: 72px; }
 		}
 	</style>
 	<!-- Page Wrapper -->
@@ -210,7 +217,7 @@
 								<thead><tr><th>Domain</th></tr></thead>
 								<tbody>
 									{% for d in c.domains %}<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="{{ d.value_full }}"><i class="tf-copy far fa-copy" data-copy="{{ d.value_full }}" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>{{ d.value_display }}</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="{{ d.value_full }}"><i class="tf-copy far fa-copy" data-copy="{{ d.value_full }}" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>{{ d.value_display }}</td>
 									</tr>
 									{% endfor %}</tbody>
 							</table>
@@ -247,7 +254,7 @@
 								</thead>
 								<tbody>
 									{% for i in c.infra %}<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ i.org }}">{{ i.org }}</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ i.org }}">{{ i.org }}</td>
 										<td style="font-size:13px; vertical-align:middle;">{{ i.ip_count }}</td>
 										<td style="font-size:13px; vertical-align:middle;">{{ i.country }}</td>
 									</tr>
@@ -286,7 +293,7 @@
 									{% for s in iocs %}<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ s.date_short }}</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:{{ s.type_color }}; color:{{ s.type_text_color }}; border-radius:3px;">{{ s.type }}</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ s.value_full }}"><i class="tf-copy far fa-copy" data-copy="{{ s.value_full }}" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>{{ s.value_display }}</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ s.value_full }}"><i class="tf-copy far fa-copy" data-copy="{{ s.value_full }}" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>{{ s.value_display }}</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/{{ s.user }}" target="_blank" rel="noopener noreferrer">@{{ s.user }}</a></td>
 									</tr>
 									{% endfor %}</tbody>

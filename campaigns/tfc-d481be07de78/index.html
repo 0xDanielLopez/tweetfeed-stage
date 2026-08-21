@@ -47,10 +47,10 @@
 	<link href="../../css/index.css?v=47" rel="stylesheet">
 	<link href="../../css/tooltip.css" rel="stylesheet">
 	<link href="../../css/tweetfeed.css?v=47" rel="stylesheet">
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -132,7 +132,7 @@
 		}
 		.skip-link:focus {
 			top: 0;
-			outline: 2px solid #4682B4;
+			outline: 2px solid #3a6f96;
 			outline-offset: -2px;
 		}
 	</style>
@@ -263,9 +263,10 @@
 						</ul>
 					</details>
 					<script>
-						/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js is
-						   referenced WITHOUT a ?v= on 54 of 56 pages, so anything added there would
-						   never reach a warm cache. Inline also means no FOUC.
+						/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=4
+						   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
+						   56th) does not load it at all, so anything added there would never reach
+						   that page. Inline also means no FOUC.
 						   The markup ships `open`, so desktop and any JS-disabled browser get the
 						   full list with no CSS trickery. CSS cannot close it: a closed <details>
 						   is hidden by the UA through its slot, and an author-level display:block
@@ -357,43 +358,43 @@
 								<thead><tr><th>Domain</th></tr></thead>
 								<tbody>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="ethercdnns.beer"><i class="tf-copy far fa-copy" data-copy="ethercdnns.beer" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>ethercdnns.beer</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="ethercdnns.beer"><i class="tf-copy far fa-copy" data-copy="ethercdnns.beer" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>ethercdnns.beer</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="getpixeltap.com"><i class="tf-copy far fa-copy" data-copy="getpixeltap.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>getpixeltap.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="getpixeltap.com"><i class="tf-copy far fa-copy" data-copy="getpixeltap.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>getpixeltap.com</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="globalexshipping.com"><i class="tf-copy far fa-copy" data-copy="globalexshipping.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>globalexshipping.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="globalexshipping.com"><i class="tf-copy far fa-copy" data-copy="globalexshipping.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>globalexshipping.com</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="glostingsolutions.shop"><i class="tf-copy far fa-copy" data-copy="glostingsolutions.shop" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>glostingsolutions.shop</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="glostingsolutions.shop"><i class="tf-copy far fa-copy" data-copy="glostingsolutions.shop" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>glostingsolutions.shop</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="ldnscreatejs.beer"><i class="tf-copy far fa-copy" data-copy="ldnscreatejs.beer" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>ldnscreatejs.beer</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="ldnscreatejs.beer"><i class="tf-copy far fa-copy" data-copy="ldnscreatejs.beer" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>ldnscreatejs.beer</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="lnkxyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="lnkxyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>lnkxyzblue.dpdns.org</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="lnkxyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="lnkxyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>lnkxyzblue.dpdns.org</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="neiwteamcdn.beer"><i class="tf-copy far fa-copy" data-copy="neiwteamcdn.beer" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>neiwteamcdn.beer</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="neiwteamcdn.beer"><i class="tf-copy far fa-copy" data-copy="neiwteamcdn.beer" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>neiwteamcdn.beer</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="ownnewstoday.live"><i class="tf-copy far fa-copy" data-copy="ownnewstoday.live" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>ownnewstoday.live</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="ownnewstoday.live"><i class="tf-copy far fa-copy" data-copy="ownnewstoday.live" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>ownnewstoday.live</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="pub-32e2f642271c45008a1601bacbdfd3f1.r2.dev"><i class="tf-copy far fa-copy" data-copy="pub-32e2f642271c45008a1601bacbdfd3f1.r2.dev" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>pub-32e2f642271c45008a1601bacbdfd3f1.r2.dev</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="pub-32e2f642271c45008a1601bacbdfd3f1.r2.dev"><i class="tf-copy far fa-copy" data-copy="pub-32e2f642271c45008a1601bacbdfd3f1.r2.dev" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>pub-32e2f642271c45008a1601bacbdfd3f1.r2.dev</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="siege-close.com"><i class="tf-copy far fa-copy" data-copy="siege-close.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>siege-close.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="siege-close.com"><i class="tf-copy far fa-copy" data-copy="siege-close.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>siege-close.com</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="testmyopinion.live"><i class="tf-copy far fa-copy" data-copy="testmyopinion.live" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>testmyopinion.live</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="testmyopinion.live"><i class="tf-copy far fa-copy" data-copy="testmyopinion.live" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>testmyopinion.live</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="vericredi.com.br"><i class="tf-copy far fa-copy" data-copy="vericredi.com.br" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>vericredi.com.br</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="vericredi.com.br"><i class="tf-copy far fa-copy" data-copy="vericredi.com.br" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>vericredi.com.br</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle;" title="xyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="xyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>xyzblue.dpdns.org</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle;" title="xyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="xyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>xyzblue.dpdns.org</td>
 									</tr>
 									</tbody>
 							</table>
@@ -428,22 +429,22 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="AS51167 Contabo GmbH">AS51167 Contabo GmbH</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="AS51167 Contabo GmbH">AS51167 Contabo GmbH</td>
 										<td style="font-size:13px; vertical-align:middle;">2</td>
 										<td style="font-size:13px; vertical-align:middle;">FR</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="AS132203 Tencent Building, Kejizhongyi Avenue">AS132203 Tencent Building, Kejizhongyi Avenue</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="AS132203 Tencent Building, Kejizhongyi Avenue">AS132203 Tencent Building, Kejizhongyi Avenue</td>
 										<td style="font-size:13px; vertical-align:middle;">1</td>
 										<td style="font-size:13px; vertical-align:middle;">SG</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="AS14315 1GSERVERS, LLC">AS14315 1GSERVERS, LLC</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="AS14315 1GSERVERS, LLC">AS14315 1GSERVERS, LLC</td>
 										<td style="font-size:13px; vertical-align:middle;">1</td>
 										<td style="font-size:13px; vertical-align:middle;">US</td>
 									</tr>
 									<tr>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="AS44592 SkyLink Data Center BV">AS44592 SkyLink Data Center BV</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="AS44592 SkyLink Data Center BV">AS44592 SkyLink Data Center BV</td>
 										<td style="font-size:13px; vertical-align:middle;">1</td>
 										<td style="font-size:13px; vertical-align:middle;">DE</td>
 									</tr>
@@ -482,151 +483,151 @@
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 11, 06:05</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://169.58.82.229"><i class="tf-copy far fa-copy" data-copy="http://169.58.82.229" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://169.58.82.229</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://169.58.82.229"><i class="tf-copy far fa-copy" data-copy="http://169.58.82.229" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://169.58.82.229</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/etugenio" target="_blank" rel="noopener noreferrer">@etugenio</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 11, 06:05</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px;">ip</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="169.58.82.229"><i class="tf-copy far fa-copy" data-copy="169.58.82.229" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>169.58.82.229</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="169.58.82.229"><i class="tf-copy far fa-copy" data-copy="169.58.82.229" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>169.58.82.229</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/etugenio" target="_blank" rel="noopener noreferrer">@etugenio</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 17:41</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="vericredi.com.br"><i class="tf-copy far fa-copy" data-copy="vericredi.com.br" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>vericredi.com.br</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="vericredi.com.br"><i class="tf-copy far fa-copy" data-copy="vericredi.com.br" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>vericredi.com.br</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/Malwarehunterr" target="_blank" rel="noopener noreferrer">@Malwarehunterr</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 17:41</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="https://www.vericredi.com.br"><i class="tf-copy far fa-copy" data-copy="https://www.vericredi.com.br" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>https://www.vericredi.com.br</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="https://www.vericredi.com.br"><i class="tf-copy far fa-copy" data-copy="https://www.vericredi.com.br" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>https://www.vericredi.com.br</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/Malwarehunterr" target="_blank" rel="noopener noreferrer">@Malwarehunterr</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 17:41</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="https://vericredi.com.br/wp-admin/admin-ajax.php?action=splash_dl"><i class="tf-copy far fa-copy" data-copy="https://vericredi.com.br/wp-admin/admin-ajax.php?action=splash_dl" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>https://vericredi.com.br/wp-admin/admin-ajax.php?action=spla...</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="https://vericredi.com.br/wp-admin/admin-ajax.php?action=splash_dl"><i class="tf-copy far fa-copy" data-copy="https://vericredi.com.br/wp-admin/admin-ajax.php?action=splash_dl" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>https://vericredi.com.br/wp-admin/admin-ajax.php?action=spla...</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/Malwarehunterr" target="_blank" rel="noopener noreferrer">@Malwarehunterr</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 17:41</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://45.142.182.137:5050"><i class="tf-copy far fa-copy" data-copy="http://45.142.182.137:5050" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://45.142.182.137:5050</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://45.142.182.137:5050"><i class="tf-copy far fa-copy" data-copy="http://45.142.182.137:5050" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://45.142.182.137:5050</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/Malwarehunterr" target="_blank" rel="noopener noreferrer">@Malwarehunterr</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 17:41</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px;">md5</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="9272ffa08cac1a2542ae48639ce7b247"><i class="tf-copy far fa-copy" data-copy="9272ffa08cac1a2542ae48639ce7b247" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>9272ffa08cac1a2542ae48639ce7b247</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="9272ffa08cac1a2542ae48639ce7b247"><i class="tf-copy far fa-copy" data-copy="9272ffa08cac1a2542ae48639ce7b247" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>9272ffa08cac1a2542ae48639ce7b247</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/Malwarehunterr" target="_blank" rel="noopener noreferrer">@Malwarehunterr</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 17:41</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px;">sha256</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="5573597932a8ab9f1e9b78d7a6754ac135f632c4a8d77dc819154f5a0dd9d77a"><i class="tf-copy far fa-copy" data-copy="5573597932a8ab9f1e9b78d7a6754ac135f632c4a8d77dc819154f5a0dd9d77a" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>5573597932a8ab9f1e9b78d7a6754ac135f632c4a8d77dc819154f5a0dd9...</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="5573597932a8ab9f1e9b78d7a6754ac135f632c4a8d77dc819154f5a0dd9d77a"><i class="tf-copy far fa-copy" data-copy="5573597932a8ab9f1e9b78d7a6754ac135f632c4a8d77dc819154f5a0dd9d77a" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>5573597932a8ab9f1e9b78d7a6754ac135f632c4a8d77dc819154f5a0dd9...</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/Malwarehunterr" target="_blank" rel="noopener noreferrer">@Malwarehunterr</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 17:41</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px;">ip</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="45.142.182.137"><i class="tf-copy far fa-copy" data-copy="45.142.182.137" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>45.142.182.137</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="45.142.182.137"><i class="tf-copy far fa-copy" data-copy="45.142.182.137" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>45.142.182.137</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/Malwarehunterr" target="_blank" rel="noopener noreferrer">@Malwarehunterr</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 07:27</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px;">md5</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="7549019b787aca9f5a2c5dd1ad0203eb"><i class="tf-copy far fa-copy" data-copy="7549019b787aca9f5a2c5dd1ad0203eb" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>7549019b787aca9f5a2c5dd1ad0203eb</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="7549019b787aca9f5a2c5dd1ad0203eb"><i class="tf-copy far fa-copy" data-copy="7549019b787aca9f5a2c5dd1ad0203eb" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>7549019b787aca9f5a2c5dd1ad0203eb</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 07:19</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="afc_security_report_2026.pdf.lnkxyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="afc_security_report_2026.pdf.lnkxyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>afc_security_report_2026.pdf.lnkxyzblue.dpdns.org</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="afc_security_report_2026.pdf.lnkxyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="afc_security_report_2026.pdf.lnkxyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>afc_security_report_2026.pdf.lnkxyzblue.dpdns.org</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 05:01</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="xyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="xyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>xyzblue.dpdns.org</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="xyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="xyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>xyzblue.dpdns.org</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/etugenio" target="_blank" rel="noopener noreferrer">@etugenio</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 05:01</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://xyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="http://xyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://xyzblue.dpdns.org</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://xyzblue.dpdns.org"><i class="tf-copy far fa-copy" data-copy="http://xyzblue.dpdns.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://xyzblue.dpdns.org</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/etugenio" target="_blank" rel="noopener noreferrer">@etugenio</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 05:01</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://43.156.228.149"><i class="tf-copy far fa-copy" data-copy="http://43.156.228.149" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://43.156.228.149</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://43.156.228.149"><i class="tf-copy far fa-copy" data-copy="http://43.156.228.149" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://43.156.228.149</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/etugenio" target="_blank" rel="noopener noreferrer">@etugenio</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 10, 05:01</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px;">ip</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="43.156.228.149"><i class="tf-copy far fa-copy" data-copy="43.156.228.149" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>43.156.228.149</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="43.156.228.149"><i class="tf-copy far fa-copy" data-copy="43.156.228.149" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>43.156.228.149</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/etugenio" target="_blank" rel="noopener noreferrer">@etugenio</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://glostingsolutions.shop"><i class="tf-copy far fa-copy" data-copy="http://glostingsolutions.shop" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://glostingsolutions.shop</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://glostingsolutions.shop"><i class="tf-copy far fa-copy" data-copy="http://glostingsolutions.shop" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://glostingsolutions.shop</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://docusignlogin.globalexshipping.com"><i class="tf-copy far fa-copy" data-copy="http://docusignlogin.globalexshipping.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://docusignlogin.globalexshipping.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://docusignlogin.globalexshipping.com"><i class="tf-copy far fa-copy" data-copy="http://docusignlogin.globalexshipping.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://docusignlogin.globalexshipping.com</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://167.86.82.141"><i class="tf-copy far fa-copy" data-copy="http://167.86.82.141" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://167.86.82.141</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://167.86.82.141"><i class="tf-copy far fa-copy" data-copy="http://167.86.82.141" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://167.86.82.141</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://137.175.30.36"><i class="tf-copy far fa-copy" data-copy="http://137.175.30.36" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://137.175.30.36</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://137.175.30.36"><i class="tf-copy far fa-copy" data-copy="http://137.175.30.36" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://137.175.30.36</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="glostingsolutions.shop"><i class="tf-copy far fa-copy" data-copy="glostingsolutions.shop" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>glostingsolutions.shop</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="glostingsolutions.shop"><i class="tf-copy far fa-copy" data-copy="glostingsolutions.shop" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>glostingsolutions.shop</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="docusignlogin.globalexshipping.com"><i class="tf-copy far fa-copy" data-copy="docusignlogin.globalexshipping.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>docusignlogin.globalexshipping.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="docusignlogin.globalexshipping.com"><i class="tf-copy far fa-copy" data-copy="docusignlogin.globalexshipping.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>docusignlogin.globalexshipping.com</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px;">md5</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="9d3bb42d996476bd1e672b9bc6a6d88e"><i class="tf-copy far fa-copy" data-copy="9d3bb42d996476bd1e672b9bc6a6d88e" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>9d3bb42d996476bd1e672b9bc6a6d88e</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="9d3bb42d996476bd1e672b9bc6a6d88e"><i class="tf-copy far fa-copy" data-copy="9d3bb42d996476bd1e672b9bc6a6d88e" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>9d3bb42d996476bd1e672b9bc6a6d88e</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px;">md5</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="796a88349395366586f8f1c4624a3aaa"><i class="tf-copy far fa-copy" data-copy="796a88349395366586f8f1c4624a3aaa" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>796a88349395366586f8f1c4624a3aaa</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="796a88349395366586f8f1c4624a3aaa"><i class="tf-copy far fa-copy" data-copy="796a88349395366586f8f1c4624a3aaa" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>796a88349395366586f8f1c4624a3aaa</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px;">ip</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="167.86.82.141"><i class="tf-copy far fa-copy" data-copy="167.86.82.141" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>167.86.82.141</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="167.86.82.141"><i class="tf-copy far fa-copy" data-copy="167.86.82.141" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>167.86.82.141</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 09, 20:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px;">ip</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="137.175.30.36"><i class="tf-copy far fa-copy" data-copy="137.175.30.36" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>137.175.30.36</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="137.175.30.36"><i class="tf-copy far fa-copy" data-copy="137.175.30.36" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>137.175.30.36</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/skocherhan" target="_blank" rel="noopener noreferrer">@skocherhan</a></td>
 									</tr>
 									</tbody>
