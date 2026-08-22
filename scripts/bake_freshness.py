@@ -167,9 +167,14 @@ def bake_malicious_page(dirname: str, noun: str, count: int, generated_dt: datet
     iso_ts = generated_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
     date_str = generated_dt.strftime("%Y-%m-%d %H:%M UTC")
 
+    # No negative margin. The first version used margin-top:-0.5rem and the
+    # line rendered 8px INSIDE the preceding .row (measured on stage: line
+    # top 906 against the row's bottom 914), which is the same
+    # "a card sitting on another" spacing fault this repo already fixed once.
+    # font-family is not set either: body is already Rubik, so it was a
+    # redundant third copy of a value defined in the stylesheet.
     line = (
-        '\t\t\t\t<p style="color:#737373; font-size:13px; font-family:\'Rubik\',sans-serif; '
-        'margin-top:-0.5rem; margin-bottom:1.5rem;">'
+        '\t\t\t\t<p style="color:#737373; font-size:13px; margin-bottom:1.5rem;">'
         f"Currently tracking {count:,} {noun} reported in the last 30 days. "
         f"Data generated {date_str}.</p>"
     )
