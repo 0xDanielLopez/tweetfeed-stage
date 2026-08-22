@@ -167,6 +167,12 @@ def bake_malicious_page(dirname: str, noun: str, count: int, generated_dt: datet
     iso_ts = generated_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
     date_str = generated_dt.strftime("%Y-%m-%d %H:%M UTC")
 
+    # Worth keeping even though the stats row right above appears to say the
+    # same thing to a human: that row is a literal `-` placeholder in the
+    # served HTML (class mu-today/mu-week/... filled by JS on load), so a
+    # crawler sees NO number on this page at all. This line is the only
+    # machine-visible count, which is the whole point of baking it.
+    #
     # No negative margin. The first version used margin-top:-0.5rem and the
     # line rendered 8px INSIDE the preceding .row (measured on stage: line
     # top 906 against the row's bottom 914), which is the same
@@ -174,7 +180,7 @@ def bake_malicious_page(dirname: str, noun: str, count: int, generated_dt: datet
     # font-family is not set either: body is already Rubik, so it was a
     # redundant third copy of a value defined in the stylesheet.
     line = (
-        '\t\t\t\t<p style="color:#737373; font-size:13px; margin-bottom:1.5rem;">'
+        '\t\t\t\t<p style="color:#737373; font-size:13px; margin-top:0.75rem; margin-bottom:1.5rem;">'
         f"Currently tracking {count:,} {noun} reported in the last 30 days. "
         f"Data generated {date_str}.</p>"
     )
