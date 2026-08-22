@@ -63,7 +63,12 @@
    1rem size, not for semantics - fixed to <h3> (C4, 2026-08-20) so the page
    gets a real h1 > h2 > h3 outline. This rule pins the pre-existing visual
    size so the fix is semantics-only, not a redesign. */
-.tf-graph-card-title { font-size: 1rem; }
+/* Colour, 2026-08-22: these 20 card titles carried Bootstrap's
+   .text-primary, i.e. #4e73df !important - the third blue nobody chose,
+   the same one `a { color: #3a6f96 }` further down exists to fight. It was
+   the only place on the site still painting it. The class now owns the
+   colour so the utility is not needed and cannot out-!important it. */
+.tf-graph-card-title { font-size: 1rem; color: #1178b3; }
 
 /* Tweet column wrapper (responsive 1/2/3/4 grid). 8 px padding so the
    embedded iframes don't touch each other on the dashboard. */
@@ -391,11 +396,43 @@ hr.divider {
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
 
-/* Section heading replacing inline style="color:#1DA1F2;font-family:'Segoe UI'...". */
+/* Section heading replacing inline style="color:#1DA1F2;font-family:'Segoe UI'...".
+
+   FAMILY, 2026-08-22. This used to carry over the 'Segoe UI', Arial stack from
+   the inline styles it replaced, and nobody ever chose it: Segoe UI ships with
+   Windows and is not loaded by the site, so every section heading on all 50
+   pages rendered in whatever the visitor's machine happened to have - Segoe on
+   Windows, Arial on Linux and macOS. Measured on the live site: .section-heading
+   computed to "Segoe UI", Arial, sans-serif while the hero above it was Alegreya
+   and the paragraph below it was Rubik, so the site was showing THREE typefaces,
+   one of them machine-dependent. It is Rubik now, which is what body copy, the
+   navbar and the footer already ask for by name. Alegreya Sans SC stays the
+   display face for .toph1 and .cardTitle only. Two fonts, no system fallback. */
 .section-heading {
 	color: #1178b3;
-	font-family: 'Segoe UI', Arial, sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 600;
+}
+
+/* SIZE. .section-heading deliberately carries no font-size and no margin: the
+   two modifiers below supply them, so a page can opt a heading into either rank
+   without the shared rule dictating one. Site scale: 42 (h1) / 28 (block) /
+   20 (section) / 22 (FAQ, set by .faq-section below).
+
+   These replace five byte-identical private copies that had drifted apart -
+   .fds-block-head/.fds-sect-head (feeds), .agt-block-head/.agt-sect-head
+   (agents), .hnt-group > .section-heading at 22px (hunt), .section-heading at
+   1.3rem (about) and h2.section-heading at 28px (the campaign template plus its
+   generated pages). Same values, five names, four different sizes for the same
+   visual rank.
+
+   scroll-margin-top clears the 56px fixed-top bar plus breathing room; without
+   it an in-page anchor lands behind the navbar. /hunt/ still needs its own 120px
+   override in the narrow media query because its filter row is sticky on top. */
+.tf-block-head { font-size: 28px; margin: 0 0 0.35rem; }
+.tf-sect-head  { font-size: 20px; margin: 2rem 0 0.5rem; }
+@media (min-width: 992px) {
+	.tf-block-head, .tf-sect-head { scroll-margin-top: 72px; }
 }
 
 /* Reference-page prose (/api/, /agents/). Neither page uses the .docs-wrap
@@ -474,7 +511,7 @@ hr.divider {
 }
 .agent-option-card .agent-option-title {
 	color: #1178b3;
-	font-family: 'Segoe UI', Arial, sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 600;
 	font-size: 18px;
 	margin-bottom: 0.4rem;
@@ -533,7 +570,7 @@ p.agent-option-note {
 .faq-section > h3 {
 	font-size: 22px;
 	color: #1178b3;
-	font-family: 'Segoe UI', Arial, sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 600;
 	margin: 0 0 1rem 0;
 }

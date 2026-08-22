@@ -44,12 +44,12 @@
 	<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../../css/table.css?v=4" rel="stylesheet">
-	<link href="../../css/index.css?v=48" rel="stylesheet">
-	<link href="../../css/tweetfeed.css?v=48" rel="stylesheet">
+	<link href="../../css/index.css?v=50" rel="stylesheet">
+	<link href="../../css/tweetfeed.css?v=50" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -134,12 +134,6 @@
 			outline: 2px solid #3a6f96;
 			outline-offset: -2px;
 		}
-		/* Section headings were promoted from h3 to h2 (h1->h3 skipped a
-		   level). .section-heading sets no font-size on purpose, so without
-		   this the h2 would inherit Bootstrap's 2rem instead of the 1.75rem
-		   (28px, measured) these sections rendered at as h3 - pin it so the
-		   heading-level fix doesn't also change the visual size. */
-		h2.section-heading { font-size: 28px; }
 	</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -305,7 +299,7 @@
 				<!-- ============================================================ -->
 				<!-- IOCS BY WINDOW (BAKED, NOT LIVE)                              -->
 				<!-- ============================================================ -->
-				<h2 class="section-heading">Campaign stats</h2>
+				<h2 class="section-heading tf-block-head">Campaign stats</h2>
 				<div class="row">
 					<div class="col-md-4 col-sm-6 col-12">
 						<div class="card shadow mb-4">
@@ -343,7 +337,7 @@
 				<!-- ============================================================ -->
 				<!-- ABOUT THIS TAG                                                -->
 				<!-- ============================================================ -->
-				<h2 class="section-heading">About this campaign</h2>
+				<h2 class="section-heading tf-block-head">About this campaign</h2>
 				<div class="card mb-4">
 					<div class="card-body">
 						<p style="margin-bottom:0; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">AdaptixC2 framework infrastructure includes two domains - aidsp.top and controllerscompetiv5.com - plus a C2 IP at 194.59.31.175 listening on port 4444. The ns1/ns2 subdomain pattern on aidsp.top indicates it also serves as an authoritative name server for the campaign&#x27;s C2 domains. Two researchers reported 11 IOCs on 2026-08-09.</p>
@@ -353,7 +347,7 @@
 				<!-- ============================================================ -->
 				<!-- DOMAINS IN THIS CAMPAIGN                                      -->
 				<!-- ============================================================ -->
-				<h2 class="section-heading">Domains in this campaign</h2>
+				<h2 class="section-heading tf-block-head">Domains in this campaign</h2>
 				<div class="card mb-4">
 					<div class="card-body">
 						
@@ -381,7 +375,7 @@
 				<!-- (majority case - most campaigns are domain/URL-heavy).       -->
 				<!-- ============================================================ -->
 				
-				<h2 class="section-heading">Infrastructure footprint</h2>
+				<h2 class="section-heading tf-block-head">Infrastructure footprint</h2>
 				<div class="card mb-4">
 					<div class="card-body">
 						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">1 IP across 1 network in this campaign:</p>
@@ -415,7 +409,7 @@
 				<!-- ============================================================ -->
 				<!-- IOCS IN THIS CAMPAIGN (BAKED FROM API AT BUILD TIME)          -->
 				<!-- ============================================================ -->
-				<h2 class="section-heading">IOCs in this campaign</h2>
+				<h2 class="section-heading tf-block-head">IOCs in this campaign</h2>
 				<div class="card mb-4">
 					<div class="card-body">
 						
@@ -513,7 +507,7 @@
 				<!-- ============================================================ -->
 				<!-- EXPLORE MORE                                                  -->
 				<!-- ============================================================ -->
-				<h2 class="section-heading">Explore more</h2>
+				<h2 class="section-heading tf-block-head">Explore more</h2>
 				<div class="card mb-4">
 					<div class="card-body">
 						<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0;">See all active campaigns on the <a href="../../campaigns/" class="text-decoration-none">Campaigns</a> page, or browse the full <a href="../../feeds/" class="text-decoration-none">IOC feed</a>.</p>
@@ -523,7 +517,7 @@
 				<!-- ============================================================ -->
 				<!-- LICENSE                                                       -->
 				<!-- ============================================================ -->
-				<h2 class="section-heading">License</h2>
+				<h2 class="section-heading tf-block-head">License</h2>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
 					This campaign's IOC data: <b>CC0 1.0 Public Domain</b>. No attribution required, no warranty. Campaign descriptions are AI-generated from the underlying IOC data and may contain errors - verify before acting on them. Source code for the pipeline:
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/TweetFeed">github.com/0xDanielLopez/TweetFeed</a> (MIT).
