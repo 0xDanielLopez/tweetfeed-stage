@@ -519,20 +519,30 @@
 		}
 		.tfc-rows { border: 1px solid black; border-radius: 3px; background: #fff; margin-bottom: 1.5rem; }
 		.tfc-row { border-top: 1px solid black; }
-		.tfc-row:first-child { border-top: 0; }
+		/* Position classes below (.tfc-row-pos-first/-topline/-right) replace
+		   what used to be :nth-child/first-child selectors. Those counted DOM
+		   position, which broke as soon as a confidence/activity filter hid
+		   rows out of visual order - the visually-first item on screen could
+		   be any DOM child once earlier siblings are display:none. These
+		   classes are assigned at RUNTIME by updateRowPositions() (page
+		   script below), which walks the currently-visible rows in order and
+		   simulates the grid's own 2-column auto-placement; a markup/selector
+		   grep for them will find nothing here because they never appear in
+		   any HTML this file emits. */
+		.tfc-row-pos-first { border-top: 0; }
 		/* ── Two-column grid at >=992px ────────────────────────────────
 		   Measured 2026-08-19: 15 compact rows were 1058px wide and 44-45px
 		   tall each (674px total), with the row title ending near x=740 and
 		   ~700px of dead space before the mini-bar. Two columns fills that
-		   width and drops the same 15 rows to ~350px. Border logic moves
-		   from adjacent-sibling to nth-child because a grid fills
-		   left-to-right: the first VISUAL row is items 1 AND 2, not just
-		   item 1, and every second item needs a divider on its left instead
-		   of a top border. */
+		   width and drops the same 15 rows to ~350px. Border placement can't
+		   use :nth-child/adjacent-sibling here (see updateRowPositions()
+		   comment above .tfc-row-pos-first) - every second visible item on
+		   the first visual line needs its top border dropped too, and every
+		   item landing in the right column needs a divider on its left. */
 		@media (min-width: 992px) {
 			.tfc-rows { display: grid; grid-template-columns: repeat(2, 1fr); }
-			.tfc-row:nth-child(-n+2) { border-top: 0; }
-			.tfc-row:nth-child(even) { border-left: 1px solid black; }
+			.tfc-row-pos-topline { border-top: 0; }
+			.tfc-row-pos-right { border-left: 1px solid black; }
 			/* Grid items default to min-width:auto, which sizes a track by
 			   its content's min-content width, not the 1fr share. A long
 			   campaign name in .tfc-row-name (white-space:nowrap for the
@@ -875,6 +885,7 @@
 
 				<div id="campaignsError" class="alert alert-danger" style="display:none;" role="alert">
 					<i class="fas fa-exclamation-circle"></i> Could not load campaign data right now. Please try again later.
+					<button type="button" class="btn btn-sm btn-outline-danger tfc-retry">Retry</button>
 				</div>
 
 				<div class="empty-state" id="campaignsEmpty" style="display:none;">
@@ -1031,6 +1042,12 @@
 		'use strict';
 
 		var CAMPAIGNS_URL = 'https://api.tweetfeed.live/v1/campaigns';
+		// The raw campaign array from the last successful render, indexed the
+		// same way as each card/row's data-idx attribute. applyFilters() reads
+		// back through this to recompute the headline stats over only the
+		// currently-visible campaigns, without re-parsing the DOM it just
+		// filtered.
+		var allCampaigns = [];
 		var IOC_TYPE_COLORS = { url: '#0026E6', domain: '#3399FF', ip: '#02bf0f', md5: '#FFC34D', sha256: '#FFC34D' };
 		var IOC_TYPE_DARK_TEXT = { md5: true, sha256: true };
 		// Campaign ids are a fixed-shape fingerprint ("tfc-" + 12 hex chars,
@@ -1243,27 +1260,33 @@
 		}
 
 		// Shared attributes so a compact row is filtered exactly like a card.
-		function campaignAttrs(c) {
+		// idx is this campaign's position in the `campaigns` array as delivered
+		// by the API (set on allCampaigns in renderCampaigns) - carried as
+		// data-idx so applyFilters() can map a visible card/row straight back
+		// to its source object without re-deriving it from rendered text.
+		function campaignAttrs(c, idx) {
 			var esc = TweetFeed.escapeHtml;
 			var conf = (c.confidence || 'low').toLowerCase();
 			if (['high', 'medium', 'low'].indexOf(conf) === -1) conf = 'low';
 			var rawId = typeof c.id === 'string' ? c.id : '';
 			var validId = CAMPAIGN_ID_RE.test(rawId) ? rawId : '';
 			var isActive = (typeof c.ioc_count_7d === 'number') ? (c.ioc_count_7d > 0) : true;
+			var safeIdx = (typeof idx === 'number' && idx >= 0) ? idx : -1;
 			return {
 				conf: conf,
 				validId: validId,
 				idAttr: validId ? ' id="' + esc(validId) + '"' : '',
 				isActive: isActive,
-				dataAttrs: ' data-confidence="' + conf + '" data-active="' + (isActive ? '1' : '0') + '"'
+				dataAttrs: ' data-confidence="' + conf + '" data-active="' + (isActive ? '1' : '0') + '" data-idx="' + safeIdx + '"'
 			};
 		}
 
 		// maxIocs is the largest ioc_count among the full-card group (7 cards,
 		// 2026-08-19); the type bar below scales against it, not the page max.
-		function renderFullCard(c, maxIocs) {
+		// idx is the campaign's index into allCampaigns - see campaignAttrs().
+		function renderFullCard(c, maxIocs, idx) {
 			var esc = TweetFeed.escapeHtml;
-			var a = campaignAttrs(c);
+			var a = campaignAttrs(c, idx);
 			var anchorLink = a.validId
 				? '<a class="tfc-anchor-link" href="#' + esc(a.validId) + '" title="Direct link to this campaign" aria-label="Direct link to this campaign"><i class="fas fa-link"></i></a>'
 				: '';
@@ -1304,9 +1327,9 @@
 		// maxIocs is the largest ioc_count within the compact-row group itself
 		// (not the page max): scaling a 38-IOC row's bar against a 405-IOC
 		// card would flatten every row in the tail to the same sliver.
-		function renderCompactRow(c, maxIocs) {
+		function renderCompactRow(c, maxIocs, idx) {
 			var esc = TweetFeed.escapeHtml;
-			var a = campaignAttrs(c);
+			var a = campaignAttrs(c, idx);
 			var types = c.types || {};
 			var keys = Object.keys(types).filter(function(t) { return types[t] > 0; });
 			var total = keys.reduce(function(acc, t) { return acc + types[t]; }, 0);
@@ -1333,6 +1356,47 @@
 			);
 		}
 
+		// Border classes for the compact-row grid are assigned here instead of
+		// via :nth-child (see the CSS comment above .tfc-row-pos-first),
+		// because filtering can hide any row out of DOM order. This simulates
+		// the same 2-column auto-placement the grid itself performs: a normal
+		// row occupies the next open column (0/1, alternating); a row that is
+		// currently expanded (.tfc-row-expanded, grid-column:1/-1) spans the
+		// full line by itself, so it closes whatever line it's on and the row
+		// after it restarts at column 0. Called after every pass that can
+		// change which rows are visible or which one is expanded.
+		function updateRowPositions() {
+			var $rows = $('.tfc-rows .tfc-row');
+			$rows.removeClass('tfc-row-pos-first tfc-row-pos-topline tfc-row-pos-right');
+			var col = 0;
+			var visibleIndex = 0;
+			var firstExpanded = false;
+			$rows.each(function() {
+				var $row = $(this);
+				if ($row.css('display') === 'none') return;
+				var expanded = $row.hasClass('tfc-row-expanded');
+				if (visibleIndex === 0) {
+					$row.addClass('tfc-row-pos-first');
+					firstExpanded = expanded;
+				} else if (visibleIndex === 1 && !firstExpanded) {
+					$row.addClass('tfc-row-pos-topline');
+				}
+				if (expanded) {
+					col = 0;
+				} else {
+					if (col === 1) $row.addClass('tfc-row-pos-right');
+					col = col === 0 ? 1 : 0;
+				}
+				visibleIndex++;
+			});
+			// Below 992px .tfc-row-pos-topline/-right don't exist in any
+			// stylesheet rule (they're declared inside that media block), and
+			// the single column means every row is "first on its own line", so
+			// .tfc-row-pos-first alone (assigned above, unconditionally) already
+			// gives every viewport the border-top:0 it needs on row 1 - no
+			// separate mobile branch required here.
+		}
+
 		// Filtering: client-side show/hide only, no re-fetch. Reads current
 		// state straight from the chip DOM (.active class) rather than
 		// tracking a parallel JS state object. A card shows only if its
@@ -1350,6 +1414,8 @@
 			var $items = $('#campaignsList').find('.tfc-card, .tfc-row');
 			var shown = 0;
 			var rowsShown = 0;
+			var visibleIocSum = 0;
+			var visibleSizesDesc = [];
 			$items.each(function() {
 				var $item = $(this);
 				var conf = $item.attr('data-confidence') || 'low';
@@ -1360,18 +1426,41 @@
 				if (visible) {
 					shown++;
 					if ($item.hasClass('tfc-row')) rowsShown++;
+					var c = allCampaigns[+$item.attr('data-idx')];
+					if (c) {
+						var iocN = (typeof c.ioc_count_30d === 'number') ? c.ioc_count_30d : (c.ioc_count || 0);
+						visibleIocSum += iocN;
+						visibleSizesDesc.push(iocN);
+					}
 				}
 			});
 			$('#campaignsFilterCount').text(shown + ' shown');
 			$('#campaignsFilterEmpty').toggle(shown === 0);
-			// The divider counts what is actually visible below it, so it never
-			// promises rows the filters have hidden. The headline "campaigns
-			// shown" cell follows the same rule - it starts equal to the
-			// default week filter's count, then tracks whatever the reader
-			// actually toggled, so it never contradicts the filter row below it.
+			// The divider (and the bordered box it introduces) count what is
+			// actually visible below it, so neither ever promises rows the
+			// filters have hidden - and the box itself disappears rather than
+			// sitting there empty when every compact row is filtered out.
 			$('.tfc-divider').toggle(rowsShown > 0)
 				.find('.tfc-divider-count').text(rowsShown + ' smaller campaign' + (rowsShown === 1 ? '' : 's'));
+			$('.tfc-rows').toggle(rowsShown > 0);
 			$('#tfcHlShown').text(TweetFeed.numberFormat(shown));
+
+			// "IOCs clustered" and "head weight" follow the same rule: they
+			// used to be computed once in renderCampaigns() over the full
+			// unfiltered payload, which meant the numbers stopped matching the
+			// cards as soon as a reader touched a confidence/activity chip.
+			// Recomputed here, every pass, over only what's currently visible.
+			visibleSizesDesc.sort(function(x, y) { return y - x; });
+			$('#tfcHlIocs').text(TweetFeed.numberFormat(visibleIocSum));
+			$('#tfcHlIocsSub').text('across ' + TweetFeed.numberFormat(shown) + ' campaign' + (shown === 1 ? '' : 's'));
+			var headN = Math.min(2, visibleSizesDesc.length);
+			var headSum = visibleSizesDesc.slice(0, headN).reduce(function(sum, n) { return sum + n; }, 0);
+			var headPct = (headN && visibleIocSum > 0) ? Math.round((headSum / visibleIocSum) * 100) : null;
+			$('#tfcHlHead').text(headPct === null ? '-' : headPct + '%');
+			$('#tfcHlHeadLabel').text('in top ' + headN + ' campaign' + (headN === 1 ? '' : 's'));
+			$('#tfcHlHeadSub').text(headN ? (TweetFeed.numberFormat(headSum) + ' of ' + TweetFeed.numberFormat(visibleIocSum) + ' IOCs') : '');
+
+			updateRowPositions();
 		}
 
 		// Activity chip group behaves like a 2-way radio (unlike the
@@ -1410,6 +1499,7 @@
 				$row.find('.tfc-row-body').prop('hidden', false);
 				$row.find('.tfc-row-head').attr('aria-expanded', 'true').addClass('is-open');
 				$row.addClass('tfc-row-expanded');
+				updateRowPositions();
 			}
 			if (typeof el.scrollIntoView === 'function') {
 				el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1419,7 +1509,22 @@
 		function renderCampaigns(data) {
 			$('#campaignsLoading').hide();
 
-			var campaigns = (data && data.campaigns) || [];
+			// A malformed payload (wrong content-type sniffed as something
+			// else, an API error body, a future breaking schema change) used
+			// to be masked by `(data && data.campaigns) || []`, which rendered
+			// a silent, unexplained "no campaigns" empty state instead of
+			// surfacing the failure. Fail loudly through the same error UI a
+			// network failure already uses.
+			if (!data || !Array.isArray(data.campaigns)) {
+				showError('unexpected payload shape (data.campaigns is missing or not an array)');
+				return;
+			}
+
+			var campaigns = data.campaigns;
+			// Kept at module scope so applyFilters() can map a visible card/row
+			// (via its data-idx) back to the campaign object it was rendered
+			// from, to recompute the headline stats over only what's visible.
+			allCampaigns = campaigns;
 			// Degrades gracefully when ioc_count_7d is absent from the doc
 			// (older API version): every campaign counts as active in that
 			// case, matching renderCampaignCard's data-active default.
@@ -1438,7 +1543,6 @@
 			// same type scale as .tfc-count-num on the cards - stated once, not
 			// twice at two different sizes. The other two numbers (total IOCs,
 			// head weight) are new: neither existed anywhere on the page before.
-			var totalIocs = campaigns.reduce(function(sum, c) { return sum + (c.ioc_count || 0); }, 0);
 			var totalTracked = (data && typeof data.campaign_count === 'number') ? data.campaign_count : campaigns.length;
 			// Same week/month -> days mapping trends/index.html uses for its
 			// own novelty.window field, so the two pages describe a window
@@ -1447,21 +1551,13 @@
 			var windowLabel = 'last ' + (apiWindow === 'week' ? '7 days' : (apiWindow === 'month' ? '30 days' : (apiWindow || '30 days')));
 			$('#tfcHlShown').text(TweetFeed.numberFormat(activeCount));
 			$('#tfcHlShownSub').text(TweetFeed.numberFormat(totalTracked) + ' tracked, ' + windowLabel);
-			$('#tfcHlIocs').text(TweetFeed.numberFormat(totalIocs));
-			$('#tfcHlIocsSub').text('across ' + TweetFeed.numberFormat(campaigns.length) + ' campaign' + (campaigns.length === 1 ? '' : 's'));
-
-			// Head weight: how concentrated the IOC volume is in the largest
-			// campaigns. Measured 2026-08-19: the top 2 campaigns (405 + 307 of
-			// 1,901 total that day) carried 37% of every IOC clustered into any
-			// campaign - a fact the old "domain 35, ip 14..." style prose never
-			// surfaced anywhere on the page.
-			var sizesDesc = campaigns.map(function(c) { return c.ioc_count || 0; }).sort(function(x, y) { return y - x; });
-			var headN = Math.min(2, sizesDesc.length);
-			var headSum = sizesDesc.slice(0, headN).reduce(function(sum, n) { return sum + n; }, 0);
-			var headPct = (headN && totalIocs > 0) ? Math.round((headSum / totalIocs) * 100) : null;
-			$('#tfcHlHead').text(headPct === null ? '-' : headPct + '%');
-			$('#tfcHlHeadLabel').text('in top ' + headN + ' campaign' + (headN === 1 ? '' : 's'));
-			$('#tfcHlHeadSub').text(headN ? (TweetFeed.numberFormat(headSum) + ' of ' + TweetFeed.numberFormat(totalIocs) + ' IOCs') : '');
+			// "IOCs clustered" and "head weight" (how concentrated the volume
+			// is in the top 2 campaigns) used to be computed once, right here,
+			// over the full unfiltered payload. They now live in applyFilters()
+			// instead, recomputed every pass over only the currently-visible
+			// cards/rows, because a reader toggling the confidence/activity
+			// chips should never see numbers that describe campaigns the page
+			// just hid. applyFilters() runs unconditionally below.
 
 			if (data && data.stale) {
 				var since = data.stale_since ? TweetFeed.formatDateLong(data.stale_since) : 'unknown';
@@ -1482,25 +1578,30 @@
 			// the full card, the tail becomes one-line rows that expand. Before
 			// this split every card was 324-375px tall whether the campaign had
 			// 401 IOCs or 6, so 10% of the data took half the page.
+			// Each entry keeps its original index into `campaigns` (== the index
+			// applyFilters() will later find on allCampaigns) alongside the
+			// campaign itself, since the big/small split reorders relative to
+			// the API's delivered order.
 			var big = [];
 			var small = [];
 			campaigns.forEach(function(c, i) {
 				var n = (typeof c.ioc_count === 'number') ? c.ioc_count : 0;
-				if (n >= FULL_CARD_MIN_IOCS || i < FULL_CARD_FLOOR) big.push(c);
-				else small.push(c);
+				var entry = { c: c, i: i };
+				if (n >= FULL_CARD_MIN_IOCS || i < FULL_CARD_FLOOR) big.push(entry);
+				else small.push(entry);
 			});
 			// Each group's own max, not the page max - see the comments on
 			// renderFullCard/renderCompactRow. Wrapped in a closure rather than
 			// passed via .map(fn) directly: .map already passes (item, index,
 			// array), and that index would silently land in the maxIocs slot.
-			var maxBigIocCount = big.reduce(function(m, c) { return Math.max(m, c.ioc_count || 0); }, 0);
-			var maxSmallIocCount = small.reduce(function(m, c) { return Math.max(m, c.ioc_count || 0); }, 0);
-			var html = big.map(function(c) { return renderFullCard(c, maxBigIocCount); }).join('');
+			var maxBigIocCount = big.reduce(function(m, e) { return Math.max(m, e.c.ioc_count || 0); }, 0);
+			var maxSmallIocCount = small.reduce(function(m, e) { return Math.max(m, e.c.ioc_count || 0); }, 0);
+			var html = big.map(function(e) { return renderFullCard(e.c, maxBigIocCount, e.i); }).join('');
 			if (small.length) {
 				html += '<div class="tfc-divider"><span class="tfc-divider-count">' +
 					small.length + ' smaller campaign' + (small.length === 1 ? '' : 's') +
 					'</span></div>';
-				html += '<div class="tfc-rows">' + small.map(function(c) { return renderCompactRow(c, maxSmallIocCount); }).join('') + '</div>';
+				html += '<div class="tfc-rows">' + small.map(function(e) { return renderCompactRow(e.c, maxSmallIocCount, e.i); }).join('') + '</div>';
 			}
 			$('#campaignsList').html(html).show();
 			// Copy buttons need no re-init: utils.js attaches document-level
@@ -1526,11 +1627,23 @@
 			console.error('[TweetFeed] campaigns fetch failed:', msg);
 		}
 
-		$(function() {
+		// Extracted from the page-load $(function(){...}) below so the retry
+		// button can call the exact same fetch, not a copy of it. Resets the
+		// error/loading UI first so a retry after a failure doesn't show both
+		// states stacked on top of each other.
+		function loadCampaigns() {
+			$('#campaignsError').hide();
+			$('#campaignsLoading').show();
 			TweetFeed.safeGet(CAMPAIGNS_URL, {
 				success: renderCampaigns,
 				error: showError
 			});
+		}
+
+		$(function() {
+			loadCampaigns();
+
+			$(document).on('click', '.tfc-retry', loadCampaigns);
 
 			// Delegated on document, like the chips: the list is rebuilt from
 			// scratch on render, and the repo forbids inline onclick=.
@@ -1542,6 +1655,9 @@
 				// Span both grid columns while open - see .tfc-row-expanded in
 				// the <style> block above.
 				$btn.closest('.tfc-row').toggleClass('tfc-row-expanded', !open);
+				// Expanding/collapsing a row can shift every row after it onto
+				// a different visual line - see updateRowPositions().
+				updateRowPositions();
 			});
 
 			$(document).on('click', '.tfc-show-all', function() {
