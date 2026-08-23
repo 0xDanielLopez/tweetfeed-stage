@@ -1076,7 +1076,7 @@
 	<!-- js/demo/datatables-demo.js removed: targets #dataTable, which does not exist on this page (graphs uses #dataTableType*/#dataTableTag* tables, initialized in its own inline script below); confirmed no-op here -->
 	<!-- TweetFeed shared utilities -->
 	<script defer src="../js/config.js"></script>
-	<script defer src="../js/utils.js?v=4"></script>
+	<script defer src="../js/utils.js?v=5"></script>
 	<!-- Page level custom scripts -->
 	<script defer src="../vendor/chart.js/Chart.min.js"></script>
 	<script>
@@ -1162,8 +1162,7 @@
 		}});
 		// Year window: use counts.json (~5 KB) instead of year.csv (~16 MB).
 		// Parsing year.csv on the main thread blocks LCP.
-		TweetFeed.safeGet(TweetFeed.dataUrl('counts.json'), { errorTarget: '#loadingYear', success: function(counts) {
-			if (typeof counts === 'string') counts = JSON.parse(counts);
+		TweetFeed.safeGet(TweetFeed.dataUrl('counts.json'), { dataType: 'json', errorTarget: '#loadingYear', success: function(counts) {
 			let yr = counts.windows.year;
 			$(".lastDateYearFrom").fadeOut(function() {
 				$(this).text("From: " + formatDateLong(yr.first_date)).fadeIn(2000);
