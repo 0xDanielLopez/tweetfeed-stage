@@ -304,6 +304,29 @@
 		.tfc-ioc-row .tf-action {
 			flex-shrink: 0;
 		}
+		/* Per-IOC date + reporter (B4). Date is muted/mono like every other
+		   timestamp on this page; the reporter link reuses the exact
+		   ../search/?user= idiom renderReporters() already uses below, so a
+		   click behaves identically whether it starts from the campaign
+		   footer or an individual sample row. Date drops on mobile at the
+		   same breakpoint .tfc-minibar already uses. */
+		.tfc-ioc-date {
+			flex-shrink: 0;
+			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+			font-size: 10.5px;
+			color: #9a9a9a;
+		}
+		.tfc-ioc-user {
+			flex-shrink: 0;
+			max-width: 110px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 11.5px;
+			color: #6c757d;
+			text-decoration: none;
+		}
+		.tfc-ioc-user:hover { color: #1178b3; text-decoration: underline; }
 		/* Two IOC columns once the content column is wide enough. Each
 		   .tfc-ioc-row is already a self-contained flex row, so this needs no
 		   change to the JS card builder. Measured before: the page was
@@ -473,7 +496,7 @@
 			margin-bottom: 0.6rem;
 		}
 		.tfc-foot-meta { font-family: 'Rubik', sans-serif; font-size: 12.5px; color: #6c757d; }
-		.tfc-reporters-toggle, .tfc-show-all {
+		.tfc-reporters-toggle, .tfc-show-all, .tfc-copy-sample {
 			background: none;
 			border: 0;
 			padding: 0;
@@ -484,8 +507,8 @@
 			text-underline-offset: 2px;
 			cursor: pointer;
 		}
-		.tfc-reporters-toggle:hover, .tfc-show-all:hover { color: #0d5c8a; }
-		.tfc-reporters-toggle:focus-visible, .tfc-show-all:focus-visible,
+		.tfc-reporters-toggle:hover, .tfc-show-all:hover, .tfc-copy-sample:hover { color: #0d5c8a; }
+		.tfc-reporters-toggle:focus-visible, .tfc-show-all:focus-visible, .tfc-copy-sample:focus-visible,
 		.tfc-row-head:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 		.tfc-reporters-list { display: block; margin-top: 0.3rem; }
 		.tfc-reporter, .tfc-reporters-inline a { color: #6c757d; margin-right: 0.4rem; }
@@ -496,6 +519,7 @@
 			gap: 1rem;
 			margin-top: 0.4rem;
 		}
+		.tfc-iocs-actions { display: flex; align-items: baseline; gap: 0.75rem; flex-shrink: 0; }
 
 		/* ── Compact row for the tail ────────────────────────────────────
 		   Measured 2026-08-19: the 11 campaigns with <=22 IOCs were 10% of the
@@ -586,6 +610,20 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
+		/* B1: single apparent-target value on the compact row head (brand, or
+		   sector when there's no brand). Kept to one short value on purpose -
+		   the full breakdown (brand + sector + country) only appears in the
+		   expanded body via renderBody(), where there's room for it. */
+		.tfc-row-target {
+			flex: 0 0 auto;
+			max-width: 140px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 12px;
+			font-family: 'Rubik', sans-serif;
+			color: #737373;
+		}
 		/* Width used to be a fixed 60px, so a 38-IOC campaign and a 6-IOC one
 		   painted the exact same bar - the tail encoded composition but not
 		   size. JS now sets width inline, proportional to ioc_count against
@@ -618,6 +656,8 @@
 			.tfc-count { text-align: left; }
 			.tfc-count-num { font-size: 22px; }
 			.tfc-minibar { display: none; }
+			.tfc-row-target { display: none; }
+			.tfc-ioc-date { display: none; }
 			.tfc-ev-value { white-space: normal; word-break: break-all; }
 		}
 
@@ -680,6 +720,47 @@
 			color: #737373;
 			margin-left: auto;
 		}
+
+		/* B2 sort control: same 1px-border minimal treatment as the filter
+		   chips (border black, radius 3px, Rubik) rather than a bare bootstrap
+		   <select> - search/index.html's selects are plain .form-control in a
+		   form context this page doesn't have, so they aren't a fit here. */
+		.tfc-sort-wrap { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
+		.tfc-sort-select {
+			padding: 3px 8px;
+			border: 1px solid black;
+			border-radius: 3px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 12px;
+			line-height: 1.6;
+			background: #fff;
+			color: #1c1c1c;
+		}
+
+		/* B3 search box: reuses dashboard/index.html's .tag-search-wrap markup
+		   and icon-inset pattern (see css/tweetfeed.css), just narrowed and
+		   stripped of its block margin so it sits inline in a filter row
+		   instead of stacking full-width above a checkbox column. */
+		.tfc-filter-row .tfc-search-wrap {
+			margin-bottom: 0;
+			flex: 0 1 260px;
+			min-width: 160px;
+		}
+		.tfc-filter-row .tfc-search-wrap .tag-search {
+			width: 100%;
+			font-size: 12.5px;
+		}
+		.tfc-search-hint {
+			font-family: 'Rubik', sans-serif;
+			font-size: 11.5px;
+			color: #9a9a9a;
+			margin: -0.4rem 0 1rem;
+		}
+		/* Sector chips are injected as raw .tfc-filter-chip buttons into this
+		   span at render time (built from the sectors actually present in the
+		   payload); display:contents lets them wrap as direct siblings in the
+		   flex filter row instead of as one block child. */
+		.tfc-sector-chips { display: contents; }
 
 		/* The desktop navbar is fixed-top at 56px and nothing compensates for
 		   it, so every campaign anchor landed underneath it (verified by
@@ -896,8 +977,18 @@
 
 				<div class="tfc-filter-row" id="campaignsActivityRow" style="display:none;">
 					<span class="tfc-filter-label">Show:</span>
+					<button type="button" class="tfc-filter-chip" data-activity="day" aria-pressed="false">Last 24h <span class="tfc-chip-count"></span></button>
 					<button type="button" class="tfc-filter-chip active" data-activity="week" aria-pressed="true">Active this week <span class="tfc-chip-count"></span></button>
 					<button type="button" class="tfc-filter-chip" data-activity="all" aria-pressed="false">All (30 days) <span class="tfc-chip-count"></span></button>
+					<div class="tfc-sort-wrap">
+						<label class="tfc-filter-label" for="campaignsSort">Sort:</label>
+						<select id="campaignsSort" class="tfc-sort-select" aria-label="Sort campaigns by">
+							<option value="total">Total IOCs</option>
+							<option value="recent">Recent activity</option>
+							<option value="lastseen">Last seen</option>
+							<option value="confidence">Confidence</option>
+						</select>
+					</div>
 				</div>
 
 				<div class="tfc-filter-row" id="campaignsFilterRow" style="display:none;">
@@ -905,15 +996,33 @@
 					<button type="button" class="tfc-filter-chip tfc-filter-chip-high active" data-confidence="high" aria-pressed="true">High</button>
 					<button type="button" class="tfc-filter-chip tfc-filter-chip-medium active" data-confidence="medium" aria-pressed="true">Medium</button>
 					<button type="button" class="tfc-filter-chip tfc-filter-chip-low active" data-confidence="low" aria-pressed="true">Low</button>
+					<button type="button" class="tfc-filter-chip" id="campaignsClearFilters" style="display:none;">Clear</button>
 					<span class="tfc-filter-count" id="campaignsFilterCount"></span>
 				</div>
+
+				<div class="tfc-filter-row" id="campaignsSearchRow" style="display:none;">
+					<div class="tag-search-wrap tfc-search-wrap">
+						<i class="fas fa-search tag-search-icon" aria-hidden="true"></i>
+						<input type="text" class="tag-search" id="campaignsSearch" placeholder="Search campaigns&hellip;" aria-label="Search campaigns">
+					</div>
+					<span class="tfc-filter-label">Type:</span>
+					<button type="button" class="tfc-filter-chip active" data-ioctype="any" aria-pressed="true">Any</button>
+					<button type="button" class="tfc-filter-chip" data-ioctype="url" aria-pressed="false">URL</button>
+					<button type="button" class="tfc-filter-chip" data-ioctype="domain" aria-pressed="false">Domain</button>
+					<button type="button" class="tfc-filter-chip" data-ioctype="ip" aria-pressed="false">IP</button>
+					<button type="button" class="tfc-filter-chip" data-ioctype="md5" aria-pressed="false">MD5</button>
+					<button type="button" class="tfc-filter-chip" data-ioctype="sha256" aria-pressed="false">SHA256</button>
+					<span class="tfc-filter-label">Sector:</span>
+					<span id="campaignsSectorChips" class="tfc-sector-chips"></span>
+				</div>
+				<p class="tfc-search-hint" id="campaignsSearchHint" style="display:none;">Searches names, AI context, targets, tags, reporters and the published sample/anchors only.</p>
 
 				<div id="campaignsList" style="display:none;"></div>
 
 				<div class="empty-state" id="campaignsFilterEmpty" style="display:none;">
 					<div class="empty-icon"><i class="fas fa-filter"></i></div>
 					<div class="empty-message">No campaigns match this filter</div>
-					<div class="empty-hint">Try enabling another confidence level, or switch to 'All (30 days)' above.</div>
+					<div class="empty-hint">Try loosening a filter above, or hit Clear to reset search/type/sector.</div>
 				</div>
 
 				<section class="faq-section">
@@ -1048,6 +1157,19 @@
 		// currently-visible campaigns, without re-parsing the DOM it just
 		// filtered.
 		var allCampaigns = [];
+		// B3: lowercase search haystacks, one per campaign, indexed the same
+		// way as allCampaigns/data-idx. Built once per render in
+		// buildHaystacks() below rather than re-derived from the DOM on every
+		// keystroke - 60 campaigns' worth of joined text is cheap to build
+		// once and cheap to indexOf() against, so no debounce is needed either.
+		var haystacks = [];
+		// B2: the entries currently backing #campaignsList, in their
+		// DELIVERED (unsorted) order, tagged with which size group each one
+		// belongs to. Set once per render in renderCampaigns() and never
+		// mutated afterwards - the sort <select> always re-sorts a COPY of
+		// this pristine list, so switching sort modes is never cumulative and
+		// "Total IOCs" can always restore the original order exactly.
+		var originalEntries = [];
 		var IOC_TYPE_COLORS = { url: '#0026E6', domain: '#3399FF', ip: '#02bf0f', md5: '#FFC34D', sha256: '#FFC34D' };
 		var IOC_TYPE_DARK_TEXT = { md5: true, sha256: true };
 		// Campaign ids are a fixed-shape fingerprint ("tfc-" + 12 hex chars,
@@ -1074,10 +1196,21 @@
 			// "url"), matching the safer of index.html's/search's two existing
 			// patterns (see search/index.html vtCell()).
 			var vtLink = '<a class="tf-action tf-action-vt" href="https://www.virustotal.com/gui/search/' + esc(encodeURIComponent(value)) + '" target="_blank" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>';
+			// B4: first 10 chars of "YYYY-MM-DD HH:MM:SS" is the date alone.
+			var dateStr = (typeof ioc.date === 'string') ? ioc.date.slice(0, 10) : '';
+			var dateSpan = dateStr ? '<span class="tfc-ioc-date">' + esc(dateStr) + '</span>' : '';
+			// Same ../search/?user= idiom as renderReporters() below: strip a
+			// leading @ before encoding, since the API can ship either form.
+			var userRaw = (typeof ioc.user === 'string') ? ioc.user.replace(/^@/, '') : '';
+			var userLink = userRaw
+				? '<a class="tfc-ioc-user" href="../search/?user=' + esc(encodeURIComponent(userRaw)) + '">@' + esc(userRaw) + '</a>'
+				: '';
 			return (
 				'<div class="tfc-ioc-row">' +
 					'<span class="tfc-ioc-type" style="background:' + bg + ';color:' + color + ';">' + esc(type) + '</span>' +
+					dateSpan +
 					'<a class="tfc-ioc-value" href="../search/?q=' + esc(encodeURIComponent(value)) + '" title="Search this value on TweetFeed">' + esc(value) + '</a>' +
+					userLink +
 					'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value"></i>' +
 					tweetLink +
 					vtLink +
@@ -1115,6 +1248,36 @@
 			tags: ['shared tag', 'shared tags']
 		};
 		var ANCHOR_ORDER = ['registered_domains', 'url_path_patterns', 'tags'];
+
+		// B1: apparent target. targeted_sector arrives as a STIX vocabulary
+		// slug ("financial-services", "government-national") - readable to a
+		// machine, not to a reader. The awkward ones get a hand-written label;
+		// anything else falls back to a generic slug->Title Case so a future
+		// STIX value never renders unmapped or raw.
+		var SECTOR_LABELS = {
+			'government-national': 'Government (national)',
+			'financial-services': 'Financial services'
+		};
+		function prettySector(slug) {
+			if (!slug || typeof slug !== 'string') return '';
+			if (SECTOR_LABELS[slug]) return SECTOR_LABELS[slug];
+			var words = slug.split('-').filter(Boolean);
+			if (!words.length) return '';
+			words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+			return words.join(' ');
+		}
+		// Returns the RAW (unescaped) parts of "who this campaign appears to
+		// target" - brand, prettified sector, country - so every caller
+		// (chip, row label, meta line, haystack) escapes/joins them the same
+		// way instead of three slightly different implementations.
+		function targetLabel(c) {
+			var parts = [];
+			if (c && c.targeted_brand) parts.push(String(c.targeted_brand));
+			var sector = c && prettySector(c.targeted_sector);
+			if (sector) parts.push(sector);
+			if (c && c.targeted_country) parts.push(String(c.targeted_country));
+			return parts;
+		}
 
 		// Stacked proportion bar for c.types. Replaces the comma list
 		// ("domain 35, ip 14, md5 5, sha256 12, url 70"), which was data
@@ -1212,13 +1375,41 @@
 			var iocs = c.iocs || [];
 			if (!iocs.length) return '';
 			var total = (typeof c.ioc_count === 'number' && c.ioc_count > 0) ? c.ioc_count : iocs.length;
+			var sampleCount = iocs.length;
 			var head = iocs.slice(0, 5).map(renderIocRow).join('');
 			var rest = iocs.slice(5).map(renderIocRow).join('');
-			var moreAfterHead = Math.max(total - Math.min(5, iocs.length), 0);
-			var moreAfterAll = Math.max(total - iocs.length, 0);
+			var moreAfterHead = Math.max(total - Math.min(5, sampleCount), 0);
+			var moreAfterAll = Math.max(total - sampleCount, 0);
 
+			// B4: when the API shipped every IOC the campaign has (no gap
+			// between the published sample and the real total), "S published
+			// samples of T total IOCs" would read as S of T with S === T - a
+			// distinction that doesn't exist for this campaign. Keep the
+			// original pre-B4 "+N more" wording for that case (moreAfterAll is
+			// 0 once fully expanded, so the expanded text is empty, exactly as
+			// it was before this change).
+			var sampleCapped = moreAfterAll > 0;
+			var collapsedText = sampleCapped
+				? (moreAfterHead ? '+' + esc(TweetFeed.numberFormat(moreAfterHead)) + ' more published sample' + (moreAfterHead === 1 ? '' : 's') + ' &middot; ' + esc(TweetFeed.numberFormat(total)) + ' total IOCs' : '')
+				: (moreAfterHead ? '+' + esc(TweetFeed.numberFormat(moreAfterHead)) + ' more IOC' + (moreAfterHead === 1 ? '' : 's') + ' in this campaign' : '');
+			var expandedText = sampleCapped
+				? (esc(TweetFeed.numberFormat(sampleCount)) + ' published sample' + (sampleCount === 1 ? '' : 's') + ' of ' + esc(TweetFeed.numberFormat(total)) + ' total IOCs')
+				: (moreAfterAll ? '+' + esc(TweetFeed.numberFormat(moreAfterAll)) + ' more IOC' + (moreAfterAll === 1 ? '' : 's') + ' in this campaign' : '');
+
+			// data-more-head/data-more-all are gone: the click handler now
+			// swaps between the two precomputed strings on .tfc-more-iocs
+			// itself (data-collapsed-text/data-expanded-text below) instead
+			// of recomputing wording from raw counts on every toggle.
 			var expandBtn = rest
-				? '<button type="button" class="tfc-show-all" data-total="' + iocs.length + '" data-more-head="' + moreAfterHead + '" data-more-all="' + moreAfterAll + '" aria-expanded="false">Show all ' + esc(String(iocs.length)) + '</button>'
+				? '<button type="button" class="tfc-show-all" data-total="' + iocs.length + '" aria-expanded="false">Show all ' + esc(String(iocs.length)) + '</button>'
+				: '';
+
+			// Copy-all-samples button: data-copy carries every published
+			// sample value, newline-separated - the .tf-copy delegation in
+			// utils.js handles the click/feedback, no handler added here.
+			var sampleValues = iocs.map(function(ioc) { return (ioc && ioc.value) ? String(ioc.value) : ''; }).filter(Boolean);
+			var copyBtn = sampleValues.length
+				? '<button type="button" class="tf-copy tfc-copy-sample" data-copy="' + esc(sampleValues.join('\n')) + '">Copy ' + esc(TweetFeed.numberFormat(sampleValues.length)) + ' samples</button>'
 				: '';
 
 			return (
@@ -1226,8 +1417,8 @@
 					(rest ? '<div class="tfc-iocs-rest" hidden>' + rest + '</div>' : '') +
 				'</div>' +
 				'<div class="tfc-iocs-foot">' +
-					'<span class="tfc-more-iocs">' + (moreAfterHead ? '+' + esc(TweetFeed.numberFormat(moreAfterHead)) + ' more IOC' + (moreAfterHead === 1 ? '' : 's') + ' in this campaign' : '') + '</span>' +
-					expandBtn +
+					'<span class="tfc-more-iocs" data-collapsed-text="' + collapsedText + '" data-expanded-text="' + expandedText + '">' + collapsedText + '</span>' +
+					'<span class="tfc-iocs-actions">' + copyBtn + expandBtn + '</span>' +
 				'</div>'
 			);
 		}
@@ -1246,8 +1437,15 @@
 			}).join('');
 			var reportersHtml = renderReporters(c);
 			var dates = esc(c.first_seen || '?') + ' &ndash; ' + esc(c.last_seen || '?');
+			// B1: full apparent-target line (brand + sector + country), omitted
+			// entirely when the campaign carries none of the three.
+			var targetParts = targetLabel(c);
+			var targetLine = targetParts.length
+				? '<p class="tfc-meta-line"><b>Apparent target (AI-inferred):</b> ' + targetParts.map(esc).join(' &middot; ') + '</p>'
+				: '';
 
 			return (
+				targetLine +
 				'<p class="tfc-context">' + esc(c.context || '') + '</p>' +
 				renderTypeBar(c.types, typeBarWidthPct) +
 				renderEvidence(c) +
@@ -1271,13 +1469,18 @@
 			var rawId = typeof c.id === 'string' ? c.id : '';
 			var validId = CAMPAIGN_ID_RE.test(rawId) ? rawId : '';
 			var isActive = (typeof c.ioc_count_7d === 'number') ? (c.ioc_count_7d > 0) : true;
+			// B2: same degrade-gracefully rule as ioc_count_7d above, applied to
+			// the new "Last 24h" activity chip - an older API payload without
+			// ioc_count_1d counts every campaign as active for that chip too.
+			var isActive1d = (typeof c.ioc_count_1d === 'number') ? (c.ioc_count_1d > 0) : true;
 			var safeIdx = (typeof idx === 'number' && idx >= 0) ? idx : -1;
 			return {
 				conf: conf,
 				validId: validId,
 				idAttr: validId ? ' id="' + esc(validId) + '"' : '',
 				isActive: isActive,
-				dataAttrs: ' data-confidence="' + conf + '" data-active="' + (isActive ? '1' : '0') + '" data-idx="' + safeIdx + '"'
+				isActive1d: isActive1d,
+				dataAttrs: ' data-confidence="' + conf + '" data-active="' + (isActive ? '1' : '0') + '" data-active-1d="' + (isActive1d ? '1' : '0') + '" data-idx="' + safeIdx + '"'
 			};
 		}
 
@@ -1290,12 +1493,28 @@
 			var anchorLink = a.validId
 				? '<a class="tfc-anchor-link" href="#' + esc(a.validId) + '" title="Direct link to this campaign" aria-label="Direct link to this campaign"><i class="fas fa-link"></i></a>'
 				: '';
-			var brandChip = c.targeted_brand
-				? '<span class="tfc-brand-chip"><i class="fas fa-bullseye"></i> ' + esc(c.targeted_brand) + '</span>'
+			// B1: the brand-only chip is now the fuller "apparent target" chip
+			// (brand + sector + country), still riding .tfc-brand-chip so the
+			// visual language doesn't change - just what it can say.
+			var targetParts = targetLabel(c);
+			var targetChip = targetParts.length
+				? '<span class="tfc-brand-chip" title="AI-inferred from the clustered IOCs"><i class="fas fa-bullseye"></i> ' + targetParts.map(esc).join(' &middot; ') + '</span>'
 				: '';
-			var weekLine = (typeof c.ioc_count_7d === 'number')
-				? '<span class="tfc-count-sub">' + esc(TweetFeed.numberFormat(c.ioc_count_7d)) + ' this week</span>'
-				: '';
+			// B2: "N today - M this week", shown honestly even at N=0 (after
+			// the 06:25 UTC daily run every campaign legitimately has 1d=0).
+			// Falls back to the pre-B2 week-only line when ioc_count_1d isn't
+			// in the payload (older API version), matching campaignAttrs()'s
+			// own degrade-gracefully rule for the same field.
+			var dayN = (typeof c.ioc_count_1d === 'number') ? c.ioc_count_1d : null;
+			var weekN = (typeof c.ioc_count_7d === 'number') ? c.ioc_count_7d : null;
+			var countSub = '';
+			if (dayN !== null) {
+				countSub = esc(TweetFeed.numberFormat(dayN)) + ' today';
+				if (weekN !== null) countSub += ' &middot; ' + esc(TweetFeed.numberFormat(weekN)) + ' this week';
+			} else if (weekN !== null) {
+				countSub = esc(TweetFeed.numberFormat(weekN)) + ' this week';
+			}
+			var weekLine = countSub ? '<span class="tfc-count-sub">' + countSub + '</span>' : '';
 			var n = (typeof c.ioc_count === 'number') ? c.ioc_count : 0;
 			var typeBarPct = maxIocs > 0 ? Math.max(TYPEBAR_MIN_PCT, Math.min(100, (n / maxIocs) * 100)) : 100;
 
@@ -1306,7 +1525,7 @@
 							'<h3 class="tfc-name">' + esc(c.name || 'Untitled campaign') + '</h3>' +
 							'<div class="tfc-head-chips">' +
 								'<span class="tfc-badge tfc-badge-' + a.conf + '">' + esc(a.conf) + ' confidence</span>' +
-								brandChip +
+								targetChip +
 								anchorLink +
 							'</div>' +
 						'</div>' +
@@ -1341,12 +1560,17 @@
 			var miniBar = total ? '<span class="tfc-minibar" style="width:' + barWidth + 'px;">' + keys.map(function(t) {
 				return '<span style="width:' + ((types[t] / total) * 100).toFixed(2) + '%;background:' + (IOC_TYPE_COLORS[t] || '#737373') + ';"></span>';
 			}).join('') + '</span>' : '';
+			// B1: one short value only - brand if present, else the sector.
+			// The full breakdown lives in the expanded body's meta line below.
+			var rowTargetVal = c.targeted_brand ? String(c.targeted_brand) : prettySector(c.targeted_sector);
+			var rowTargetHtml = rowTargetVal ? '<span class="tfc-row-target">' + esc(rowTargetVal) + '</span>' : '';
 
 			return (
 				'<div class="tfc-row"' + a.dataAttrs + a.idAttr + '>' +
 					'<button type="button" class="tfc-row-head" aria-expanded="false">' +
 						'<i class="fas fa-chevron-right tfc-row-caret" aria-hidden="true"></i>' +
 						'<span class="tfc-row-name">' + esc(c.name || 'Untitled campaign') + '</span>' +
+						rowTargetHtml +
 						miniBar +
 						'<span class="tfc-row-count">' + esc(TweetFeed.numberFormat(c.ioc_count || 0)) + '</span>' +
 						'<span class="tfc-badge tfc-badge-' + a.conf + ' tfc-badge-sm">' + esc(a.conf) + '</span>' +
@@ -1408,9 +1632,19 @@
 				var $chip = $(this);
 				activeConfidences[$chip.data('confidence')] = $chip.hasClass('active');
 			});
-			var showAllActivity = $('.tfc-filter-chip[data-activity="all"]').hasClass('active');
-			// Both wrappers carry the same data-confidence/data-active, so one
-			// pass filters full cards and compact rows alike.
+			// B2: 3-way activity, up from the old 2-way "week"/"all" toggle.
+			// Reads the currently-active chip's value straight off the DOM,
+			// same pattern the confidence loop above uses - no parallel JS
+			// state to keep in sync.
+			var activityMode = $('.tfc-filter-chip[data-activity].active').data('activity') || 'week';
+			// B3: search/type/sector predicates, AND-ed with confidence and
+			// activity below. Each reads its current value off the DOM chips/
+			// input the same way, for the same reason.
+			var searchQuery = ($('#campaignsSearch').val() || '').trim().toLowerCase();
+			var typeFilter = $('.tfc-filter-chip[data-ioctype].active').data('ioctype') || 'any';
+			var sectorFilter = $('.tfc-filter-chip[data-sector].active').data('sector') || 'any';
+			// Both wrappers carry the same data-confidence/data-active(-1d), so
+			// one pass filters full cards and compact rows alike.
 			var $items = $('#campaignsList').find('.tfc-card, .tfc-row');
 			var shown = 0;
 			var rowsShown = 0;
@@ -1420,13 +1654,18 @@
 				var $item = $(this);
 				var conf = $item.attr('data-confidence') || 'low';
 				var confOk = activeConfidences[conf] !== false;
-				var activityOk = showAllActivity || $item.attr('data-active') !== '0';
-				var visible = confOk && activityOk;
+				var activityOk = activityMode === 'all' ? true :
+					(activityMode === 'day' ? $item.attr('data-active-1d') !== '0' : $item.attr('data-active') !== '0');
+				var idx = +$item.attr('data-idx');
+				var c = allCampaigns[idx];
+				var searchOk = !searchQuery || (haystacks[idx] || '').indexOf(searchQuery) !== -1;
+				var typeOk = typeFilter === 'any' || !!(c && c.types && c.types[typeFilter] > 0);
+				var sectorOk = sectorFilter === 'any' || !!(c && c.targeted_sector === sectorFilter);
+				var visible = confOk && activityOk && searchOk && typeOk && sectorOk;
 				$item.toggle(visible);
 				if (visible) {
 					shown++;
 					if ($item.hasClass('tfc-row')) rowsShown++;
-					var c = allCampaigns[+$item.attr('data-idx')];
 					if (c) {
 						var iocN = (typeof c.ioc_count_30d === 'number') ? c.ioc_count_30d : (c.ioc_count || 0);
 						visibleIocSum += iocN;
@@ -1436,6 +1675,9 @@
 			});
 			$('#campaignsFilterCount').text(shown + ' shown');
 			$('#campaignsFilterEmpty').toggle(shown === 0);
+			// Clear button only earns its place once one of the three B3
+			// filters has actually moved off its default.
+			$('#campaignsClearFilters').toggle(!!searchQuery || typeFilter !== 'any' || sectorFilter !== 'any');
 			// The divider (and the bordered box it introduces) count what is
 			// actually visible below it, so neither ever promises rows the
 			// filters have hidden - and the box itself disappears rather than
@@ -1506,6 +1748,111 @@
 			}
 		}
 
+		// B3: search haystacks, rebuilt from scratch on every render (the API
+		// is only ever fetched once per page load, or again on retry after an
+		// error - never on a timer), one lowercase blob per campaign covering
+		// name, context, apparent target, tags, reporters, every anchor value
+		// and every published sample's value+user.
+		function buildHaystacks(campaigns) {
+			haystacks = campaigns.map(function(c) {
+				var parts = [c.name || '', c.context || ''].concat(targetLabel(c));
+				parts = parts.concat(c.tags || [], c.reporters || []);
+				var anchors = c.anchors || {};
+				ANCHOR_ORDER.forEach(function(key) {
+					var vals = anchors[key];
+					if (Array.isArray(vals)) parts = parts.concat(vals);
+				});
+				(c.iocs || []).forEach(function(ioc) {
+					if (ioc && ioc.value) parts.push(String(ioc.value));
+					if (ioc && ioc.user) parts.push(String(ioc.user));
+				});
+				return parts.join(' ').toLowerCase();
+			});
+		}
+
+		// B3: sector chip roster built from what's actually IN the payload
+		// today, not a hardcoded list that would drift from the data (and
+		// would show empty sectors, or hide new ones the classifier starts
+		// emitting). "Any" always comes first and starts active.
+		function renderSectorChips(campaigns) {
+			var esc = TweetFeed.escapeHtml;
+			var seen = {};
+			var slugs = [];
+			campaigns.forEach(function(c) {
+				var s = c.targeted_sector;
+				if (s && typeof s === 'string' && !seen[s]) {
+					seen[s] = true;
+					slugs.push(s);
+				}
+			});
+			slugs.sort(function(a, b) { return prettySector(a).localeCompare(prettySector(b)); });
+			var html = '<button type="button" class="tfc-filter-chip active" data-sector="any" aria-pressed="true">Any</button>';
+			html += slugs.map(function(s) {
+				return '<button type="button" class="tfc-filter-chip" data-sector="' + esc(s) + '" aria-pressed="false">' + esc(prettySector(s)) + '</button>';
+			}).join('');
+			$('#campaignsSectorChips').html(html);
+		}
+
+		// B2: renders #campaignsList from a list of {c, i, big} entries -
+		// membership (big vs small) travels WITH each entry, so this never
+		// needs to recompute the size split; it only needs to know, per
+		// entry, which of the two renderers to use. Called once on initial
+		// load and again (with a re-sorted copy) on every sort change.
+		function renderList(entries) {
+			var big = entries.filter(function(e) { return e.big; });
+			var small = entries.filter(function(e) { return !e.big; });
+			// Each group's own max, not the page max - see the comments on
+			// renderFullCard/renderCompactRow.
+			var maxBigIocCount = big.reduce(function(m, e) { return Math.max(m, e.c.ioc_count || 0); }, 0);
+			var maxSmallIocCount = small.reduce(function(m, e) { return Math.max(m, e.c.ioc_count || 0); }, 0);
+			var html = big.map(function(e) { return renderFullCard(e.c, maxBigIocCount, e.i); }).join('');
+			if (small.length) {
+				html += '<div class="tfc-divider"><span class="tfc-divider-count">' +
+					small.length + ' smaller campaign' + (small.length === 1 ? '' : 's') +
+					'</span></div>';
+				html += '<div class="tfc-rows">' + small.map(function(e) { return renderCompactRow(e.c, maxSmallIocCount, e.i); }).join('') + '</div>';
+			}
+			$('#campaignsList').html(html).show();
+			// Copy buttons/row toggles/etc need no re-init: utils.js attaches
+			// document-level .tf-copy delegation once at page load, and every
+			// other control below is delegated on document too.
+		}
+
+		// B2 sort: ties always fall back to ioc_count desc, via the same
+		// comparator every mode below calls last.
+		function sortTieBreak(a, b) {
+			var an = (typeof a.c.ioc_count === 'number') ? a.c.ioc_count : 0;
+			var bn = (typeof b.c.ioc_count === 'number') ? b.c.ioc_count : 0;
+			return bn - an;
+		}
+		var CONFIDENCE_RANK = { high: 3, medium: 2, low: 1 };
+		// "total" (delivered order) needs no comparator - it's handled as a
+		// special case in the change handler below, restoring originalEntries
+		// as-is rather than sorting a copy of it.
+		var SORT_COMPARATORS = {
+			recent: function(a, b) {
+				var a1 = (typeof a.c.ioc_count_1d === 'number') ? a.c.ioc_count_1d : -1;
+				var b1 = (typeof b.c.ioc_count_1d === 'number') ? b.c.ioc_count_1d : -1;
+				if (a1 !== b1) return b1 - a1;
+				var a7 = (typeof a.c.ioc_count_7d === 'number') ? a.c.ioc_count_7d : -1;
+				var b7 = (typeof b.c.ioc_count_7d === 'number') ? b.c.ioc_count_7d : -1;
+				if (a7 !== b7) return b7 - a7;
+				return sortTieBreak(a, b);
+			},
+			lastseen: function(a, b) {
+				var av = a.c.last_seen || '';
+				var bv = b.c.last_seen || '';
+				if (av !== bv) return av < bv ? 1 : -1;
+				return sortTieBreak(a, b);
+			},
+			confidence: function(a, b) {
+				var av = CONFIDENCE_RANK[(a.c.confidence || 'low').toLowerCase()] || 1;
+				var bv = CONFIDENCE_RANK[(b.c.confidence || 'low').toLowerCase()] || 1;
+				if (av !== bv) return bv - av;
+				return sortTieBreak(a, b);
+			}
+		};
+
 		function renderCampaigns(data) {
 			$('#campaignsLoading').hide();
 
@@ -1530,6 +1877,10 @@
 			// case, matching renderCampaignCard's data-active default.
 			var activeCount = campaigns.filter(function(c) {
 				return (typeof c.ioc_count_7d === 'number') ? (c.ioc_count_7d > 0) : true;
+			}).length;
+			// B2: same degrade-gracefully rule, for the new "Last 24h" chip.
+			var active1dCount = campaigns.filter(function(c) {
+				return (typeof c.ioc_count_1d === 'number') ? (c.ioc_count_1d > 0) : true;
 			}).length;
 
 			var genLine = '<i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs';
@@ -1574,42 +1925,43 @@
 			}
 
 			// Campaigns already arrive sorted by ioc_count desc from the API;
-			// render in that delivered order. Split by size: the big ones keep
-			// the full card, the tail becomes one-line rows that expand. Before
-			// this split every card was 324-375px tall whether the campaign had
-			// 401 IOCs or 6, so 10% of the data took half the page.
-			// Each entry keeps its original index into `campaigns` (== the index
-			// applyFilters() will later find on allCampaigns) alongside the
-			// campaign itself, since the big/small split reorders relative to
-			// the API's delivered order.
-			var big = [];
-			var small = [];
-			campaigns.forEach(function(c, i) {
+			// render in that delivered order by default. Split by size: the
+			// big ones keep the full card, the tail becomes one-line rows
+			// that expand. Before this split every card was 324-375px tall
+			// whether the campaign had 401 IOCs or 6, so 10% of the data took
+			// half the page.
+			//
+			// B2: membership in the "big" group is now a RANK against
+			// ioc_count (top FULL_CARD_FLOOR by size, or over the flat 50-IOC
+			// threshold), computed independently of `campaigns`' own array
+			// order - not "i < FULL_CARD_FLOOR" any more. The split has to
+			// survive the sort <select> re-ordering these same entries later,
+			// so it can never be a function of delivered position.
+			var byIocDesc = campaigns.map(function(c, i) {
+				return { i: i, n: (typeof c.ioc_count === 'number') ? c.ioc_count : 0 };
+			}).sort(function(a, b) { return b.n - a.n; });
+			var floorIdxSet = {};
+			byIocDesc.slice(0, FULL_CARD_FLOOR).forEach(function(e) { floorIdxSet[e.i] = true; });
+
+			// Each entry keeps its original index into `campaigns` (== the
+			// index applyFilters()/haystacks will later find it at on
+			// allCampaigns) alongside the campaign itself and its big/small
+			// membership, since both the size split and the sort control
+			// reorder relative to the API's delivered order.
+			originalEntries = campaigns.map(function(c, i) {
 				var n = (typeof c.ioc_count === 'number') ? c.ioc_count : 0;
-				var entry = { c: c, i: i };
-				if (n >= FULL_CARD_MIN_IOCS || i < FULL_CARD_FLOOR) big.push(entry);
-				else small.push(entry);
+				return { c: c, i: i, big: (n >= FULL_CARD_MIN_IOCS || !!floorIdxSet[i]) };
 			});
-			// Each group's own max, not the page max - see the comments on
-			// renderFullCard/renderCompactRow. Wrapped in a closure rather than
-			// passed via .map(fn) directly: .map already passes (item, index,
-			// array), and that index would silently land in the maxIocs slot.
-			var maxBigIocCount = big.reduce(function(m, e) { return Math.max(m, e.c.ioc_count || 0); }, 0);
-			var maxSmallIocCount = small.reduce(function(m, e) { return Math.max(m, e.c.ioc_count || 0); }, 0);
-			var html = big.map(function(e) { return renderFullCard(e.c, maxBigIocCount, e.i); }).join('');
-			if (small.length) {
-				html += '<div class="tfc-divider"><span class="tfc-divider-count">' +
-					small.length + ' smaller campaign' + (small.length === 1 ? '' : 's') +
-					'</span></div>';
-				html += '<div class="tfc-rows">' + small.map(function(e) { return renderCompactRow(e.c, maxSmallIocCount, e.i); }).join('') + '</div>';
-			}
-			$('#campaignsList').html(html).show();
-			// Copy buttons need no re-init: utils.js attaches document-level
-			// .tf-copy delegation once at page load.
+			buildHaystacks(campaigns);
+			renderSectorChips(campaigns);
+			renderList(originalEntries);
 
 			// Set BEFORE the row is revealed, so the chips never flash a
-			// countless state. activeCount is the same number applyFilters()
-			// would land on for "week"; campaigns.length is what "all" holds.
+			// countless state. activeCount/active1dCount are the same numbers
+			// applyFilters() would land on for "week"/"day"; campaigns.length
+			// is what "all" holds.
+			$('.tfc-filter-chip[data-activity="day"] .tfc-chip-count')
+				.text(TweetFeed.numberFormat(active1dCount));
 			$('.tfc-filter-chip[data-activity="week"] .tfc-chip-count')
 				.text(TweetFeed.numberFormat(activeCount));
 			$('.tfc-filter-chip[data-activity="all"] .tfc-chip-count')
@@ -1617,6 +1969,8 @@
 
 			$('#campaignsActivityRow').show();
 			$('#campaignsFilterRow').show();
+			$('#campaignsSearchRow').show();
+			$('#campaignsSearchHint').show();
 			applyFilters();
 			scrollToHashCampaign();
 		}
@@ -1667,12 +2021,16 @@
 				$block.find('.tfc-iocs-rest').prop('hidden', open);
 				$btn.attr('aria-expanded', open ? 'false' : 'true');
 				$btn.text(open ? ('Show all ' + $btn.data('total')) : 'Show fewer');
-				// The remaining-count line has to follow the toggle: collapsed it
-				// counts from the 5 on screen, expanded from all 25 we hold.
-				var more = open ? $btn.data('more-head') : $btn.data('more-all');
-				$block.find('.tfc-more-iocs').text(
-					more > 0 ? ('+' + TweetFeed.numberFormat(more) + ' more IOC' + (more === 1 ? '' : 's') + ' in this campaign') : ''
-				);
+				// B4: the foot line has to follow the toggle too - collapsed it
+				// reads "+N more published samples - T total IOCs" (or the
+				// pre-B4 "+N more IOCs" wording when there's no sample/total
+				// gap to report), expanded it reads "S published samples of T
+				// total IOCs". Both strings were precomputed once in
+				// renderIocBlock() and stashed on the span itself, so this
+				// handler only ever swaps between them - it never recomputes
+				// the wording logic.
+				var $more = $block.find('.tfc-more-iocs');
+				$more.text(open ? $more.data('collapsed-text') : $more.data('expanded-text'));
 			});
 
 			$(document).on('click', '.tfc-reporters-toggle', function() {
@@ -1692,6 +2050,69 @@
 				var $chip = $(this);
 				if ($chip.hasClass('active')) return;
 				setActivityChip($chip.data('activity'));
+				applyFilters();
+			});
+
+			// B3: type/sector chips behave like the activity group above - a
+			// 1-of-N radio, not the independently-toggleable confidence chips.
+			$(document).on('click', '.tfc-filter-chip[data-ioctype]', function() {
+				var $chip = $(this);
+				if ($chip.hasClass('active')) return;
+				$('.tfc-filter-chip[data-ioctype]').removeClass('active').attr('aria-pressed', 'false');
+				$chip.addClass('active').attr('aria-pressed', 'true');
+				applyFilters();
+			});
+			// Delegated on document like every other control here: the sector
+			// roster itself is rebuilt from scratch by renderSectorChips() on
+			// each render, so a handler bound to the chips directly would be
+			// lost the moment the page re-renders.
+			$(document).on('click', '.tfc-filter-chip[data-sector]', function() {
+				var $chip = $(this);
+				if ($chip.hasClass('active')) return;
+				$('.tfc-filter-chip[data-sector]').removeClass('active').attr('aria-pressed', 'false');
+				$chip.addClass('active').attr('aria-pressed', 'true');
+				applyFilters();
+			});
+
+			// B3: free-text search. 60 campaigns max, so a plain per-keystroke
+			// pass over the precomputed haystacks needs no debounce.
+			$(document).on('input', '#campaignsSearch', function() {
+				applyFilters();
+			});
+
+			// B3: resets only the three non-default filters (search/type/
+			// sector) - confidence and activity are left exactly as the
+			// reader set them.
+			$(document).on('click', '#campaignsClearFilters', function() {
+				$('#campaignsSearch').val('');
+				$('.tfc-filter-chip[data-ioctype]').removeClass('active').attr('aria-pressed', 'false');
+				$('.tfc-filter-chip[data-ioctype="any"]').addClass('active').attr('aria-pressed', 'true');
+				$('.tfc-filter-chip[data-sector]').removeClass('active').attr('aria-pressed', 'false');
+				$('.tfc-filter-chip[data-sector="any"]').addClass('active').attr('aria-pressed', 'true');
+				applyFilters();
+			});
+
+			// B2: re-sorts a COPY of originalEntries within each of big/small
+			// independently (renderList() itself splits by e.big, so passing
+			// it a differently-ORDERED-but-same-membership array is exactly
+			// what "independently" means here) and re-renders. "total" is the
+			// delivered order - restoring originalEntries as-is rather than
+			// running it through a comparator keeps that mode a true no-op.
+			// Always sorts from the pristine originalEntries, never from
+			// whatever's currently on screen, so switching between sort modes
+			// is never cumulative.
+			$(document).on('change', '#campaignsSort', function() {
+				var mode = $(this).val();
+				var cmp = SORT_COMPARATORS[mode];
+				var sorted;
+				if (!cmp) {
+					sorted = originalEntries.slice();
+				} else {
+					var big = originalEntries.filter(function(e) { return e.big; }).slice().sort(cmp);
+					var small = originalEntries.filter(function(e) { return !e.big; }).slice().sort(cmp);
+					sorted = big.concat(small);
+				}
+				renderList(sorted);
 				applyFilters();
 			});
 		});
