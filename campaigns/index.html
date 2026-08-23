@@ -86,8 +86,8 @@
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
 		"mainEntity": [
-			{"@type": "Question", "name": "What is an AI campaign on TweetFeed?", "acceptedAnswer": {"@type": "Answer", "text": "A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. Instead of scrolling isolated indicators one by one, you see the cluster as a single narrative."}},
-			{"@type": "Question", "name": "How is campaign confidence calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Confidence (high, medium, low) reflects how strongly related the underlying IOCs are. Shared registrable domains, matching tags and overlapping reporters raise confidence; loosely related indicators lower it. Treat low-confidence campaigns as a lead to verify, not a verdict."}},
+			{"@type": "Question", "name": "What is an AI campaign on TweetFeed?", "acceptedAnswer": {"@type": "Answer", "text": "A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. The grouping itself, the name, the context narrative, the confidence score and the apparent target are AI-inferred; the counts, dates, IOC types, anchors and the raw IOCs underneath are derived deterministically from the feed."}},
+			{"@type": "Question", "name": "How is campaign confidence calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Confidence (high, medium, low) is the AI's assessment of how cohesive the cluster is - how strongly the underlying IOCs appear related, not a maliciousness score or a verdict on any single indicator. Shared registrable domains, matching tags and overlapping reporters raise it; loosely related indicators lower it. Treat low confidence as a lead to verify, not a verdict."}},
 			{"@type": "Question", "name": "How often is the campaign data refreshed?", "acceptedAnswer": {"@type": "Answer", "text": "Campaigns are recomputed daily from a rolling 30-day window of TweetFeed IOCs. This page shows campaigns still active this week by default - switch to 'All (30 days)' to see the full window. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot."}},
 			{"@type": "Question", "name": "Where does the underlying IOC data come from?", "acceptedAnswer": {"@type": "Answer", "text": "The same source as the rest of TweetFeed: indicators of compromise shared publicly by infosec researchers on Twitter/X, deduplicated and published every 15 minutes. Campaign clustering is an AI layer on top of that same feed."}}
 		]
@@ -222,6 +222,24 @@
 			font-family: 'Rubik', sans-serif;
 			line-height: 1.6;
 			margin: 0 0 0.6rem 0;
+		}
+		/* C1: honesty label on the AI-written context paragraph. Small-caps/
+		   muted/1px-border on purpose - it should read as a provenance stamp,
+		   not another badge competing with confidence/target for attention. */
+		.tfc-ai-label {
+			display: inline-block;
+			margin-right: 6px;
+			padding: 1px 6px;
+			border: 1px solid #c9c9c9;
+			border-radius: 3px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 10px;
+			font-weight: 600;
+			font-variant: small-caps;
+			letter-spacing: 0.03em;
+			color: #8a8a8a;
+			vertical-align: middle;
+			white-space: nowrap;
 		}
 		.tfc-meta-line {
 			color: #737373;
@@ -485,6 +503,16 @@
 			white-space: nowrap;
 		}
 		.tfc-ev-rest { color: #9aa0a6; }
+		/* C2: "merged from N pre-clusters" tail on the evidence head line.
+		   .tfc-ev-head is uppercase/bold/letter-spaced for its own label;
+		   this undoes all three so the count reads as an aside, not a
+		   second heading. */
+		.tfc-ev-merged {
+			text-transform: none;
+			font-weight: 400;
+			letter-spacing: normal;
+			color: #9aa0a6;
+		}
 
 		/* ── Tags + dates + reporters ────────────────────────────────────── */
 		.tfc-foot-line {
@@ -1029,11 +1057,11 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is an AI campaign on TweetFeed?</summary>
-						<p>A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. Instead of scrolling isolated indicators one by one, you see the cluster as a single narrative.</p>
+						<p>A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. The grouping itself, the name, the context narrative, the confidence score and the apparent target are AI-inferred; the counts, dates, IOC types, anchors and the raw IOCs underneath are derived deterministically from the feed.</p>
 					</details>
 					<details>
 						<summary>How is campaign confidence calculated?</summary>
-						<p>Confidence (high, medium, low) reflects how strongly related the underlying IOCs are. Shared registrable domains, matching tags and overlapping reporters raise confidence; loosely related indicators lower it. Treat low-confidence campaigns as a lead to verify, not a verdict.</p>
+						<p>Confidence (high, medium, low) is the AI's assessment of how cohesive the cluster is - how strongly the underlying IOCs appear related, not a maliciousness score or a verdict on any single indicator. Shared registrable domains, matching tags and overlapping reporters raise it; loosely related indicators lower it. Treat low confidence as a lead to verify, not a verdict.</p>
 					</details>
 					<details>
 						<summary>How often is the campaign data refreshed?</summary>
@@ -1249,6 +1277,13 @@
 		};
 		var ANCHOR_ORDER = ['registered_domains', 'url_path_patterns', 'tags'];
 
+		// C3: the generator caps every published anchor list at 50
+		// (MAX_PUBLISHED_LIST in the tweetfeed-campaigns repo's
+		// assemble.py:21). An anchor array at that length is a capped
+		// list, not necessarily the true membership count, so it renders
+		// as "50+" rather than a false-precision "50".
+		var MAX_PUBLISHED_LIST = 50;
+
 		// B1: apparent target. targeted_sector arrives as a STIX vocabulary
 		// slug ("financial-services", "government-national") - readable to a
 		// machine, not to a reader. The awkward ones get a hand-written label;
@@ -1328,18 +1363,37 @@
 				var label = vals.length === 1 ? labels[0] : labels[1];
 				var sample = vals.slice(0, 3).map(function(v) { return esc(String(v)); }).join(' &middot; ');
 				var restCount = vals.length - Math.min(3, vals.length);
+				// C3: a capped list (>= MAX_PUBLISHED_LIST) gets "50+" instead
+				// of an exact count, and its tail states the cap explicitly
+				// instead of "+47" (which reads as "47 more exist", when the
+				// truth is only 50 were ever published to begin with).
+				var capped = vals.length >= MAX_PUBLISHED_LIST;
+				var countText = capped ? (MAX_PUBLISHED_LIST + '+') : esc(TweetFeed.numberFormat(vals.length));
+				var restHtml = capped
+					? ' <span class="tfc-ev-rest">showing ' + MAX_PUBLISHED_LIST + ' published (list capped)</span>'
+					: (restCount ? ' <span class="tfc-ev-rest">+' + restCount + '</span>' : '');
 				return (
 					'<div class="tfc-ev-row">' +
-						'<span class="tfc-ev-count">' + esc(TweetFeed.numberFormat(vals.length)) + '</span>' +
+						'<span class="tfc-ev-count">' + countText + '</span>' +
 						'<span class="tfc-ev-label">' + esc(label) + '</span>' +
-						'<span class="tfc-ev-value">' + sample + (restCount ? ' <span class="tfc-ev-rest">+' + restCount + '</span>' : '') + '</span>' +
+						'<span class="tfc-ev-value">' + sample + restHtml + '</span>' +
 					'</div>'
 				);
 			}).filter(Boolean).join('');
 			if (!rows) return '';
+			// C2: when the AI layer merged more than one deterministic
+			// pre-cluster into this campaign, say so on the evidence head
+			// line - the anchor rows below already show WHAT ties the IOCs
+			// together, this states that the AI did some of the grouping
+			// work itself, on top of the deterministic anchors.
+			var mergedHtml = '';
+			if (Array.isArray(c.member_cluster_ids) && c.member_cluster_ids.length > 1) {
+				mergedHtml = ' <span class="tfc-ev-merged" title="deterministic pre-grouping clusters merged into this campaign by the AI layer">&middot; merged from ' +
+					esc(TweetFeed.numberFormat(c.member_cluster_ids.length)) + ' pre-clusters</span>';
+			}
 			return (
 				'<div class="tfc-evidence">' +
-					'<p class="tfc-ev-head">Why these are one campaign</p>' +
+					'<p class="tfc-ev-head">Why these are one campaign' + mergedHtml + '</p>' +
 					rows +
 				'</div>'
 			);
@@ -1444,9 +1498,14 @@
 				? '<p class="tfc-meta-line"><b>Apparent target (AI-inferred):</b> ' + targetParts.map(esc).join(' &middot; ') + '</p>'
 				: '';
 
+			// C1: honesty label on the context paragraph - it's the one
+			// piece of free-text prose on the card, AI-written from the
+			// clustered IOCs, and previously indistinguishable from the
+			// deterministic fields around it.
+			var aiLabel = '<span class="tfc-ai-label" title="Written by the AI clustering layer from the underlying IOCs">AI summary</span>';
 			return (
 				targetLine +
-				'<p class="tfc-context">' + esc(c.context || '') + '</p>' +
+				'<p class="tfc-context">' + aiLabel + esc(c.context || '') + '</p>' +
 				renderTypeBar(c.types, typeBarWidthPct) +
 				renderEvidence(c) +
 				'<div class="tfc-foot-line">' +
