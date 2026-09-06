@@ -644,7 +644,7 @@
 
 				</div>
 
-				<section class="faq-section">
+				<section class="faq-section" id="trendsFaq" style="display:none;">
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What does this page measure?</summary>
@@ -769,7 +769,7 @@
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=5"></script>
+	<script src="../js/utils.js?v=6"></script>
 	<!-- Page level custom scripts -->
 	<script src="../vendor/chart.js/Chart.min.js"></script>
 	<!-- Page level custom script: single fetch of trends.json (TweetFeed.dataUrl,
@@ -1074,6 +1074,7 @@
 		function renderTrends(data) {
 			$('#trendsLoading').hide();
 			$('#trendsContent').show();
+			$('#trendsFaq').show();
 
 			if (data.generated_at) {
 				$('#trendsGeneratedLine').text('Last updated: ' + TweetFeed.formatDateLong(data.generated_at));
@@ -1093,6 +1094,7 @@
 			$('#trendsLoading').hide();
 			$('#trendsContent').hide();
 			$('#trendsFailNotice').show();
+			$('#trendsFaq').show();
 		}
 
 		$(function() {
