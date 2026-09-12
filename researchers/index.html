@@ -544,9 +544,9 @@
 	// viewport) - lazy-init here regressed CLS to 0.317 because the
 	// DataTables wrapper injects after paint and shifts layout.
 	// 'week', 'month' and 'year' live on inactive Bootstrap pills
-	// (display:none at load), so IntersectionObserver never fires until the
-	// user clicks the tab, deferring their DataTable init without any CLS
-	// impact on the initial paint. All four windows come from ONE
+	// (display:none at load), so their DataTable init waits for the pill's
+	// shown.bs.tab event, deferring it without any CLS impact on the initial
+	// paint. All four windows come from ONE
 	// /v1/contributors fetch below - lazy init here only defers rendering an
 	// already-fetched window, never a network request.
 	let tableUsersToday = $('#dataTableUsersToday').DataTable(researchersTableOpts);
@@ -649,20 +649,22 @@
 			pendingWindows = [];
 		}});
 
-		TweetFeed.lazyInViewport('dataTableUsersWeek', function() {
-			tableUsersWeek = $('#dataTableUsersWeek').DataTable(researchersTableOpts);
-			renderWindowWhenReady(tableUsersWeek, 'week');
-		});
-
-		TweetFeed.lazyInViewport('dataTableUsersMonth', function() {
-			tableUsersMonth = $('#dataTableUsersMonth').DataTable(researchersTableOpts);
-			renderWindowWhenReady(tableUsersMonth, 'month');
-		});
-
-		TweetFeed.lazyInViewport('dataTableUsersYear', function() {
-			tableUsersYear = $('#dataTableUsersYear').DataTable(researchersTableOpts);
-			renderWindowWhenReady(tableUsersYear, 'year');
-		});
+		// Bootstrap fires shown.bs.tab once the pane is visible; initialising
+		// the DataTable there keeps the CLS benefit (nothing injects into a
+		// hidden pane at load) without depending on IntersectionObserver, which
+		// never fires for a table inside a tab-pane that flips from
+		// display:none to visible (measured 2026-09-12 on the old page: the
+		// Week and Month tabs stayed empty in production).
+		function initWindowTabOnShow(pillId, tableId, name, assign) {
+			$('#' + pillId).one('shown.bs.tab', function() {
+				var table = $('#' + tableId).DataTable(researchersTableOpts);
+				assign(table);
+				renderWindowWhenReady(table, name);
+			});
+		}
+		initWindowTabOnShow('pills-week-tab', 'dataTableUsersWeek', 'week', function(t) { tableUsersWeek = t; });
+		initWindowTabOnShow('pills-month-tab', 'dataTableUsersMonth', 'month', function(t) { tableUsersMonth = t; });
+		initWindowTabOnShow('pills-year-tab', 'dataTableUsersYear', 'year', function(t) { tableUsersYear = t; });
 	});
 
 	// Top tags -> /search/?tag=<tag> pivot (Feed explorer panel auto-runs on
