@@ -172,6 +172,41 @@
 	--tf-fg-0d5c8a: #0d5c8a;
 	--tf-fg-6b6b6b: #6b6b6b;
 	--tf-bg-737373: #737373;
+	/* T2: hunt / trends / graphs / dashboard / researchers (inline <style> converted) */
+	--tf-bg-f8f9fc: #f8f9fc;
+	--tf-bg-1178b3: #1178b3;
+	--tf-bg-d9d9d9: #d9d9d9;
+	--tf-bg-7bc5f9: #7BC5F9;
+	--tf-bg-cdd8fa: #cdd8fa;
+	--tf-bg-e6d3f7: #e6d3f7;
+	--tf-bg-f7c7d9: #f7c7d9;
+	--tf-bg-c9e4c5: #c9e4c5;
+	--tf-bg-f5e6a3: #f5e6a3;
+	--tf-fg-1a7a3d: #1a7a3d;
+	--tf-fg-b3261e: #b3261e;
+	--tf-bg-9aa0a6: #9aa0a6;
+	--tf-bg-e2574c: #e2574c;
+	--tf-bg-ffc94d: #ffc94d;
+	--tf-fg-4a3300: #4a3300;
+	--tf-bg-c62828: #c62828;
+	--tf-fg-ffffff: #ffffff;
+	--tf-bd-fff: #fff;
+	--tf-bd-0026e6: #0026E6;
+	--tf-bd-3399ff: #3399FF;
+	--tf-bd-02bf0f: #02bf0f;
+	--tf-bd-ffc34d: #FFC34D;
+	--tf-bd-4b5563: #4b5563;
+	--tf-bd-d6d6d6: #d6d6d6;
+	--tf-bd-e6e6e6: #e6e6e6;
+	--tf-fg-808080: #808080;       /* was `color: grey` */	/* Chart.js (trends, graphs): read through TweetFeed.chartTheme() in js/utils.js. Light = the literals the pages hard-coded. */
+	--tf-chart-text: #858796;
+	--tf-chart-title: #6e707e;
+	--tf-chart-grid: rgb(234, 236, 244);
+	--tf-chart-tip-bg: rgb(255,255,255);
+	--tf-chart-tip-border: #dddfeb;
+	--tf-chart-hover-border: rgba(234, 236, 244, 1);
+	--tf-chart-arc-border: #fff;
+	--tf-chart-line-rgb: 78, 115, 223;
 }
 
 /* Navbar skeleton, moved out of two inline style="" attributes of
@@ -2142,6 +2177,35 @@ a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offs
 	--tf-fg-6b6b6b: #aab6c0;
 	--tf-bg-737373: #8b98a5;
 	--tf-bg-0026e6: #3b55e6;
+	/* T2: hunt / trends / graphs / dashboard / researchers */
+	--tf-bg-f8f9fc: var(--tf-bg);
+	--tf-bg-1178b3: #125f94;
+	--tf-fg-808080: var(--tf-text-3);
+	--tf-bg-ffc94d: #8a6414;
+	--tf-fg-4a3300: #fff3d1;
+	--tf-chart-text: #aab6c0;
+	--tf-chart-title: #d0d8de;
+	--tf-chart-grid: #2f3d4a;
+	--tf-chart-tip-bg: #253544;
+	--tf-chart-tip-border: #4a5a68;
+	--tf-chart-hover-border: #192734;
+	--tf-chart-arc-border: #192734;
+	--tf-chart-line-rgb: 111, 147, 255;
+	--tf-bg-d9d9d9: #3d4a56;
+	--tf-bg-7bc5f9: #1d5280;
+	--tf-bg-cdd8fa: #2c3b73;
+	--tf-bg-e6d3f7: #46326e;
+	--tf-bg-f7c7d9: #6e2d49;
+	--tf-bg-c9e4c5: #2e5c2c;
+	--tf-bg-f5e6a3: #5e5424;
+	--tf-fg-1a7a3d: #4ade80;
+	--tf-fg-b3261e: #f87171;
+	--tf-bg-9aa0a6: #5b6b78;
+	--tf-bd-fff: var(--tf-surface);
+	--tf-bd-0026e6: #7b93ff;
+	--tf-bd-4b5563: var(--tf-text-2);
+	--tf-bd-d6d6d6: var(--tf-border);
+	--tf-bd-e6e6e6: var(--tf-border);
 }
 
 /* (2) Page */
@@ -2306,6 +2370,50 @@ a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offs
 :root[data-site-theme="dark"] .code-block .tf-copy.code-copy { color: var(--tf-text-body); }
 :root[data-site-theme="dark"] .tweet-skeleton { background: var(--tf-surface); }
 :root[data-site-theme="dark"] .tf-action:hover { background: var(--tf-surface-3); }
+/* Embedded tweets (widgets.js iframes) render their own dark card on a transparent page. An iframe whose
+   color-scheme differs from the embedding page gets an opaque light backdrop, which shows as white
+   corners around the rounded card: pin the iframe to the scheme of the embedded document. */
+:root[data-site-theme="dark"] .tfd-cell iframe,
+:root[data-site-theme="dark"] .twitter-tweet iframe,
+:root[data-site-theme="dark"] iframe.twitter-tweet { color-scheme: normal; }
+/* highlight.js 11.2.0 ships only the light "default" theme from cdnjs (SRI-pinned, so it cannot be
+   swapped): in dark, repaint its token colours with a github-dark palette. The box itself is the
+   .code-block (token --tf-bg-dedede -> #0f1923), so every ink below is >= 4.5:1 on it. */
+:root[data-site-theme="dark"] .code-block code.hljs { color: #d0d8de; }
+:root[data-site-theme="dark"] .code-block .hljs-comment,
+:root[data-site-theme="dark"] .code-block .hljs-quote { color: #8b98a5; }
+:root[data-site-theme="dark"] .code-block .hljs-keyword,
+:root[data-site-theme="dark"] .code-block .hljs-selector-tag,
+:root[data-site-theme="dark"] .code-block .hljs-doctag,
+:root[data-site-theme="dark"] .code-block .hljs-deletion { color: #ff7b72; }
+:root[data-site-theme="dark"] .code-block .hljs-title,
+:root[data-site-theme="dark"] .code-block .hljs-section,
+:root[data-site-theme="dark"] .code-block .hljs-selector-id { color: #d2a8ff; }
+:root[data-site-theme="dark"] .code-block .hljs-attr,
+:root[data-site-theme="dark"] .code-block .hljs-attribute,
+:root[data-site-theme="dark"] .code-block .hljs-literal,
+:root[data-site-theme="dark"] .code-block .hljs-number,
+:root[data-site-theme="dark"] .code-block .hljs-operator,
+:root[data-site-theme="dark"] .code-block .hljs-variable,
+:root[data-site-theme="dark"] .code-block .hljs-meta,
+:root[data-site-theme="dark"] .code-block .hljs-selector-attr,
+:root[data-site-theme="dark"] .code-block .hljs-selector-class,
+:root[data-site-theme="dark"] .code-block .hljs-selector-pseudo { color: #79c0ff; }
+:root[data-site-theme="dark"] .code-block .hljs-string,
+:root[data-site-theme="dark"] .code-block .hljs-regexp,
+:root[data-site-theme="dark"] .code-block .hljs-meta .hljs-string { color: #a5d6ff; }
+:root[data-site-theme="dark"] .code-block .hljs-built_in,
+:root[data-site-theme="dark"] .code-block .hljs-symbol,
+:root[data-site-theme="dark"] .code-block .hljs-template-variable,
+:root[data-site-theme="dark"] .code-block .hljs-type,
+:root[data-site-theme="dark"] .code-block .hljs-link { color: #ffa657; }
+:root[data-site-theme="dark"] .code-block .hljs-name,
+:root[data-site-theme="dark"] .code-block .hljs-tag,
+:root[data-site-theme="dark"] .code-block .hljs-addition { color: #7ee787; }
+:root[data-site-theme="dark"] .code-block .hljs-bullet { color: #f2cc60; }
+:root[data-site-theme="dark"] .code-block .hljs-punctuation,
+:root[data-site-theme="dark"] .code-block .hljs-params,
+:root[data-site-theme="dark"] .code-block .hljs-subst { color: #d0d8de; }
 
 /* (6) Theme toggle button. Colours match the other nav links (the nav is dark
    navy-ish in dark and brand blue + black ink in light: --tf-nav-fg-000). */

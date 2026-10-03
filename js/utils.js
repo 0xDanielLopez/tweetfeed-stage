@@ -488,6 +488,63 @@
   })();
 
 
+
+  // ─── Chart theme helpers (Chart.js pages: trends, graphs) ──────────────────
+  // Colours come from the --tf-chart-* / --tf-ioc-* tokens of css/tweetfeed.css:
+  // the light value of each token is the literal the pages used to hard-code, so
+  // light charts are unchanged. Charts read them when they are CREATED and again
+  // on `site-themechange` (mutate options + chart.update(), never a reload).
+  var CHART_TOKENS = {
+    text:        ['--tf-chart-text', '#858796'],
+    title:       ['--tf-chart-title', '#6e707e'],
+    grid:        ['--tf-chart-grid', 'rgb(234, 236, 244)'],
+    tipBg:       ['--tf-chart-tip-bg', 'rgb(255,255,255)'],
+    tipBorder:   ['--tf-chart-tip-border', '#dddfeb'],
+    hoverBorder: ['--tf-chart-hover-border', 'rgba(234, 236, 244, 1)'],
+    arcBorder:   ['--tf-chart-arc-border', '#fff'],
+    lineRgb:     ['--tf-chart-line-rgb', '78, 115, 223'],
+    url:         ['--tf-ioc-url', '#0026E6'],
+    domain:      ['--tf-ioc-domain', '#3399FF'],
+    ip:          ['--tf-ioc-ip', '#02bf0f'],
+    sha256:      ['--tf-ioc-sha256', '#FFC34D'],
+    md5:         ['--tf-ioc-md5', '#ffc591']
+  };
+  function isDark() {
+    try { return document.documentElement.getAttribute('data-site-theme') === 'dark'; } catch (e) { return false; }
+  }
+  function chartTheme() {
+    var out = { dark: isDark() }, cs = null;
+    try { cs = window.getComputedStyle(document.documentElement); } catch (e) {}
+    Object.keys(CHART_TOKENS).forEach(function (k) {
+      var v = cs ? String(cs.getPropertyValue(CHART_TOKENS[k][0]) || '').trim() : '';
+      out[k] = v || CHART_TOKENS[k][1];
+    });
+    out.line = 'rgba(' + out.lineRgb + ', 1)';
+    out.lineFill = function (a) { return 'rgba(' + out.lineRgb + ', ' + a + ')'; };
+    return out;
+  }
+  // Data colours that are too dark to read on the dark card (#7315BF, #082A33 ...)
+  // are lifted toward white until they reach a relative luminance of ~0.2; light
+  // theme returns the colour untouched. Accepts #rgb / #rrggbb, anything else passes through.
+  function chartInk(color) {
+    if (!isDark() || typeof color !== 'string') return color;
+    var m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(color.trim());
+    if (!m) return color;
+    var h = m[1].length === 3 ? m[1].replace(/./g, '$&$&') : m[1];
+    var c = [0, 2, 4].map(function (i) { return parseInt(h.substr(i, 2), 16); });
+    function lin(x) { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); }
+    function lum(v) { return 0.2126 * lin(v[0]) + 0.7152 * lin(v[1]) + 0.0722 * lin(v[2]); }
+    var t = 0, v = c;
+    while (lum(v) < 0.2 && t < 1) {
+      t += 0.05;
+      v = c.map(function (x) { return Math.round(x + (255 - x) * t); });
+    }
+    return '#' + v.map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+  }
+  function onThemeChange(fn) {
+    try { document.addEventListener('site-themechange', function () { try { fn(chartTheme()); } catch (e) {} }); } catch (e) {}
+  }
+
   // ─── Expose public API ─────────────────────────────────────────────────────
   var api = {
     escapeHtml: escapeHtml,
@@ -506,6 +563,9 @@
     clearTrackedIntervals: clearTrackedIntervals,
     lazyInViewport: lazyInViewport,
     track: track,
+    chartTheme: chartTheme,
+    chartInk: chartInk,
+    onThemeChange: onThemeChange,
   };
 
   window.TweetFeed = window.TweetFeed || {};

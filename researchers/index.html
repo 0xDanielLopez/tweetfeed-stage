@@ -67,8 +67,8 @@
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=6" rel="stylesheet">
-	<link href="../css/index.css?v=66" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=66" rel="stylesheet">
+	<link href="../css/index.css?v=69" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=69" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -304,16 +304,16 @@
 				<hr class="divider"> <!-- DIVIDER -->
 				<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
 					<li class="nav-item" role="presentation">
-						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-today-tab" data-toggle="pill" href="#pills-today" role="tab" aria-controls="pills-today" aria-selected="true">Today</a>
+						<a style="border-radius: 50px;border: 1px solid var(--tf-bd-fff);" class="nav-link" id="pills-today-tab" data-toggle="pill" href="#pills-today" role="tab" aria-controls="pills-today" aria-selected="true">Today</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-week-tab" data-toggle="pill" href="#pills-week" role="tab" aria-controls="pills-week" aria-selected="false">Week</a>
+						<a style="border-radius: 50px;border: 1px solid var(--tf-bd-fff);" class="nav-link" id="pills-week-tab" data-toggle="pill" href="#pills-week" role="tab" aria-controls="pills-week" aria-selected="false">Week</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-month-tab" data-toggle="pill" href="#pills-month" role="tab" aria-controls="pills-month" aria-selected="false">Month</a>
+						<a style="border-radius: 50px;border: 1px solid var(--tf-bd-fff);" class="nav-link" id="pills-month-tab" data-toggle="pill" href="#pills-month" role="tab" aria-controls="pills-month" aria-selected="false">Month</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-year-tab" data-toggle="pill" href="#pills-year" role="tab" aria-controls="pills-year" aria-selected="false">Year</a>
+						<a style="border-radius: 50px;border: 1px solid var(--tf-bd-fff);" class="nav-link" id="pills-year-tab" data-toggle="pill" href="#pills-year" role="tab" aria-controls="pills-year" aria-selected="false">Year</a>
 					</li>
 				</ul>
 				<div class="tab-content" id="nav-tabContent">
@@ -543,7 +543,7 @@
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=7"></script>
+	<script src="../js/utils.js?v=8"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	// IOCs column (index 2) is fed an {display, sort} object instead of a
@@ -614,7 +614,7 @@
 			var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
 			var picSrc = '../pics/' + safeUser + '.png';
 
-			$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>' + ' <a href="../search/?user=' + encodeURIComponent(user) + '" style="color:#555;font-size:12px;" title="Search this researcher\'s IOCs on TweetFeed" aria-label="Search this researcher\'s IOCs on TweetFeed"><i class="fas fa-search"></i> Search</a>');
+			$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>' + ' <a href="../search/?user=' + encodeURIComponent(user) + '" style="color:var(--tf-fg-555);font-size:12px;" title="Search this researcher\'s IOCs on TweetFeed" aria-label="Search this researcher\'s IOCs on TweetFeed"><i class="fas fa-search"></i> Search</a>');
 
 			// For Mobile
 			$(this.node()).find('td').eq(0).addClass('text-center');
