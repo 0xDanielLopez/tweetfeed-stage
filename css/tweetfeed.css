@@ -2190,7 +2190,8 @@ a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offs
 	--tf-chart-tip-border: #4a5a68;
 	--tf-chart-hover-border: #192734;
 	--tf-chart-arc-border: #192734;
-	--tf-chart-line-rgb: 111, 147, 255;
+	/* neutral light grey: the trends 'Total' aggregate must not collide with --tf-ioc-url (#7b93ff) or --tf-ioc-domain (#3399FF) */
+	--tf-chart-line-rgb: 200, 209, 217;
 	--tf-bg-d9d9d9: #3d4a56;
 	--tf-bg-7bc5f9: #1d5280;
 	--tf-bg-cdd8fa: #2c3b73;
