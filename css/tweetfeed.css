@@ -2248,6 +2248,8 @@ a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offs
 :root[data-site-theme="dark"] .shadow { box-shadow: 0 .15rem 1.75rem 0 rgba(0, 0, 0, .45) !important; }
 :root[data-site-theme="dark"] .shadow-sm { box-shadow: 0 .125rem .25rem 0 rgba(0, 0, 0, .4) !important; }
 :root[data-site-theme="dark"] pre { color: var(--tf-text-body); border-color: var(--tf-border); }
+/* .code-block panels keep the crisp box border (SPEC: never the soft #38444d); the generic pre rule above (0,2,1) would otherwise beat .code-block (0,1,0). */
+:root[data-site-theme="dark"] pre.code-block { border-color: var(--tf-box-border); }
 :root[data-site-theme="dark"] kbd { background: var(--tf-surface-3); color: var(--tf-text); }
 :root[data-site-theme="dark"] .section-heading,
 :root[data-site-theme="dark"] .faq-section > h2,
