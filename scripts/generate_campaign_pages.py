@@ -41,12 +41,16 @@ MAX_CONTEXT_CHARS = 600
 MAX_META_DESC_CHARS = 155
 
 TYPE_COLORS = {
-    "url": ("#0026E6", "white"),
-    "domain": ("#3399FF", "white"),
-    "ip": ("#02bf0f", "white"),
-    "sha256": ("#FFC34D", "#1c1c1c"),
-    "md5": ("#FFC34D", "#1c1c1c"),
+    # --tf-* tokens (css/tweetfeed.css): the light values are the original hexes, the dark theme
+    # swaps in tints that keep the badge text readable. Raw hex here would be re-stamped by the
+    # nightly regen and undo the dark skin.
+    "url": ("var(--tf-bg-0026e6)", "var(--tf-fg-fff)"),
+    "domain": ("var(--tf-bg-3399ff)", "var(--tf-fg-fff)"),
+    "ip": ("var(--tf-bg-02bf0f)", "var(--tf-fg-fff)"),
+    "sha256": ("var(--tf-bg-ffc34d)", "var(--tf-fg-1c1c1c)"),
+    "md5": ("var(--tf-bg-ffc34d)", "var(--tf-fg-1c1c1c)"),
 }
+TYPE_COLOR_DEFAULT = ("var(--tf-bg-737373)", "var(--tf-fg-on-ink)")
 
 
 def fetch_campaigns():
@@ -116,7 +120,7 @@ def format_ioc(row):
         date_short = ts.strftime("%b %d, %H:%M")
     except (ValueError, KeyError):
         date_short = row.get("date", "")
-    color, text_color = TYPE_COLORS.get(row.get("type", ""), ("#737373", "white"))
+    color, text_color = TYPE_COLORS.get(row.get("type", ""), TYPE_COLOR_DEFAULT)
     val = row.get("value", "")
     val_display = val[:60] + "..." if len(val) > 60 else val
     return {

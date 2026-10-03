@@ -158,6 +158,20 @@
 	--tf-pill-bd-166534: #166534;
 	--tf-pill-fg-ecfdf5: #ecfdf5;
 	--tf-pill-fg-86efac: #86efac;
+	/* Campaigns page (inline <style> converted) */
+	--tf-bg-fff3cd: #fff3cd;
+	--tf-bd-f0ad4e: #f0ad4e;
+	--tf-fg-7a5b12: #7a5b12;
+	--tf-fg-9a9a9a: #9a9a9a;
+	--tf-fg-0b3d2e: #0b3d2e;
+	--tf-bd-9aa0a6: #9aa0a6;
+	--tf-bg-1c1c1c: #1c1c1c;
+	--tf-fg-on-ink: #fff;           /* text on a --tf-bg-1c1c1c fill (hover chips) */
+	--tf-bg-eef0f3: #eef0f3;
+	--tf-bd-c9c9c9: #c9c9c9;
+	--tf-fg-0d5c8a: #0d5c8a;
+	--tf-fg-6b6b6b: #6b6b6b;
+	--tf-bg-737373: #737373;
 }
 
 /* Navbar skeleton, moved out of two inline style="" attributes of
@@ -2113,6 +2127,21 @@ a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offs
 	--tf-fg-1da1f2: var(--tf-brand);
 	--tf-fg-c2185b: #f472b6;
 	--tf-fg-0000ee: #7cc8f8;
+	/* Campaigns page */
+	--tf-bg-fff3cd: #3b3320;
+	--tf-bd-f0ad4e: #b8862b;
+	--tf-fg-7a5b12: #fcd34d;
+	--tf-fg-9a9a9a: #b8c3cc;
+	--tf-fg-0b3d2e: #d6f7ea;
+	--tf-bd-9aa0a6: #8b98a5;
+	--tf-bg-1c1c1c: #e7edf1;
+	--tf-fg-on-ink: #15202b;
+	--tf-bg-eef0f3: #263646;
+	--tf-bd-c9c9c9: #4a5a68;
+	--tf-fg-0d5c8a: #8fd0fa;
+	--tf-fg-6b6b6b: #aab6c0;
+	--tf-bg-737373: #8b98a5;
+	--tf-bg-0026e6: #3b55e6;
 }
 
 /* (2) Page */
@@ -2303,6 +2332,11 @@ a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offs
 :root[data-site-theme="dark"] .site-theme-toggle .fa-sun { display: inline-block; }
 @media (max-width: 991.98px) {
 	.site-theme-toggle { width: 44px; height: 44px; margin: 0; }
+	/* Same ink as the hamburger next to it: its computed colour is Bootstrap's
+	   .navbar-dark .nav-link rgba(255,255,255,.5) in both themes (that rule outranks the
+	   burger's own colour), so the toggle follows the same value instead of black. */
+	.tf-navbar-mobile .site-theme-toggle { color: rgba(255, 255, 255, .5); }
+	.tf-navbar-mobile .site-theme-toggle:hover { color: rgba(255, 255, 255, .75); }
 }
 
 /* Bare inputs (DataTables column filters, ad-hoc <input> in page scripts) */
