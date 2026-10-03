@@ -72,6 +72,7 @@
 	--tf-fg-5a5a5a: #5a5a5a;
 	--tf-fg-1c1c1c: #1c1c1c;
 	--tf-fg-737373: #737373;
+	--tf-fg-3c4043: #3c4043;
 	--tf-fg-fff: #fff;
 	--tf-fg-4b5563: #4b5563;
 	--tf-fg-3a6f96: #3a6f96;
@@ -2155,6 +2156,7 @@ a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offs
 	--tf-fg-6b7280: var(--tf-text-2);
 	--tf-fg-6c757d: var(--tf-text-2);
 	--tf-fg-737373: var(--tf-text-2);
+	--tf-fg-3c4043: var(--tf-text-body);
 	--tf-fg-9aa0a6: var(--tf-text-3);
 	--tf-fg-1178b3: var(--tf-heading);
 	--tf-fg-3a6f96: var(--tf-accent);
@@ -2456,4 +2458,5 @@ a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offs
 :root[data-site-theme="dark"] input::placeholder,
 :root[data-site-theme="dark"] textarea::placeholder { color: var(--tf-text-3); opacity: 1; }
 /* The VirusTotal glyph is a dark-blue PNG: lift it on dark (hover keeps its own white-out filter). */
-:root[data-site-theme="dark"] .tf-action.tf-action-vt:not(:hover) img { filter: brightness(2.1) saturate(.8); }
+:root[data-site-theme="dark"] .tf-action.tf-action-vt:not(:hover) img,
+:root[data-site-theme="dark"] img.virustotal { filter: brightness(2.1) saturate(.8); }

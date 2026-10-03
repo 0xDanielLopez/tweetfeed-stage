@@ -31,7 +31,7 @@
 	</script>
 	<!-- /site-theme-init -->
 	<meta name="robots" content="noindex, nofollow">
-	<meta name="description" content="Free malicious URL list: full links with path and query, for phishing, scam and malware delivery. From Twitter/X researchers. 44k+ past year. CSV, JSON, RSS.">
+	<meta name="description" content="Free malicious URL list: full links with path and query, for phishing, scam and malware delivery. From Twitter/X researchers. 46k+ past year. CSV, JSON, RSS.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="malicious urls,phishing urls,scam urls,malware urls,c2 urls,ioc feed,osint,Threat Intelligence">
 	<link rel="canonical" href="https://tweetfeed.live/malicious-urls/">
@@ -40,7 +40,7 @@
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Malicious URLs feed - free phishing & scam URL list - TweetFeed">
-	<meta name="twitter:description" content="Free malicious URL list: full links with path and query, for phishing, scam and malware delivery. From Twitter/X researchers. 44k+ past year. CSV, JSON, RSS.">
+	<meta name="twitter:description" content="Free malicious URL list: full links with path and query, for phishing, scam and malware delivery. From Twitter/X researchers. 46k+ past year. CSV, JSON, RSS.">
 	<meta name="twitter:url" content="https://tweetfeed.live/malicious-urls/">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
@@ -48,7 +48,7 @@
 	<meta property="og:url" content="https://tweetfeed.live/malicious-urls/">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Malicious URLs feed - free phishing & scam URL list - TweetFeed">
-	<meta property="og:description" content="Free malicious URL list: full links with path and query, for phishing, scam and malware delivery. From Twitter/X researchers. 44k+ past year. CSV, JSON, RSS.">
+	<meta property="og:description" content="Free malicious URL list: full links with path and query, for phishing, scam and malware delivery. From Twitter/X researchers. 46k+ past year. CSV, JSON, RSS.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -65,8 +65,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=6" rel="stylesheet">
-	<link href="../css/index.css?v=70" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=70" rel="stylesheet">
+	<link href="../css/index.css?v=72" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=72" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -131,7 +131,7 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
-		"dateModified": "2026-10-03T11:15:17Z",
+		"dateModified": "2026-10-02T12:00:20Z",
 		"@type": "Dataset",
 		"@id": "https://tweetfeed.live/malicious-urls/#dataset",
 		"name": "TweetFeed Malicious URLs",
@@ -386,10 +386,10 @@
 						</ul>
 					</details>
 					<script>
-						/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=8
-						   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
-						   56th) does not load it at all, so anything added there would never reach
-						   that page. Inline also means no FOUC.
+						/* Collapse the docs nav on small screens. Inline on purpose: no FOUC
+						   (it runs before first paint, js/utils.js loads at the end of <body>).
+						   js/utils.js now loads on every page, threat-intelligence-guide included
+						   (the dark-mode toggle handler lives there).
 						   The markup ships `open`, so desktop and any JS-disabled browser get the
 						   full list with no CSS trickery. CSS cannot close it: a closed <details>
 						   is hidden by the UA through its slot, and an author-level display:block
@@ -420,7 +420,7 @@
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
 
-				<p class="text-center" style="font-size:13px;color:#737373;margin:0 0 1.25rem;"><strong>Related Threat Intelligence feeds:</strong> <a href="../malicious-domains/">Domains</a> &middot; <a href="../malicious-ips/">IPs</a> &middot; <a href="../malicious-hashes-sha256/">SHA-256</a> &middot; <a href="../malicious-hashes-md5/">MD5</a> &middot; <a href="../ioc-types/">All IOC types</a></p>
+				<p class="text-center" style="font-size:13px;color:var(--tf-fg-737373);margin:0 0 1.25rem;"><strong>Related Threat Intelligence feeds:</strong> <a href="../malicious-domains/">Domains</a> &middot; <a href="../malicious-ips/">IPs</a> &middot; <a href="../malicious-hashes-sha256/">SHA-256</a> &middot; <a href="../malicious-hashes-md5/">MD5</a> &middot; <a href="../ioc-types/">All IOC types</a></p>
 
 				<!-- ============================================================ -->
 				<!-- COUNTS BY WINDOW                                              -->
@@ -433,8 +433,8 @@
 								<span class="card-text cardTitle">Today</span>
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="URLs collected since 00:00 UTC today"></i>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;" class="mu-today">-</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">malicious URLs</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;" class="mu-today">-</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">malicious URLs</p>
 							</div>
 						</div>
 					</div>
@@ -444,8 +444,8 @@
 								<span class="card-text cardTitle">Week</span>
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="URLs collected in the last 7 days"></i>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;" class="mu-week">-</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">malicious URLs</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;" class="mu-week">-</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">malicious URLs</p>
 							</div>
 						</div>
 					</div>
@@ -455,8 +455,8 @@
 								<span class="card-text cardTitle">Month</span>
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="URLs collected in the last 30 days"></i>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;" class="mu-month">-</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">malicious URLs</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;" class="mu-month">-</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">malicious URLs</p>
 							</div>
 						</div>
 					</div>
@@ -466,15 +466,15 @@
 								<span class="card-text cardTitle">Year</span>
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="URLs collected in the last 365 days"></i>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;" class="mu-year">-</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">malicious URLs</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;" class="mu-year">-</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">malicious URLs</p>
 							</div>
 						</div>
 					</div>
 				</div>
 
 				<!-- freshness:count:start -->
-				<p style="color:#737373; font-size:13px; margin-top:0.75rem; margin-bottom:1.5rem;">Currently tracking 1,682 malicious URLs reported in the last 30 days. Data generated 2026-10-03 11:15 UTC.</p>
+				<p style="color:var(--tf-fg-737373); font-size:13px; margin-top:0.75rem; margin-bottom:1.5rem;">Currently tracking 1,626 malicious URLs reported in the last 30 days. Data generated 2026-10-02 12:00 UTC.</p>
 				<!-- freshness:count:end -->
 				<!-- ============================================================ -->
 				<!-- WHAT THIS LIST CONTAINS                                       -->
@@ -482,7 +482,7 @@
 				<h3 class="section-heading tf-block-head">What this list contains</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">
+						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li>Sourced from ~95 Twitter/X security researchers, refreshed every 15 minutes.</li>
 							<li>Phishing kits, scam landing pages, malware-delivery URLs and command-and-control endpoints.</li>
 							<li>Onion (.onion) URLs and ransomware leak sites included.</li>
@@ -497,7 +497,7 @@
 				<h3 class="section-heading tf-block-head">Recent samples</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Latest 10 URLs from the past 7 days. Live from <a href="https://api.tweetfeed.live/v1/week/url" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/week/url</code></a>.</p>
+						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Latest 10 URLs from the past 7 days. Live from <a href="https://api.tweetfeed.live/v1/week/url" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/week/url</code></a>.</p>
 						<div id="samplesLoading" class="text-center" style="padding: 2rem 0;">
 							<img loading="lazy" style="height: 32px; width:auto;" src="../img/loading.svg" alt="Loading samples" width="32" height="32">
 						</div>
@@ -520,7 +520,7 @@
 								<tbody></tbody>
 							</table>
 						</div>
-						<div id="samplesError" style="display:none; padding: 1rem; color:#737373; font-size:14px;">
+						<div id="samplesError" style="display:none; padding: 1rem; color:var(--tf-fg-737373); font-size:14px;">
 							Could not load samples right now. <a href="https://api.tweetfeed.live/v1/week/url" target="_blank" rel="noopener noreferrer">Open the JSON feed directly</a>.
 						</div>
 					</div>
@@ -532,7 +532,7 @@
 				<h3 class="section-heading tf-block-head">Top tags for malicious URLs</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Filter the URL feed by malware family or category. Each tag has its own landing page with recent samples and context.</p>
+						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Filter the URL feed by malware family or category. Each tag has its own landing page with recent samples and context.</p>
 						<ul style="list-style:none; padding-left:0; margin-bottom:0; display:flex; flex-wrap:wrap; gap:0.5rem;">
 							<li><a class="btn btn-tf btn-sm" href="../tag/phishing/">#phishing</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../tag/c2/">#c2</a></li>
@@ -540,7 +540,7 @@
 							<li><a class="btn btn-tf btn-sm" href="../tag/scam/">#scam</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../tag/malware/">#malware</a></li>
 						</ul>
-						<p style="color:#737373; font-size:13px; font-family:'Rubik',sans-serif; margin-top:1rem; margin-bottom:0;">See all tags on the <a href="../dashboard/" class="text-decoration-none">Dashboard</a> or browse the full <a href="../feeds/" class="text-decoration-none">IOC feed</a>.</p>
+						<p style="color:var(--tf-fg-737373); font-size:13px; font-family:'Rubik',sans-serif; margin-top:1rem; margin-bottom:0;">See all tags on the <a href="../dashboard/" class="text-decoration-none">Dashboard</a> or browse the full <a href="../feeds/" class="text-decoration-none">IOC feed</a>.</p>
 					</div>
 				</div>
 
@@ -550,7 +550,7 @@
 				<h3 class="section-heading tf-block-head">Formats and how to use</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.85rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Every TweetFeed feed is free and public domain (<a href="../tos/" class="text-decoration-none">CC0 1.0</a>) with no API key or sign-up. The malicious URLs are available in four formats:</p>
+						<p style="margin-bottom:0.85rem; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Every TweetFeed feed is free and public domain (<a href="../tos/" class="text-decoration-none">CC0 1.0</a>) with no API key or sign-up. The malicious URLs are available in four formats:</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem; font-family:'Rubik',sans-serif; font-size:14px;">
 								<colgroup>
@@ -567,7 +567,7 @@
 								</tbody>
 							</table>
 						</div>
-						<p style="margin-bottom:0; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Import the URL list into your secure web gateway or email-security filter as a blocklist, or query the JSON API from your SOAR to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives.</p>
+						<p style="margin-bottom:0; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Import the URL list into your secure web gateway or email-security filter as a blocklist, or query the JSON API from your SOAR to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives.</p>
 					</div>
 				</div>
 				<section class="faq-section">
@@ -610,7 +610,7 @@
 				<!-- LICENSE                                                       -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">License</h3>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
+				<p style="color: var(--tf-fg-737373);font-size: 16px;font-family: 'Rubik', sans-serif;">
 					Source code for the pipeline:
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/TweetFeed">github.com/0xDanielLopez/TweetFeed</a> (MIT).
 				</p>
@@ -763,11 +763,11 @@
 			if (top.length === 0) { $('#samplesError').show(); $('#samplesLoading').hide(); return; }
 			for (const r of top) {
 				const valSafe = escapeHtml(r.value || '');
-				const tags = (r.tags || []).map(t => '<span style="color:#1178b3;">'+escapeHtml(t)+'</span>').join(' ');
+				const tags = (r.tags || []).map(t => '<span style="color:var(--tf-fg-1178b3);">'+escapeHtml(t)+'</span>').join(' ');
 				const userSafe = escapeHtml(r.user || '');
 				const tweetSafe = escapeHtml(r.tweet || '');
 				const $tr = $('<tr>')
-					.append('<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">'+escapeHtml(fmtDate(r.date))+'</td>')
+					.append('<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">'+escapeHtml(fmtDate(r.date))+'</td>')
 					.append('<td style="font-family:\'SFMono-Regular\', Consolas, \'Liberation Mono\', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="'+valSafe+'"><i class="tf-copy far fa-copy" data-copy="'+valSafe+'" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>'+valSafe+'</td>')
 					.append('<td style="font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">'+tags+'</td>')
 					.append('<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="'+tweetSafe+'" target="_blank" rel="noopener noreferrer">@'+userSafe+'</a></td>');

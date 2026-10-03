@@ -57,8 +57,8 @@
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
-	<link href="../css/index.css?v=70" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=70" rel="stylesheet">
+	<link href="../css/index.css?v=72" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=72" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -250,10 +250,10 @@
 						</ul>
 					</details>
 					<script>
-						/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=8
-						   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
-						   56th) does not load it at all, so anything added there would never reach
-						   that page. Inline also means no FOUC.
+						/* Collapse the docs nav on small screens. Inline on purpose: no FOUC
+						   (it runs before first paint, js/utils.js loads at the end of <body>).
+						   js/utils.js now loads on every page, threat-intelligence-guide included
+						   (the dark-mode toggle handler lives there).
 						   The markup ships `open`, so desktop and any JS-disabled browser get the
 						   full list with no CSS trickery. CSS cannot close it: a closed <details>
 						   is hidden by the UA through its slot, and an author-level display:block
@@ -287,51 +287,51 @@
 				<h3 class="section-heading tf-block-head">Per-type streams</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.9rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Each landing page covers one IOC type, with stats by window (today / week / month / year), the active source distribution, and a FAQ. Use them as canonical link targets when linking out from your own writing.</p>
+						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Each landing page covers one IOC type, with stats by window (today / week / month / year), the active source distribution, and a FAQ. Use them as canonical link targets when linking out from your own writing.</p>
 						<div class="row">
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-urls/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+								<a href="../malicious-urls/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
 									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">url</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious URLs</span>
+										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px; font-family:'Rubik',sans-serif;">url</span>
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">Malicious URLs</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Full HTTP/HTTPS URLs flagged by public Twitter/X researchers. Highest-volume IOC type on TweetFeed.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Full HTTP/HTTPS URLs flagged by public Twitter/X researchers. Highest-volume IOC type on TweetFeed.</div>
 								</a>
 							</div>
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-domains/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+								<a href="../malicious-domains/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
 									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">domain</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious domains</span>
+										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px; font-family:'Rubik',sans-serif;">domain</span>
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">Malicious domains</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Bare domain names without scheme or path. Useful for DNS-level blocklists and CT-log correlation.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Bare domain names without scheme or path. Useful for DNS-level blocklists and CT-log correlation.</div>
 								</a>
 							</div>
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-ips/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+								<a href="../malicious-ips/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
 									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">ip</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious IPs</span>
+										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-02bf0f); color:var(--tf-fg-fff); border-radius:3px; font-family:'Rubik',sans-serif;">ip</span>
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">Malicious IPs</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">IPv4 / IPv6 addresses linked to attacker infrastructure (C2, scanners, phishing hosts). Free malicious IP list, refreshed every 15 min; high FP risk on shared hosting.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">IPv4 / IPv6 addresses linked to attacker infrastructure (C2, scanners, phishing hosts). Free malicious IP list, refreshed every 15 min; high FP risk on shared hosting.</div>
 								</a>
 							</div>
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-hashes-md5/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+								<a href="../malicious-hashes-md5/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
 									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px; font-family:'Rubik',sans-serif;">md5</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">MD5 hashes</span>
+										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-ffc34d); color:var(--tf-fg-1c1c1c); border-radius:3px; font-family:'Rubik',sans-serif;">md5</span>
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">MD5 hashes</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Legacy 128-bit file hashes shared by researchers. Pivot through VirusTotal / Malpedia / Hybrid Analysis.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Legacy 128-bit file hashes shared by researchers. Pivot through VirusTotal / Malpedia / Hybrid Analysis.</div>
 								</a>
 							</div>
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-hashes-sha256/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+								<a href="../malicious-hashes-sha256/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
 									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px; font-family:'Rubik',sans-serif;">sha256</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">SHA-256 hashes</span>
+										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-ffc34d); color:var(--tf-fg-1c1c1c); border-radius:3px; font-family:'Rubik',sans-serif;">sha256</span>
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">SHA-256 hashes</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Modern 256-bit file hashes; preferred over MD5 for forensic chain of custody and incident-response artefacts.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Modern 256-bit file hashes; preferred over MD5 for forensic chain of custody and incident-response artefacts.</div>
 								</a>
 							</div>
 						</div>
@@ -341,7 +341,7 @@
 				<h3 class="section-heading tf-block-head">Other reference</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">
+						<p style="margin-bottom:0; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">
 							<a href="../tags/" class="text-decoration-none"><b>Tag index</b></a> &middot; 25 per-tag landing pages (APT groups, malware families, TTPs). <br>
 							<a href="../threat-intelligence-guide/" class="text-decoration-none"><b>Threat Intelligence guide</b></a> &middot; ~1,640-word pillar covering IOC types, OSINT vs commercial, MITRE ATT&amp;CK basics, glossary.
 						</p>
