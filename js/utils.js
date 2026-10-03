@@ -402,6 +402,92 @@
     } catch (e) { /* analytics must never break a click handler */ }
   }
 
+  // ─── Site theme (light/dark) ───────────────────────────────────────────────
+  // Contract shared with the inline init snippet (scripts/templates/_theme_init.html.j2):
+  // <html data-site-theme="light|dark"> is the RESOLVED theme, localStorage
+  // 'site-theme' = 'light'|'dark' is the explicit choice (absent = follow the
+  // system). The init snippet sets the attribute before first paint; this
+  // handler owns the toggle button, the live system-follow, cross-tab sync and
+  // the `site-themechange` event (charts listen to it). Embedded tweets
+  // (widgets.js) read the twitter:widgets:theme meta only when they render, so
+  // a toggle does not repaint tweets already on the page: they follow on the
+  // next load (re-rendering them is neither cheap nor safe).
+  (function initSiteTheme() {
+    var doc, root, mq;
+    try { doc = document; root = doc.documentElement; mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) { return; }
+    if (!root || !root.setAttribute || !doc.querySelectorAll) return;
+
+    function stored() {
+      try {
+        var v = window.localStorage.getItem('site-theme');
+        return (v === 'light' || v === 'dark') ? v : null;
+      } catch (e) { return null; }
+    }
+    function systemTheme() { return mq && mq.matches ? 'dark' : 'light'; }
+    function resolved() { return stored() || systemTheme(); }
+
+    function paint(theme) {
+      var changed = root.getAttribute('data-site-theme') !== theme;
+      root.setAttribute('data-site-theme', theme);
+      root.style.colorScheme = theme;
+      // Tweet embeds: keep the widgets meta in step for tweets rendered later.
+      var meta = doc.querySelector('meta[name="twitter:widgets:theme"]');
+      if (theme === 'dark' && !meta && doc.head) {
+        meta = doc.createElement('meta');
+        meta.name = 'twitter:widgets:theme';
+        meta.content = 'dark';
+        doc.head.appendChild(meta);
+      } else if (theme === 'light' && meta && meta.parentNode) {
+        meta.parentNode.removeChild(meta);
+      }
+      var tc = doc.querySelector('meta[name="theme-color"]');
+      if (tc) {
+        if (!tc.hasAttribute('data-light')) tc.setAttribute('data-light', tc.getAttribute('content') || '');
+        tc.setAttribute('content', theme === 'dark' ? '#192734' : tc.getAttribute('data-light'));
+      }
+      var btns = doc.querySelectorAll('[data-theme-toggle]');
+      for (var i = 0; i < btns.length; i++) {
+        var b = btns[i];
+        var label = theme === 'dark'
+          ? (b.getAttribute('data-label-to-light') || 'Switch to light theme')
+          : (b.getAttribute('data-label-to-dark') || 'Switch to dark theme');
+        b.setAttribute('aria-label', label);
+        b.setAttribute('title', label);
+      }
+      return changed;
+    }
+    function announce(theme) {
+      try { doc.dispatchEvent(new CustomEvent('site-themechange', { detail: { theme: theme } })); } catch (e) {}
+    }
+    function apply(theme) { if (paint(theme)) announce(theme); }
+
+    // Labels must reflect the theme the init snippet already set.
+    function syncLabels() { paint(root.getAttribute('data-site-theme') === 'dark' ? 'dark' : (root.getAttribute('data-site-theme') === 'light' ? 'light' : resolved())); }
+    if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', syncLabels); else syncLabels();
+
+    doc.addEventListener('click', function (ev) {
+      var t = ev.target;
+      var btn = t && t.closest ? t.closest('[data-theme-toggle]') : null;
+      if (!btn) return;
+      ev.preventDefault();
+      var next = root.getAttribute('data-site-theme') === 'dark' ? 'light' : 'dark';
+      try { window.localStorage.setItem('site-theme', next); } catch (e) { /* blocked storage: works for this page view only */ }
+      apply(next);
+    });
+
+    // Follow the system live, but only while the visitor has made no choice.
+    if (mq) {
+      var onSys = function () { if (!stored()) apply(systemTheme()); };
+      if (mq.addEventListener) mq.addEventListener('change', onSys);
+      else if (mq.addListener) mq.addListener(onSys);
+    }
+    // Another tab changed the choice (or cleared it).
+    window.addEventListener('storage', function (ev) {
+      if (ev.key === 'site-theme' || ev.key === null) apply(resolved());
+    });
+  })();
+
+
   // ─── Expose public API ─────────────────────────────────────────────────────
   var api = {
     escapeHtml: escapeHtml,
