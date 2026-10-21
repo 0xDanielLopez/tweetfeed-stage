@@ -217,8 +217,7 @@ Same table markup/columns as the original (Date/Type/Value/Source), sourced from
 ```html
 <h3 class="section-heading">License</h3>
 <p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
-	This campaign's IOC data: <b>CC0 1.0 Public Domain</b>. No attribution required, no warranty. Campaign descriptions are AI-generated from the underlying IOC data and may contain errors — verify before acting on them. Raw data:
-	<a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/TweetFeed">github.com/0xDanielLopez/TweetFeed</a>.
+	This campaign's IOC data: <b>CC0 1.0 Public Domain</b>. No attribution required, no warranty. Campaign descriptions are AI-generated from the underlying IOC data and may contain errors — verify before acting on them.
 </p>
 ```
 
